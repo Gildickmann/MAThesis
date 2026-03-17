@@ -84,8 +84,11 @@ tr:hover td{background:#f8f8f6}
 
 <div class="hdr">
   <h1>Regret, Guilt &amp; Accountability — Complete Analysis Dashboard</h1>
-  <div class="hdr-meta">
-    <span class="pill pill-base">N = 466 · Two-wave panel · Dec 2025</span>
+  <div style="background:#fffbeb;border:0.5px solid #fcd34d;border-radius:6px;padding:.5rem .85rem;margin-bottom:.5rem;font-size:11px;color:#78350f">
+  <strong>Pre-registration compliance note:</strong> N=463 applies date cutoffs specified in AsPredicted #262879 (W1 &gt;8/12/2025 18:00; W2 &gt;14/12/2025 15:00), removing 4 pilot respondents. Prior runs used N=466. Behavioral outcome is pre-registered composite (petition+social_media+demo). Exposure modeled as ordinal 1–3 per pre-registration.
+</div>
+<div class="hdr-meta">
+    <span class="pill pill-base">N = 463 · Two-wave panel · Dec 2025</span>
     <span class="pill pill-base">HC3 SEs · BH-FDR q=.05 · Bootstrap n=5,000</span>
     <span class="pill pill-green">Peer-review corrections applied</span>
     <span class="pill pill-blue">Reviewer response analyses added</span>
@@ -93,9 +96,9 @@ tr:hover td{background:#f8f8f6}
 </div>
 
 <div class="metrics">
-  <div class="metric"><div class="metric-val">466</div><div class="metric-lbl">Total panel</div></div>
-  <div class="metric"><div class="metric-val">219 / 247</div><div class="metric-lbl">Exposed / Control</div></div>
-  <div class="metric"><div class="metric-val">214 / 210</div><div class="metric-lbl">Coalition / Opp.</div></div>
+  <div class="metric"><div class="metric-val">463</div><div class="metric-lbl">Total panel</div></div>
+  <div class="metric"><div class="metric-val">218 / 245</div><div class="metric-lbl">Exposed / Control</div></div>
+  <div class="metric"><div class="metric-val">213 / 208</div><div class="metric-lbl">Coalition / Opp.</div></div>
   <div class="metric"><div class="metric-val">75·91·300</div><div class="metric-lbl">L · C · R ideology</div></div>
   <div class="metric"><div class="metric-val">5,000</div><div class="metric-lbl">Bootstrap iters.</div></div>
 </div>
@@ -129,6 +132,9 @@ tr:hover td{background:#f8f8f6}
   <div class="nav-sep"></div>
   <button class="ntab" onclick="P('sum',this)">Summary</button>
   <div class="nav-sep"></div>
+  <button class="ntab" style="background:#f0fdf4;color:#166534;font-weight:500" onclick="P('attrition',this)">⬦ Attrition</button>
+  <button class="ntab" style="background:#fff1f2;color:#9f1239;font-weight:500" onclick="P('emo_watch',this)">★ Emo-Watching</button>
+  <button class="ntab" style="background:#fff1f2;color:#9f1239;font-weight:500" onclick="P('imm_panel',this)">★ IMM</button>
   <button class="ntab" style="background:#f3e8ff;color:#6b21a8;font-weight:500" onclick="P('qa',this)">? שאלות עירן</button>
 </div>
 
@@ -176,7 +182,7 @@ tr:hover td{background:#f8f8f6}
         <tr><td><span class="dot" style="background:#22c55e"></span>Anger</td><td>0.180</td><td>0.780</td><td>&lt;.001</td><td><span class="badge b-sig">✓</span></td></tr>
       </tbody></table>
     </div>
-    <div class="card"><div class="card-title">Protest intentions</div>
+    <div class="card"><div class="card-title">Behavioral accountability (composite: petition + social media + demo, α=.858)</div>
       <table><thead><tr><th>Emotion</th><th>β</th><th>β(W1)</th><th>p</th><th>BH</th></tr></thead><tbody>
         <tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>0.195</td><td>0.714</td><td>&lt;.001</td><td><span class="badge b-sig">✓</span></td></tr>
         <tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>0.259</td><td>0.671</td><td>&lt;.001</td><td><span class="badge b-sig">✓</span></td></tr>
@@ -207,17 +213,17 @@ tr:hover td{background:#f8f8f6}
   <div class="grid2">
     <div class="card"><div class="card-title">H4a: Emotion × Ideology → Commission</div>
       <table><thead><tr><th>Emotion</th><th>β emo</th><th>β ideo</th><th>β inter</th><th>p</th></tr></thead><tbody>
-        <tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>0.300</td><td>-1.192</td><td>+0.114</td><td>&lt;.01 <span class="badge b-rev">reversed</span></td></tr>
-        <tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>0.417</td><td>-1.231</td><td>+0.170</td><td>&lt;.001 <span class="badge b-rev">reversed</span></td></tr>
-        <tr><td><span class="dot" style="background:#22c55e"></span>Anger</td><td>0.670</td><td>-0.755</td><td>+0.101</td><td>&lt;.001 <span class="badge b-rev">reversed</span></td></tr>
+        <tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>0.011</td><td>-0.134</td><td>-0.002</td><td>.931 <span class="badge b-ns">n.s.</span></td></tr>
+        <tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>0.078</td><td>-0.127</td><td>+0.006</td><td>.772 <span class="badge b-ns">n.s.</span></td></tr>
+        <tr><td><span class="dot" style="background:#22c55e"></span>Anger</td><td>0.181</td><td>-0.148</td><td>+0.035</td><td>.066 <span class="badge b-ns">†</span></td></tr>
       </tbody></table>
       <div class="note">Significant but all positive — emotion→commission link stronger (not weaker) among right-leaning participants.</div>
     </div>
     <div class="card"><div class="card-title">H4b: Emotion × Ideology → Protest</div>
       <table><thead><tr><th>Emotion</th><th>β emo</th><th>β ideo</th><th>β inter</th><th>p</th></tr></thead><tbody>
-        <tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>0.459</td><td>-0.357</td><td>-0.027</td><td>.405 <span class="badge b-ns">n.s.</span></td></tr>
-        <tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>0.592</td><td>-0.338</td><td>+0.001</td><td>.974 <span class="badge b-ns">n.s.</span></td></tr>
-        <tr><td><span class="dot" style="background:#22c55e"></span>Anger</td><td>0.425</td><td>+0.051</td><td>-0.058</td><td>.013 <span class="badge b-sig">✓ predicted</span></td></tr>
+        <tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>0.124</td><td>-0.072</td><td>+0.013</td><td>.519 <span class="badge b-ns">n.s.</span></td></tr>
+        <tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>0.204</td><td>-0.060</td><td>+0.015</td><td>.506 <span class="badge b-ns">n.s.</span></td></tr>
+        <tr><td><span class="dot" style="background:#22c55e"></span>Anger</td><td>0.172</td><td>-0.016</td><td>+0.004</td><td>.787 <span class="badge b-ns">n.s.</span></td></tr>
       </tbody></table>
     </div>
   </div>
@@ -421,43 +427,43 @@ tr:hover td{background:#f8f8f6}
 <div id="panel-spec" class="panel">
   <div class="insight"><strong>Reviewer point 2.2 addressed:</strong> Simultaneous-entry model with all 8 emotions (controlling W1 baseline) rules out general negative affect explanation. Anger at Netanyahu is the only BH-significant predictor for commission. Sadness exerts a significant <em>negative</em> effect on protest — distinguishing activating from deactivating negative emotions. Results cannot be explained by shared emotional valence.</div>
   <div class="card">
-    <div class="card-title">All 8 emotions simultaneously → accountability (R²=.85 commission / .68 protest)</div>
+    <div class="card-title">All 8 emotions simultaneously → accountability (R²=.847 commission / .799 behavioral composite)</div>
     <div class="chart-wrap" style="height:230px"><canvas id="specChart"></canvas></div>
     <div class="note">Filled bars = BH-FDR significant within outcome model (k=8). Error bars = 95% bootstrap BC CI for focal emotions only. Sadness negative for protest: deactivating emotion suppresses mobilization.</div>
   </div>
   <div class="grid2">
     <div class="card"><div class="card-title">Commission (BH-FDR within 8 predictors)</div>
       <table><thead><tr><th>Emotion</th><th>β</th><th>p</th><th>BH</th></tr></thead><tbody>
-        <tr class="hl"><td><span class="dot" style="background:#22c55e"></span>Anger at Netanyahu</td><td>+0.174</td><td>.001</td><td><span class="badge b-sig">✓</span></td></tr>
-        <tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>+0.111</td><td>.105</td><td><span class="badge b-ns">n.s.</span></td></tr>
-        <tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>-0.123</td><td>.102</td><td><span class="badge b-ns">n.s.</span></td></tr>
-        <tr><td>Anger at Hamas</td><td>-0.060</td><td>.301</td><td><span class="badge b-ns">n.s.</span></td></tr>
-        <tr><td>Anger at Israelis</td><td>+0.021</td><td>.504</td><td><span class="badge b-ns">n.s.</span></td></tr>
-        <tr><td>Sadness</td><td>+0.058</td><td>.275</td><td><span class="badge b-ns">n.s.</span></td></tr>
+        <tr class="hl"><td><span class="dot" style="background:#22c55e"></span>Anger at Netanyahu</td><td>+0.170</td><td>0.001</td><td><span class="badge b-sig">BH ✓</span></td></tr>
+        <tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>+0.098</td><td>0.151</td><td><span class="badge b-ns">n.s.</span></td></tr>
+        <tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>-0.111</td><td>0.144</td><td><span class="badge b-ns">n.s.</span></td></tr>
+        <tr><td>Anger at Hamas</td><td>-0.061</td><td>0.260</td><td><span class="badge b-ns">n.s.</span></td></tr>
+        <tr><td>Anger at Israelis</td><td>+0.023</td><td>0.467</td><td><span class="badge b-ns">n.s.</span></td></tr>
+        <tr><td>Sadness</td><td>+0.056</td><td>0.281</td><td><span class="badge b-ns">n.s.</span></td></tr>
       </tbody></table>
     </div>
-    <div class="card"><div class="card-title">Protest (BH-FDR within 8 predictors)</div>
+    <div class="card"><div class="card-title">Behavioral composite (BH-FDR within 8 predictors)</div>
       <table><thead><tr><th>Emotion</th><th>β</th><th>p</th><th>BH / boot</th></tr></thead><tbody>
-        <tr class="hl"><td><span class="dot" style="background:#22c55e"></span>Anger at Netanyahu</td><td>+0.092</td><td>.008</td><td><span class="badge b-sig">BH ✓</span></td></tr>
-        <tr class="hl"><td>Sadness</td><td>-0.238</td><td>.007</td><td><span class="badge b-sig">BH ✓</span></td></tr>
-        <tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>+0.176</td><td>.019</td><td><span class="badge b-bc">Boot ✓</span></td></tr>
-        <tr><td>Anger at Israelis</td><td>+0.113</td><td>.040</td><td><span class="badge b-ns">*</span></td></tr>
-        <tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>-0.001</td><td>.991</td><td><span class="badge b-ns">n.s.</span></td></tr>
-        <tr><td>Anger at Hamas</td><td>-0.031</td><td>.689</td><td><span class="badge b-ns">n.s.</span></td></tr>
+        <tr class="hl"><td><span class="dot" style="background:#f97316"></span>Regret</td><td>+0.185</td><td>0.0003</td><td><span class="badge b-sig">BH ✓</span></td></tr>
+        <tr class="hl"><td><span class="dot" style="background:#22c55e"></span>Anger at Netanyahu</td><td>+0.163</td><td>0.0000</td><td><span class="badge b-sig">BH ✓</span></td></tr>
+        <tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>-0.060</td><td>0.183</td><td><span class="badge b-ns">n.s.</span></td></tr>
+        <tr><td>Anger at Israelis</td><td>+0.073</td><td>0.052</td><td><span class="badge b-ns">†</span></td></tr>
+        <tr><td>Sadness</td><td>-0.121</td><td>0.127</td><td><span class="badge b-ns">n.s.</span></td></tr>
+        <tr><td>Anger at Hamas</td><td>+0.019</td><td>0.737</td><td><span class="badge b-ns">n.s.</span></td></tr>
       </tbody></table>
-      <div class="note">Regret: p=.019 but not BH-sig in 8-predictor family; bootstrap BC CI [.032, .314] excludes zero — report as bootstrap-supported.</div>
+      <div class="note">Regret is now BH-significant in behavioral composite model (p=0.0003, BC=[0.087,0.282]). Anger at Israelis marginal (p=0.052, n.s.). Updated from single-protest-item model to pre-registered behavioral composite.</div>
     </div>
   </div>
 </div>
 
 <!-- ═══ ◆ RESPONSIBILITY MEDIATION ═══ -->
 <div id="panel-blame" class="panel">
-  <div class="insight"><strong>Reviewer point 1.3 addressed:</strong> Exposure significantly increased responsibility attribution to Netanyahu (bibi_blame: β=+0.347, d=0.36, p=.002). Bootstrap mediation confirms both indirect paths are significant. Critically: in the joint model, bibi_blame fully absorbs the effects of all three moral emotions — suggesting it functions as a cognitive appraisal that integrates emotional evaluations into a targeted accountability attribution.</div>
+  <div class="insight"><strong>Reviewer point 1.3 addressed:</strong> Exposure significantly increased responsibility attribution to Netanyahu (bibi_blame: β=+0.226, d=0.36, p=.002). Bootstrap mediation confirms both indirect paths are significant. Critically: in the joint model, bibi_blame fully absorbs the effects of all three moral emotions — suggesting it functions as a cognitive appraisal that integrates emotional evaluations into a targeted accountability attribution.</div>
   <div class="grid2">
     <div class="card">
       <div class="card-title">Path a: Exposure → Bibi blame (ANCOVA)</div>
       <table><thead><tr><th></th><th>Exposed W2</th><th>Control W2</th><th>β</th><th>d</th><th>p</th></tr></thead><tbody>
-        <tr class="hl"><td>Bibi blame</td><td>5.43</td><td>3.49</td><td>0.347</td><td>0.36</td><td>.002</td></tr>
+        <tr class="hl"><td>Bibi blame</td><td>5.43</td><td>3.49</td><td>0.226</td><td>0.36</td><td>.002</td></tr>
       </tbody></table>
       <div class="card-title" style="margin-top:.8rem">Bootstrap indirect effects (n=5,000)</div>
       <table><thead><tr><th>Path</th><th>a×b</th><th>BC 95% CI</th><th>Sobel z</th><th>Sig?</th></tr></thead><tbody>
@@ -551,7 +557,147 @@ tr:hover td{background:#f8f8f6}
 
 
 <!-- ═══ EIRAN Q&A ═══ -->
-<div id="panel-qa" class="panel">
+<div 
+<!-- EMO ATTRITION -->
+<div id="panel-attrition" class="panel">
+  <div class="insight"><strong>Attrition Analysis.</strong> Of 577 W1 respondents (post-exclusion), 511 completed W2 (88.6% retention). 66 dropped out. This tests whether dropout was systematic on key study variables.</div>
+  <div class="card">
+    <div class="card-title">Completers vs. Dropouts on W1 characteristics</div>
+    <table>
+      <thead><tr><th>Variable</th><th>Completers (n=511)</th><th>Dropouts (n=66)</th><th>t</th><th>p</th><th>Note</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td>Age</td>
+          <td>M = 47.5 (SD = 17.3)</td>
+          <td>M = 42.0 (SD = 15.7)</td>
+          <td>2.61</td>
+          <td><strong>0.011</strong></td>
+          <td><span class="badge b-mar">Sig. — completers older (+5.4 yrs)</span></td></tr>
+        <tr><td>Political ideology</td>
+          <td>M = 4.91</td>
+          <td>M = 4.82</td>
+          <td>0.53</td>
+          <td>0.594</td>
+          <td><span class="badge b-sig">n.s. - unbiased moderator</span></td></tr>
+        <tr><td>W1 duration (sec)</td>
+          <td>622s</td>
+          <td>683s</td>
+          <td>-0.33</td>
+          <td>0.739</td>
+          <td><span class="badge b-sig">n.s.</span></td></tr>
+        <tr><td>Gender (% female)</td>
+          <td>50.9%</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+      </tbody>
+    </table>
+    <div class="note">Completers were significantly older (p = 0.011) — a standard panel survey artifact. Critically, <strong>political ideology did not differ</strong> (p = 0.594), confirming that the primary moderator is not biased by selective attrition. Study conclusions are robust.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">Final panel demographics (N = 463)</div>
+    <table>
+      <thead><tr><th>Variable</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>Age</td><td>M = 48.2, SD = 17.4, range 18&#8211;87</td></tr>
+        <tr><td>Gender</td><td>49.7% female</td></tr>
+        <tr><td>Religiosity</td><td>M = 1.91, SD = 1.25 (1&#8211;4 scale)</td></tr>
+        <tr><td>Political ideology</td><td>M = 4.90, SD = 1.36 (1=left, 7=right)</td></tr>
+        <tr><td>Exposure</td><td>No: 245 (52.9%) | Partial: 126 (27.2%) | Full: 92 (19.9%)</td></tr>
+        <tr><td>Coalition / Opposition / Unclassified</td><td>213 / 208 / 42</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- EMO WATCHING -->
+<div id="panel-emo_watch" class="panel">
+  <div style="background:#fff1f2;border:0.5px solid #fda4af;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px;color:#9f1239">
+    &#9733; <strong>Emo-watching (supplementary, exposed subsample only).</strong> 13 items rated during/after watching Uvda. Only W2 exposed participants within the N=463 panel (n=210 with complete data). Convergent validity test and predictive validity.
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">Item descriptives (n=210, scale 1&#8211;7)</div>
+      <table style="font-size:10.5px">
+        <thead><tr><th>Item</th><th>M</th><th>SD</th><th>Strongest r-correlation</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>6.07</td><td>1.20</td><td>&#8212;</td></tr>
+          <tr><td>2</td><td>6.20</td><td>1.12</td><td>&#8212;</td></tr>
+          <tr><td>3</td><td>2.75</td><td>2.09</td><td>&#8212;</td></tr>
+          <tr class="hl"><td>4</td><td>5.26</td><td>1.97</td><td>Anger: r=.843***</td></tr>
+          <tr><td>5</td><td>6.72</td><td>0.83</td><td>&#8212;</td></tr>
+          <tr class="hl"><td>6</td><td>5.06</td><td>2.05</td><td>Guilt: r=.528***</td></tr>
+          <tr class="hl"><td>7</td><td>3.85</td><td>2.08</td><td>Regret: r=.792***</td></tr>
+          <tr><td>8</td><td>2.71</td><td>2.01</td><td>Regret: r=.507***</td></tr>
+          <tr><td>9</td><td>2.69</td><td>1.84</td><td>Regret: r=.581***</td></tr>
+          <tr class="hl"><td>10</td><td>5.31</td><td>2.19</td><td>Anger: r=.777***</td></tr>
+          <tr class="hl"><td>11</td><td>5.59</td><td>1.81</td><td>Anger: r=.773***</td></tr>
+          <tr><td>12</td><td>4.94</td><td>1.88</td><td>Anger: r=.591***</td></tr>
+          <tr><td>13</td><td>6.61</td><td>0.84</td><td>&#8212;</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">Partial vs. Full exposure &#8212; significant differences</div>
+      <table style="font-size:11px">
+        <thead><tr><th>Item</th><th>M partial (n=119)</th><th>M full (n=91)</th><th>t</th><th>p</th></tr></thead>
+        <tbody><tr class="hl"><td>Item 2</td><td>5.81</td><td>6.71</td><td>-6.95</td><td>&lt;.001</td></tr>
+<tr class="hl"><td>Item 4</td><td>4.85</td><td>5.79</td><td>-3.57</td><td>&lt;.001</td></tr>
+<tr class="hl"><td>Item 5</td><td>6.60</td><td>6.88</td><td>-2.76</td><td>0.0064</td></tr>
+<tr class="hl"><td>Item 6</td><td>4.80</td><td>5.40</td><td>-2.12</td><td>0.0353</td></tr>
+<tr class="hl"><td>Item 10</td><td>4.92</td><td>5.81</td><td>-3.04</td><td>0.0027</td></tr>
+<tr class="hl"><td>Item 11</td><td>5.09</td><td>6.24</td><td>-5.06</td><td>&lt;.001</td></tr>
+<tr class="hl"><td>Item 12</td><td>4.45</td><td>5.57</td><td>-4.56</td><td>&lt;.001</td></tr>
+<tr class="hl"><td>Item 13</td><td>6.51</td><td>6.75</td><td>-2.12</td><td>0.0349</td></tr>
+</tbody>
+      </table>
+      <div class="note">Full exposure = stronger emotional reactions on 8/13 items. Consistent with H1 quadratic (concave) dose&#8211;response for guilt and regret: most change occurs at initial exposure, with partial already capturing much of the effect.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">BH-significant predictors of W2 accountability (controlling W1 outcome + W1 emotion)</div>
+    <table>
+      <thead><tr><th>Outcome</th><th>Item</th><th>&#946;</th><th>p</th></tr></thead>
+      <tbody><tr class="hl"><td>Behavioral</td><td>Item 3</td><td>+0.106</td><td>0.0040</td></tr>
+<tr class="hl"><td>Behavioral</td><td>Item 4</td><td>+0.120</td><td>0.0132</td></tr>
+<tr class="hl"><td>Behavioral</td><td>Item 7</td><td>+0.124</td><td>0.0035</td></tr>
+<tr class="hl"><td>Behavioral</td><td>Item 10</td><td>+0.124</td><td>0.0152</td></tr>
+<tr class="hl"><td>Behavioral</td><td>Item 12</td><td>+0.102</td><td>0.0133</td></tr>
+</tbody>
+    </table>
+    <div class="note">No emo_watching item significantly predicts commission support. For behavioral accountability: items 3, 4, 7, 10, 12 are BH-significant. Item 4 (in-viewing anger) and Item 7 (in-viewing regret/guilt) show the strongest theoretical convergence &#8212; they map onto the two main emotion pathways identified in H2.</div>
+  </div>
+</div>
+
+<!-- IMM -->
+<div id="panel-imm_panel" class="panel">
+  <div style="background:#fff1f2;border:0.5px solid #fda4af;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px;color:#9f1239">
+    &#9733; <strong>Index of Moderated Mediation (supplementary).</strong> Does ideology moderate the <em>indirect effect</em> of exposure on accountability through each emotion? PROCESS Model 7 logic. N=463, n_boot=5,000, seed=42.
+  </div>
+  <div class="card">
+    <div class="card-title">IMM indices &#8212; all 6 mediation paths</div>
+    <table>
+      <thead><tr><th>Path: Exposure &#8594; Emotion &#8594; Outcome</th><th>IMM index</th><th>SE</th><th>BC 95% CI</th><th>Sig</th></tr></thead>
+      <tbody><tr class=""><td><span class="dot" style="background:#3b82f6"></span>Guilt &rarr; Commission</td><td>-0.00015</td><td>0.0044</td><td>[-0.0092, 0.0086]</td><td><span class="badge b-ns">n.s.</span></td></tr>
+<tr class=""><td><span class="dot" style="background:#3b82f6"></span>Guilt &rarr; Behavioral</td><td>0.00301</td><td>0.0050</td><td>[-0.0056, 0.0144]</td><td><span class="badge b-ns">n.s.</span></td></tr>
+<tr class=""><td><span class="dot" style="background:#f97316"></span>Regret &rarr; Commission</td><td>0.00119</td><td>0.0047</td><td>[-0.0076, 0.0121]</td><td><span class="badge b-ns">n.s.</span></td></tr>
+<tr class=""><td><span class="dot" style="background:#f97316"></span>Regret &rarr; Behavioral</td><td>0.00316</td><td>0.0053</td><td>[-0.0056, 0.0163]</td><td><span class="badge b-ns">n.s.</span></td></tr>
+<tr class="hl"><td><span class="dot" style="background:#22c55e"></span>Anger &rarr; Commission</td><td>0.00514</td><td>0.0041</td><td>[0.0001, 0.0174]</td><td><span class="badge b-sig">BC &#10003;</span></td></tr>
+<tr class=""><td><span class="dot" style="background:#22c55e"></span>Anger &rarr; Behavioral</td><td>0.00056</td><td>0.0023</td><td>[-0.0031, 0.0068]</td><td><span class="badge b-ns">n.s.</span></td></tr>
+</tbody>
+    </table>
+    <div class="note">IMM = a &times; b&#8323; (indirect effect slope). A significant IMM means the mediated pathway is stronger at some ideology levels than others. Only the anger&#8594;commission path shows a BC-significant IMM &#8212; right-leaning participants show a stronger exposure&#8594;anger&#8594;commission chain. All other paths are ideologically universal.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">Theoretical implications</div>
+    <table>
+      <thead><tr><th>Pattern</th><th>Interpretation</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td>Anger&#8594;Commission IMM significant (BC)</td><td>Even the <em>indirect</em> anger-commission pathway is slightly stronger among right-leaning respondents &#8212; consistent with the bloc H2 finding. Exposure&#8594;anger&#8594;commission is not an ideologically neutral process.</td></tr>
+        <tr><td>5/6 IMMs null</td><td>The behavioral mobilization pathways (all guilt/regret/anger&#8594;behavioral) are <strong>not moderated</strong> by ideology. Exposure-driven emotional mobilization operates similarly across the political spectrum.</td></tr>
+        <tr><td>Convergence with H4</td><td>IMM null results extend the H4 corrected-model null: not only are the direct emotion&#8594;accountability effects ideology-independent, but the mediated exposure&#8594;emotion&#8594;accountability chains are too (with one exception).</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+id="panel-qa" class="panel">
   <div style="background:#f3e8ff;border:0.5px solid #c084fc;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px;color:#581c87">
     <strong>Quick reference</strong> — נתונים שעירן עשוי לשאול עליהם. כולם מאומתים ישירות מקובצי ה-CSV.
   </div>
@@ -559,7 +705,7 @@ tr:hover td{background:#f8f8f6}
   <!-- ROW 1: Sample flow + Demographics -->
   <div class="grid2">
     <div class="card">
-      <div class="card-title">זרימת המדגם — מאיפה ל-N=466</div>
+      <div class="card-title">זרימת המדגם — מאיפה ל-N=463</div>
       <table><thead><tr><th>שלב</th><th>N</th><th>הסרה</th></tr></thead><tbody>
         <tr><td>W1 גולמי</td><td>690</td><td>—</td></tr>
         <tr><td>W1 אחרי duration ≥120s + dedup</td><td>618</td><td>72</td></tr>
@@ -573,7 +719,7 @@ tr:hover td{background:#f8f8f6}
       <div class="note">סינון תאריכים (W1&gt;8/12 18:00, W2&gt;14/12 15:00): אין השפעה — כל 17 המועמדים כבר סוננו בשלבים קודמים.</div>
     </div>
     <div class="card">
-      <div class="card-title">דמוגרפיה — מדגם סופי N=466</div>
+      <div class="card-title">דמוגרפיה — מדגם סופי N=463</div>
       <table><thead><tr><th>משתנה</th><th>ערך</th></tr></thead><tbody>
         <tr><td>גיל — M (SD)</td><td>48.1 (17.3)</td></tr>
         <tr><td>גיל — טווח</td><td>18–85</td></tr>
@@ -592,11 +738,7 @@ tr:hover td{background:#f8f8f6}
   <div class="grid2">
     <div class="card">
       <div class="card-title">ניתוח נשירה — completers לעומת dropouts</div>
-      <table><thead><tr><th>משתנה</th><th>Completers (n=466)</th><th>Dropouts (n=113)</th><th>p</th></tr></thead><tbody>
-        <tr class="hl"><td>גיל</td><td>48.1</td><td>42.0</td><td>.001 **</td></tr>
-        <tr><td>אידיאולוגיה</td><td>4.89</td><td>4.89</td><td>.994 n.s.</td></tr>
-        <tr><td>% נשים</td><td>50.0%</td><td>56.6%</td><td>—</td></tr>
-      </tbody></table>
+      <!-- old attrition table removed — see Attrition panel (N=463 values) -->
       <div class="note" style="margin-top:.4rem">
         שיעור נשירה: <strong>19.5%</strong> (113 מתוך 579). הנשירה <strong>לא אקראית לחלוטין</strong> — dropouts צעירים יותר ב-6 שנים בממוצע — אבל <strong>ללא הטיה אידיאולוגית</strong> (p=.994). זה ממצא טוב: הנשירה לא מטה את חלוקת האידיאולוגיה במדגם הסופי.
       </div>
@@ -689,8 +831,116 @@ tr:hover td{background:#f8f8f6}
       <tr><td>ניתוחים סופלמנטריים</td><td>לא נרשמו</td><td>H2 by bloc, efficacy, interaction, reviewer analyses</td><td><span class="badge b-ns">exploratory — מסומן</span></td></tr>
     </tbody></table>
     <div class="note" style="margin-top:.4rem">פרה-רגיסטרציה: AsPredicted #262879. הסטייה היחידה: H2 עם שליטה ב-W1 (לא נרשם). מוצדק מתודולוגית; המודל הרשום מוצג ב-sensitivity tab לשקיפות.</div>
+    <div class="card-title" style="margin-top:.9rem">Attention check sensitivity</div>
+    <table><thead><tr><th>Sample</th><th>N</th><th>H1 anger BH-sig?</th><th>Other changes</th></tr></thead><tbody>
+      <tr class="hl"><td>Sample A: with exclusion (pre-registered)</td><td>463</td><td><span class="badge b-ns">No (p=.060)</span></td><td>—</td></tr>
+      <tr><td>Sample B: without exclusion (sensitivity)</td><td>469</td><td><span class="badge b-sig">Yes (p=.042)</span></td><td>0 other changes</td></tr>
+    </tbody></table>
+    <div class="note">39 W1 failures (6.3%). Ideology M: failures=4.92, passers=4.90 (p=.934) — <strong>not biased</strong>. Excluding failures makes anger's H1 result marginal rather than significant. Sample A is the primary pre-registered sample.</div>
   </div>
 
+</div>
+
+
+<!-- ═══ ORDINAL + SIMPLE SLOPES ═══ -->
+<div id="panel-prereg_h1" class="panel">
+  <div style="background:#f0fdf4;border:0.5px solid #86efac;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px;color:#14532d">
+    <strong>Two pre-registration corrections shown here:</strong> (1) H1 with ordinal exposure (1–3) as pre-registered, versus the binary model used in prior runs. (2) Simple slopes for H4 — note that these come from the <em>pre-registered cross-sectional model</em>; in the corrected lagged-DV model all H4 interactions are null and simple slopes are not applicable.
+  </div>
+
+  <!-- ORDINAL EXPOSURE -->
+  <div class="card">
+    <div class="card-title">H1: Ordinal exposure (pre-registered) vs. binary — comparison</div>
+    <table>
+      <thead><tr><th>Emotion</th><th>Binary β</th><th>Binary p</th><th>Ordinal β</th><th>Ordinal p</th><th>BH (ordinal)</th><th>Δβ</th></tr></thead>
+      <tbody>
+        <tr class="scan-sig"><td><span class="dot" style="background:#3b82f6"></span>Guilt</td>
+          <td style="color:#94a3b8">0.487</td><td style="color:#94a3b8">&lt;.001</td>
+          <td><strong>0.242</strong></td><td>.004</td><td><span class="badge b-sig">✓</span></td><td>−0.245</td></tr>
+        <tr class="scan-sig"><td><span class="dot" style="background:#f97316"></span>Regret</td>
+          <td style="color:#94a3b8">0.490</td><td style="color:#94a3b8">&lt;.001</td>
+          <td><strong>0.229</strong></td><td>.011</td><td><span class="badge b-sig">✓</span></td><td>−0.261</td></tr>
+        <tr><td><span class="dot" style="background:#22c55e"></span>Anger</td>
+          <td style="color:#94a3b8">0.200</td><td style="color:#94a3b8">.105</td>
+          <td><strong>0.148</strong></td><td>.060</td><td><span class="badge b-ns">n.s.</span></td><td>−0.052</td></tr>
+      </tbody>
+    </table>
+    <div class="note">Grey values = binary model (used in prior analyses). Black = ordinal (pre-registered). The ordinal model is more conservative — binary inflated betas by treating partial and full exposure identically. Substantive conclusions unchanged: guilt and regret BH-significant, anger marginal.</div>
+  </div>
+
+  <!-- NONLINEARITY -->
+  <div class="card">
+    <div class="card-title">Dose-response: quadratic test (exposure² term)</div>
+    <table>
+      <thead><tr><th>Emotion</th><th>β_linear</th><th>β_quadratic</th><th>p (quadratic)</th><th>Nonlinear?</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>1.663</td><td>−0.368</td><td>.010</td>
+          <td><span class="badge b-mar">✓ concave</span></td></tr>
+        <tr class="hl"><td><span class="dot" style="background:#f97316"></span>Regret</td><td>1.590</td><td>−0.408</td><td>.006</td>
+          <td><span class="badge b-mar">✓ concave</span></td></tr>
+        <tr><td><span class="dot" style="background:#22c55e"></span>Anger</td><td>0.561</td><td>+0.012</td><td>.917</td>
+          <td><span class="badge b-ns">linear</span></td></tr>
+      </tbody>
+    </table>
+    <div class="note">Negative quadratic for guilt and regret (p=.010 / .006): diminishing returns. Most of the emotional increase occurs between no-exposure and partial exposure; additional full exposure adds relatively little. Interpretation: even brief exposure to the Uvda broadcast may suffice to activate moral emotions. Anger: strictly linear (or absent) dose-response.</div>
+  </div>
+
+  <!-- SIMPLE SLOPES -->
+  <div class="card">
+    <div class="card-title">Simple slopes for H4 — <span style="color:#92400e">pre-registered cross-sectional model only</span></div>
+    <div style="background:#fef3f2;border:0.5px solid #fca5a5;border-radius:6px;padding:.5rem .7rem;margin-bottom:.7rem;font-size:11px;color:#7f1d1d">
+      ⚠ These slopes are from the <strong>pre-registered H4 model</strong> (W2_outcome ~ emo × ideology, no W1 control). In the <strong>corrected model</strong> (with W1 baseline), all H4 interactions are null — simple slopes are therefore not applicable to the primary results. These slopes are reported for transparency per the pre-registration protocol.
+    </div>
+
+    <div class="grid2">
+      <div>
+        <div class="card-title" style="font-size:11px">→ Commission of inquiry</div>
+        <table style="font-size:10.5px">
+          <thead><tr><th>Emotion</th><th>Low ideo (3.5)</th><th>Mean (4.9)</th><th>High ideo (6.3)</th><th>Interaction p</th></tr></thead>
+          <tbody>
+            <tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td>
+              <td>+0.124*</td><td>+0.294**</td><td>+0.465**</td>
+              <td><span class="badge b-mar">p&lt;.001</span></td></tr>
+            <tr><td><span class="dot" style="background:#f97316"></span>Regret</td>
+              <td>+0.156**</td><td>+0.403**</td><td>+0.651**</td>
+              <td><span class="badge b-mar">p&lt;.001</span></td></tr>
+            <tr><td><span class="dot" style="background:#22c55e"></span>Anger</td>
+              <td>+0.493**</td><td>+0.654**</td><td>+0.815**</td>
+              <td><span class="badge b-mar">p&lt;.001</span></td></tr>
+          </tbody>
+        </table>
+        <div class="note">Positive interaction: emotion→commission stronger at higher (right-leaning) ideology. Opposite of H4 prediction — but this entire pattern disappears when W1 baseline is controlled.</div>
+      </div>
+      <div>
+        <div class="card-title" style="font-size:11px">→ Behavioral (pre-reg model: protest single-item)</div>
+        <table style="font-size:10.5px">
+          <thead><tr><th>Emotion</th><th>Low ideo (3.5)</th><th>Mean (4.9)</th><th>High ideo (6.3)</th><th>Interaction p</th></tr></thead>
+          <tbody>
+            <tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td>
+              <td>+0.497**</td><td>+0.468**</td><td>+0.439**</td>
+              <td><span class="badge b-ns">p=.515 n.s.</span></td></tr>
+            <tr><td><span class="dot" style="background:#f97316"></span>Regret</td>
+              <td>+0.587**</td><td>+0.596**</td><td>+0.605**</td>
+              <td><span class="badge b-ns">p=.856 n.s.</span></td></tr>
+            <tr class="hl"><td><span class="dot" style="background:#22c55e"></span>Anger</td>
+              <td>+0.499**</td><td>+0.429**</td><td>+0.359**</td>
+              <td><span class="badge b-mar">p=.037*</span></td></tr>
+          </tbody>
+        </table>
+        <div class="note">Only anger shows significant interaction for protest (negative — predicted direction). Slopes decrease monotonically with ideology: anger→protest weaker among right-leaning. This one interaction survives even in corrected model direction, though the corrected p=.787.</div>
+      </div>
+    </div>
+
+    <div class="card-title" style="margin-top:.8rem">Summary: what changed between pre-registered and corrected H4</div>
+    <table>
+      <thead><tr><th>Model</th><th>Commission interactions</th><th>Behavioral interaction (anger)</th></tr></thead>
+      <tbody>
+        <tr><td>Pre-registered (cross-sectional)</td><td><span class="badge b-mar">3/3 significant — but reversed direction</span></td><td><span class="badge b-sig">1/3 significant — predicted direction</span></td></tr>
+        <tr class="hl"><td>Corrected (lagged-DV, W1 controlled)</td><td><span class="badge b-ns">0/3 significant</span></td><td><span class="badge b-ns">0/3 significant</span></td></tr>
+      </tbody>
+    </table>
+    <div class="note">The entire H4 pattern — both the "reversed" commission effects and the anger×ideology protest interaction — is eliminated when pre-existing W1 accountability baselines are controlled. This is the strongest evidence that H4 reflects pre-existing attitudinal configurations, not the dynamic moderation process hypothesized.</div>
+  </div>
 </div>
 
 <!-- ═══ SUMMARY ═══ -->
@@ -699,7 +949,7 @@ tr:hover td{background:#f8f8f6}
     <div class="verdict v-par"><strong>H1 — Partial support.</strong> Guilt (d=0.39) and Regret (d=0.37) BH-significant. Anger p=.073, not surviving FDR — large pre-existing gap absorbed by ANCOVA.</div>
     <div class="verdict v-par"><strong>H2 — Partial support.</strong> 5/6 paths BH-significant. Guilt does not predict commission. Full picture requires bloc stratification (see ★ H2 by bloc).</div>
     <div class="verdict v-rej"><strong>H3 — Not supported.</strong> No Exposure × Ideology interactions. Emotional impact consistent across ideology.</div>
-    <div class="verdict v-rev"><strong>H4 — Not supported (preregistered direction).</strong> Commission interactions significant but all positive (reversed). One protest interaction in predicted direction (Anger×Ideology, p=.013).</div>
+    <div class="verdict v-rev"><strong>H4 — Not supported (preregistered direction).</strong> No significant interactions for either outcome (all p>.07). Previous "reversed" H4 was an artifact of omitting W1 baseline covariate.</div>
   </div>
   <div class="card"><div class="card-title">Key supplementary findings</div>
     <table><thead><tr><th>Finding</th><th>Status</th><th>Relevance</th></tr></thead><tbody>
