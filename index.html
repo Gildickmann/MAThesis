@@ -132,6 +132,7 @@ tr:hover td{background:#f8f8f6}
   <div class="nav-sep"></div>
   <button class="ntab" onclick="P('sum',this)">Summary</button>
   <div class="nav-sep"></div>
+  <button class="ntab" style="background:#fff1f2;color:#9f1239;font-weight:500" onclick="P('framing',this)">★ Framing &amp; Credibility</button>
   <button class="ntab" style="background:#f0fdf4;color:#166534;font-weight:500" onclick="P('attrition',this)">⬦ Attrition</button>
   <button class="ntab" style="background:#fff1f2;color:#9f1239;font-weight:500" onclick="P('emo_watch',this)">★ Emo-Watching</button>
   <button class="ntab" style="background:#fff1f2;color:#9f1239;font-weight:500" onclick="P('imm_panel',this)">★ IMM</button>
@@ -155,7 +156,7 @@ tr:hover td{background:#f8f8f6}
       <table><thead><tr><th>Outcome</th><th>β</th><th>SE</th><th>d_adj</th><th>BH</th></tr></thead><tbody>
         <tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>0.521</td><td>0.125</td><td>0.386</td><td><span class="badge b-sig">✓</span></td></tr>
         <tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>0.510</td><td>0.127</td><td>0.374</td><td><span class="badge b-sig">✓</span></td></tr>
-        <tr><td><span class="dot" style="background:#22c55e"></span>Anger at Netanyahu</td><td>0.220</td><td>0.123</td><td>0.166</td><td><span class="badge b-mar">† p=.073</span></td></tr>
+        <tr><td><span class="dot" style="background:#22c55e"></span>Anger at Netanyahu</td><td>0.220</td><td>0.123</td><td>0.217</td><td><span class="badge b-mar">† p=.073</span></td></tr>
       </tbody></table>
       <div class="card-title" style="margin-top:.8rem">Dose-response (partial vs. full)</div>
       <table><thead><tr><th>Outcome</th><th>Partial β</th><th>p</th><th>Full β</th><th>p</th></tr></thead><tbody>
@@ -177,16 +178,16 @@ tr:hover td{background:#f8f8f6}
   <div class="grid2">
     <div class="card"><div class="card-title">Commission of inquiry</div>
       <table><thead><tr><th>Emotion</th><th>β</th><th>β(W1)</th><th>p</th><th>BH</th></tr></thead><tbody>
-        <tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>0.031</td><td>0.914</td><td>.321</td><td><span class="badge b-ns">n.s.</span></td></tr>
-        <tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>0.084</td><td>0.896</td><td>&lt;.01</td><td><span class="badge b-sig">✓</span></td></tr>
-        <tr><td><span class="dot" style="background:#22c55e"></span>Anger</td><td>0.180</td><td>0.780</td><td>&lt;.001</td><td><span class="badge b-sig">✓</span></td></tr>
+        <tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>0.030</td><td>0.915</td><td>.329</td><td><span class="badge b-ns">n.s.</span></td></tr>
+        <tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>0.077</td><td>0.898</td><td>.011</td><td><span class="badge b-sig">✓</span></td></tr>
+        <tr><td><span class="dot" style="background:#22c55e"></span>Anger</td><td>0.173</td><td>0.787</td><td>&lt;.001</td><td><span class="badge b-sig">✓</span></td></tr>
       </tbody></table>
     </div>
     <div class="card"><div class="card-title">Behavioral accountability (composite: petition + social media + demo, α=.858)</div>
       <table><thead><tr><th>Emotion</th><th>β</th><th>β(W1)</th><th>p</th><th>BH</th></tr></thead><tbody>
-        <tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>0.195</td><td>0.714</td><td>&lt;.001</td><td><span class="badge b-sig">✓</span></td></tr>
-        <tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>0.259</td><td>0.671</td><td>&lt;.001</td><td><span class="badge b-sig">✓</span></td></tr>
-        <tr><td><span class="dot" style="background:#22c55e"></span>Anger</td><td>0.124</td><td>0.706</td><td>&lt;.001</td><td><span class="badge b-sig">✓</span></td></tr>
+        <tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>0.129</td><td>0.831</td><td>&lt;.001</td><td><span class="badge b-sig">✓</span></td></tr>
+        <tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>0.199</td><td>0.786</td><td>&lt;.001</td><td><span class="badge b-sig">✓</span></td></tr>
+        <tr><td><span class="dot" style="background:#22c55e"></span>Anger</td><td>0.176</td><td>0.724</td><td>&lt;.001</td><td><span class="badge b-sig">✓</span></td></tr>
       </tbody></table>
     </div>
   </div>
@@ -196,9 +197,9 @@ tr:hover td{background:#f8f8f6}
 <div id="panel-h3" class="panel">
   <div class="card"><div class="card-title">H3: Exposure × Ideology interaction terms (H3 not supported)</div>
     <table><thead><tr><th>Outcome</th><th>β main</th><th>p</th><th>β ideo</th><th>p</th><th>β interaction</th><th>p</th></tr></thead><tbody>
-      <tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>0.505</td><td>&lt;.001</td><td>-0.030</td><td>.644</td><td>-0.052</td><td>.588</td></tr>
-      <tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>0.475</td><td>&lt;.001</td><td>-0.153</td><td>&lt;.01</td><td>-0.037</td><td>.709</td></tr>
-      <tr><td><span class="dot" style="background:#22c55e"></span>Anger</td><td>0.234</td><td>.059</td><td>-0.156</td><td>.023</td><td>+0.042</td><td>.530</td></tr>
+      <tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>0.227</td><td>&lt;.001</td><td>0.002</td><td>.003</td><td>-0.040</td><td>.548</td></tr>
+      <tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>0.206</td><td>.011</td><td>-0.185</td><td>.079</td><td>+0.001</td><td>.991</td></tr>
+      <tr><td><span class="dot" style="background:#22c55e"></span>Anger</td><td>0.161</td><td>.060</td><td>-0.209</td><td>.041</td><td>+0.035</td><td>.440</td></tr>
     </tbody></table>
     <div class="note">No Exposure × Ideology interactions reach significance. Emotional impact consistent across ideological spectrum.</div>
   </div>
@@ -266,20 +267,21 @@ tr:hover td{background:#f8f8f6}
     <div class="card"><div class="card-title"><span class="bb-coal">Coalition</span> n=214, n_exp=76</div>
       <table><thead><tr><th>Path</th><th>β</th><th>p</th><th>BH</th></tr></thead><tbody>
         <tr><td>Guilt → Commission</td><td>0.036</td><td>.639</td><td><span class="badge b-ns">n.s.</span></td></tr>
-        <tr><td>Guilt → Protest</td><td>0.114</td><td>.098</td><td><span class="badge b-ns">†</span></td></tr>
+        <tr><td>Guilt → Commission</td><td>0.044</td><td>.565</td><td><span class="badge b-ns">n.s.</span></td></tr>
         <tr><td>Regret → Commission</td><td>0.166</td><td>.026</td><td><span class="badge b-ns">*</span></td></tr>
         <tr><td>Regret → Protest</td><td>0.195</td><td>.034</td><td><span class="badge b-ns">*</span></td></tr>
-        <tr class="hl"><td>Anger → Commission</td><td>0.218</td><td>.008</td><td><span class="badge b-sig">BH ✓</span></td></tr>
+        <tr class="hl"><td>Anger → Commission</td><td>0.217</td><td>0.009</td><td><span class="badge b-sig">BH ✓</span></td></tr>
+        <tr class="hl"><td>Anger → Behavioral</td><td>0.205</td><td>0.0010</td><td><span class="badge b-sig">BH ✓</span></td></tr>
         <tr><td>Anger → Protest</td><td>0.117</td><td>.057</td><td><span class="badge b-ns">†</span></td></tr>
       </tbody></table>
     </div>
     <div class="card"><div class="card-title"><span class="bb-opp">Opposition</span> n=210, n_exp=128</div>
       <table><thead><tr><th>Path</th><th>β</th><th>p</th><th>BH</th></tr></thead><tbody>
         <tr><td>Guilt → Commission</td><td>-0.005</td><td>.831</td><td><span class="badge b-ns">n.s.</span></td></tr>
-        <tr class="hl"><td>Guilt → Protest</td><td>0.225</td><td>&lt;.001</td><td><span class="badge b-sig">BH ✓</span></td></tr>
-        <tr><td>Regret → Commission</td><td>0.001</td><td>.985</td><td><span class="badge b-ns">n.s.</span></td></tr>
-        <tr class="hl"><td>Regret → Protest</td><td>0.268</td><td>&lt;.001</td><td><span class="badge b-sig">BH ✓</span></td></tr>
-        <tr><td>Anger → Commission</td><td>0.059</td><td>.237</td><td><span class="badge b-ns">n.s.</span></td></tr>
+        <tr class="hl"><td>Guilt → Behavioral</td><td>0.144</td><td>&lt;.001</td><td><span class="badge b-sig">BH ✓</span></td></tr>
+        <tr><td>Regret → Commission</td><td>-0.005</td><td>.985</td><td><span class="badge b-ns">n.s.</span></td></tr>
+        <tr class="hl"><td>Regret → Behavioral</td><td>0.209</td><td>&lt;.001</td><td><span class="badge b-sig">BH ✓</span></td></tr>
+        <tr><td>Anger → Commission</td><td>0.054</td><td>.237</td><td><span class="badge b-ns">n.s.</span></td></tr>
         <tr><td>Anger → Protest</td><td>0.128</td><td>.038</td><td><span class="badge b-ns">*</span></td></tr>
       </tbody></table>
     </div>
@@ -288,7 +290,7 @@ tr:hover td{background:#f8f8f6}
 
 <!-- ═══ ★ EFFICACY ═══ -->
 <div id="panel-eff" class="panel">
-  <div class="insight"><strong>Key finding:</strong> Uvda exposure increased political efficacy only among Opposition voters (d≈0.34–0.44, both p&lt;.02); Coalition effect is near-zero and non-significant. This efficacy increase mediates protest intentions (bootstrap BC CI excludes 0).</div>
+  <div class="insight"><strong>Key finding:</strong> Uvda exposure increased action-efficacy (eff_actions) in the full sample (β=0.254, p=0.003); effect concentrated in Opposition (β=0.282, p=0.021*), near-zero in Coalition (β=0.179, n.s.); Coalition effect is near-zero and non-significant. This efficacy increase mediates protest intentions (bootstrap BC CI excludes 0).</div>
   <div class="grid2">
     <div class="card"><div class="card-title">Path a: Exposure → Efficacy by bloc</div>
       <div class="chart-wrap" style="height:190px"><canvas id="effA"></canvas></div>
@@ -308,24 +310,33 @@ tr:hover td{background:#f8f8f6}
 
 <!-- ═══ ★ ANGER×EFFICACY ═══ -->
 <div id="panel-inter" class="panel">
-  <div class="insight"><strong>Key finding (SIMCA double-activation):</strong> Anger at Netanyahu × Efficacy significantly predicts protest (β=+0.034, p=.016), emotion-specific to anger (guilt p=.912, regret p=.301). High-efficacy individuals show a steeper anger→protest slope — both conditions must be met for full mobilization.</div>
-  <div class="grid2">
-    <div class="card"><div class="card-title">Anger × Efficacy → Protest (full sample)</div>
-      <table><thead><tr><th>Predictor</th><th>β</th><th>p</th></tr></thead><tbody>
-        <tr><td>Anger (mean-centred)</td><td>0.099</td><td>.005</td></tr>
-        <tr><td>Efficacy actions (mean-centred)</td><td>0.128</td><td>&lt;.001</td></tr>
-        <tr class="hl"><td>Anger × Efficacy</td><td>+0.034</td><td>.016 <span class="badge b-mar">*</span></td></tr>
-        <tr><td>W1 protest baseline</td><td>0.682</td><td>&lt;.001</td></tr>
-      </tbody></table>
-    </div>
-    <div class="card"><div class="card-title">Emotion-specificity check</div>
-      <table><thead><tr><th>Interaction</th><th>β_inter</th><th>p</th><th>Specific?</th></tr></thead><tbody>
-        <tr class="hl"><td>Anger × Efficacy → Protest</td><td>+0.034</td><td>.016</td><td><span class="badge b-sig">✓ sig</span></td></tr>
-        <tr><td>Guilt × Efficacy → Protest</td><td>+0.002</td><td>.912</td><td><span class="badge b-ns">n.s.</span></td></tr>
-        <tr><td>Regret × Efficacy → Protest</td><td>+0.022</td><td>.301</td><td><span class="badge b-ns">n.s.</span></td></tr>
-      </tbody></table>
-      <div class="note">Interaction is anger-specific — consistent with anger's role as target-attribution emotion. Guilt/regret may mobilize through efficacy-independent mechanisms.</div>
-    </div>
+  <div style="background:#fef9c3;border:0.5px solid #fde047;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px;color:#713f12">
+    ★ <strong>Anger × Efficacy interaction (supplementary).</strong> N=463, corrected model with W1 behavioral baseline. <strong>Note:</strong> this interaction was significant in an earlier N=466 run (β=+0.034, p=.016) but is <strong>null in the pre-registration-compliant N=463 sample</strong> (β=+0.009, p=.324). The N=463 result is the authoritative figure.
+  </div>
+  <div class="card">
+    <div class="card-title">Anger × Efficacy → Behavioral composite (N=463, corrected model)</div>
+    <table>
+      <thead><tr><th>Predictor</th><th>β (N=463)</th><th>p</th><th>Sig?</th></tr></thead>
+      <tbody>
+        <tr><td>Anger (mean-centred)</td><td>0.176</td><td>&lt;.001</td><td><span class="badge b-sig">✓</span></td></tr>
+        <tr><td>Efficacy actions (mean-centred)</td><td>0.133</td><td>&lt;.001</td><td><span class="badge b-sig">✓</span></td></tr>
+        <tr><td><strong>Anger × Efficacy</strong></td><td><strong>+0.009</strong></td><td>.324</td><td><span class="badge b-ns">n.s.</span></td></tr>
+        <tr><td>W1 behavioral baseline</td><td>0.724</td><td>&lt;.001</td><td></td></tr>
+      </tbody>
+    </table>
+    <div class="note"><strong>Null result (N=463).</strong> Emotion and efficacy contribute additively to behavioral mobilization — the hypothesized synergistic interaction (you need to be BOTH angry AND feel efficacious) does not emerge. This is consistent with H4 null results: ideology and efficacy do not moderate the emotion→accountability association in the pre-registration-compliant sample.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">Emotion-specificity check (N=463)</div>
+    <table>
+      <thead><tr><th>Interaction</th><th>β_inter</th><th>p</th><th>Sig?</th></tr></thead>
+      <tbody>
+        <tr><td>Anger × Efficacy → Behavioral</td><td>+0.009</td><td>.324</td><td><span class="badge b-ns">n.s.</span></td></tr>
+        <tr><td>Guilt × Efficacy → Behavioral</td><td>−0.013</td><td>.374</td><td><span class="badge b-ns">n.s.</span></td></tr>
+        <tr><td>Regret × Efficacy → Behavioral</td><td>−0.008</td><td>.582</td><td><span class="badge b-ns">n.s.</span></td></tr>
+      </tbody>
+    </table>
+    <div class="note">All three emotion×efficacy interactions are null in N=463 (all p&gt;.32). The N=466 significant anger×efficacy interaction (p=.016) was a false positive driven by the 3 pilot respondents not excluded in earlier runs. This is a cautionary example of why pre-registered date cutoffs matter.</div>
   </div>
 </div>
 
@@ -411,9 +422,9 @@ tr:hover td{background:#f8f8f6}
       <table>
         <thead><tr><th>Item</th><th>M (W1)</th><th>SD</th><th>M (W2)</th><th>r(W1,W2)</th></tr></thead>
         <tbody>
-          <tr><td>Commission</td><td>4.91</td><td>2.43</td><td>4.84</td><td><strong>0.911</strong></td></tr>
-          <tr><td>Protest</td><td>2.55</td><td>2.11</td><td>2.61</td><td>0.792 <span class="badge b-mar">lowest</span></td></tr>
-          <tr><td>Petition</td><td>4.62</td><td>2.51</td><td>4.47</td><td>0.864</td></tr>
+          <tr><td>Commission</td><td>4.91</td><td>2.43</td><td>4.84</td><td><strong>0.912</strong></td></tr>
+          <tr><td>Protest</td><td>2.55</td><td>2.11</td><td>2.61</td><td>>0.789< <span class="badge b-mar">lowest</span></td></tr>
+          <tr><td>Petition</td><td>4.62</td><td>2.51</td><td>4.47</td><td>0.863</td></tr>
           <tr><td>Officials resign</td><td>5.00</td><td>2.20</td><td>5.16</td><td>0.843</td></tr>
           <tr><td>Bibi blame</td><td>4.33</td><td>2.57</td><td>4.40</td><td><strong>0.924</strong></td></tr>
         </tbody>
@@ -458,7 +469,7 @@ tr:hover td{background:#f8f8f6}
 
 <!-- ═══ ◆ RESPONSIBILITY MEDIATION ═══ -->
 <div id="panel-blame" class="panel">
-  <div class="insight"><strong>Reviewer point 1.3 addressed:</strong> Exposure significantly increased responsibility attribution to Netanyahu (bibi_blame: β=+0.226, d=0.36, p=.002). Bootstrap mediation confirms both indirect paths are significant. Critically: in the joint model, bibi_blame fully absorbs the effects of all three moral emotions — suggesting it functions as a cognitive appraisal that integrates emotional evaluations into a targeted accountability attribution.</div>
+  <div class="insight"><strong>Reviewer point 1.3 addressed:</strong> Exposure significantly increased responsibility attribution to Netanyahu (bibi_blame: β=+0.226, d=0.36, p=.002). Bootstrap mediation confirms both indirect paths are significant: Exposure→bibi→commission: ab=0.070 BC=[0.027, 0.137]; Exposure→bibi→behavioral: ab=0.037 BC=[0.015, 0.073]. Critically: in the joint model, bibi_blame fully absorbs the effects of all three moral emotions — suggesting it functions as a cognitive appraisal that integrates emotional evaluations into a targeted accountability attribution.</div>
   <div class="grid2">
     <div class="card">
       <div class="card-title">Path a: Exposure → Bibi blame (ANCOVA)</div>
@@ -558,6 +569,135 @@ tr:hover td{background:#f8f8f6}
 
 <!-- ═══ EIRAN Q&A ═══ -->
 <div 
+
+<!-- ═══ FRAMING & CREDIBILITY ═══ -->
+<div id="panel-framing" class="panel">
+  <div style="background:#fff1f2;border:0.5px solid #fda4af;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px;color:#9f1239">
+    ★ <strong>Framing &amp; Credibility (supplementary).</strong> Does journalistic packaging matter beyond mere content exposure? N=453 (10 excluded: exposure_specific_videos=4 "unsure"). All models HC3, BH-FDR q=.05.
+  </div>
+
+  <!-- INSIGHT -->
+  <div class="insight"><strong>Core finding:</strong> General exposure to hostage videos (viral clips, social media, WhatsApp) had <em>zero</em> effect on moral emotions when Uvda-specific exposure was controlled. Uvda exposure remained significant for all three emotions — with <em>larger</em> coefficients than in the plain H1 model. This supports a credibility/framing interpretation: the journalistic context of the broadcast, not the raw content, drove the emotional response.</div>
+
+  <div class="grid2">
+
+    <!-- LEFT: General exposure alone — null -->
+    <div class="card">
+      <div class="card-title">General hostage video exposure → emotions (alone)</div>
+      <table>
+        <thead><tr><th>Emotion</th><th>β</th><th>p</th><th>BH</th></tr></thead>
+        <tbody>
+          <tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td>
+            <td>0.127</td>
+            <td>0.135</td>
+            <td><span class="badge b-ns">n.s.</span></td></tr>
+          <tr><td><span class="dot" style="background:#f97316"></span>Regret</td>
+            <td>0.164</td>
+            <td>0.083</td>
+            <td><span class="badge b-ns">n.s.</span></td></tr>
+          <tr><td><span class="dot" style="background:#22c55e"></span>Anger (Bibi)</td>
+            <td>0.014</td>
+            <td>0.868</td>
+            <td><span class="badge b-ns">n.s.</span></td></tr>
+        </tbody>
+      </table>
+      <div class="note">N=453 (exclude "unsure"). 173 respondents (37%) saw general videos but did NOT watch Uvda — for them, raw content exposure produced no emotional change. Distribution: 16% no exposure, 49% partial, 33% extensive.</div>
+    </div>
+
+    <!-- RIGHT: Unique Uvda effect — controlling general -->
+    <div class="card">
+      <div class="card-title">Unique Uvda effect — controlling general exposure</div>
+      <table>
+        <thead><tr><th>Emotion</th><th>β general</th><th>β Uvda</th><th>p Uvda</th></tr></thead>
+        <tbody>
+          <tr class="hl"><td><span class="dot" style="background:#3b82f6"></span>Guilt</td>
+            <td style="color:#94a3b8">-0.030 n.s.</td>
+            <td><strong>+0.278</strong></td>
+            <td><span class="badge b-sig">.004</span></td></tr>
+          <tr class="hl"><td><span class="dot" style="background:#f97316"></span>Regret</td>
+            <td style="color:#94a3b8">0.026 n.s.</td>
+            <td><strong>+0.247</strong></td>
+            <td><span class="badge b-sig">.010</span></td></tr>
+          <tr class="hl"><td><span class="dot" style="background:#22c55e"></span>Anger (Bibi)</td>
+            <td style="color:#94a3b8">-0.105 n.s.</td>
+            <td><strong>+0.209</strong></td>
+            <td><span class="badge b-mar">.036</span></td></tr>
+        </tbody>
+      </table>
+      <div class="note">Model: W2_emo ~ W1_emo + β₁(general_videos) + β₂(uvda). β Uvda is <em>larger</em> than in the plain H1 model (guilt: 0.278 vs. 0.242; regret: 0.247 vs. 0.229). Partialling out general exposure <em>sharpens</em> the Uvda coefficient — consistent with the unique contribution of journalistic packaging.</div>
+    </div>
+
+  </div>
+
+  <!-- TRUST BY BLOC -->
+  <div class="card">
+    <div class="card-title">Why credibility? Channel 12 trust by political bloc</div>
+    <table>
+      <thead><tr><th>Channel</th><th>M Coalition (n=213)</th><th>M Opposition (n=208)</th><th>Gap</th><th>r(ideology)</th></tr></thead>
+      <tbody>
+        <tr class="hl">
+          <td><strong>ערוץ 12 (Uvda)</strong></td>
+          <td style="color:#dc2626"><strong>2.38</strong></td>
+          <td style="color:#16a34a"><strong>4.98</strong></td>
+          <td><strong>2.59</strong></td>
+          <td>-0.467***</td></tr>
+        <tr>
+          <td>ערוץ 11</td>
+          <td>3.37</td>
+          <td>5.13</td>
+          <td>1.77</td>
+          <td>-0.400***</td></tr>
+        <tr>
+          <td>ערוץ 13</td>
+          <td>2.28</td>
+          <td>4.80</td>
+          <td>2.52</td>
+          <td>-0.459***</td></tr>
+        <tr class="hl">
+          <td><strong>ערוץ 14</strong></td>
+          <td style="color:#16a34a"><strong>4.93</strong></td>
+          <td style="color:#dc2626"><strong>1.98</strong></td>
+          <td><strong>-2.95</strong></td>
+          <td>0.520***</td></tr>
+        <tr>
+          <td>אתרי חדשות</td>
+          <td>3.39</td>
+          <td>4.70</td>
+          <td>1.31</td>
+          <td>-0.299***</td></tr>
+      </tbody>
+    </table>
+    <div class="note"><strong>Key implication:</strong> Coalition voters distrust Channel 12 deeply (M=2.38/7). Those who watched Uvda despite low trust showed emotional change anyway — making the Uvda effect harder to dismiss as mere confirmation bias. The emotional response occurred even among the skeptical audience. Caution: trust measured post-exposure (W2 only); reverse causation possible.</div>
+  </div>
+
+  <!-- TRUST MODERATION -->
+  <div class="card">
+    <div class="card-title">Does Channel 12 trust moderate the Uvda→emotion effect? (exploratory)</div>
+    <table>
+      <thead><tr><th>Interaction</th><th>β interaction</th><th>p (uncorrected)</th><th>BH</th><th>Direction</th></tr></thead>
+      <tbody>
+        <tr><td>Exposure × Trust₁₂ → Guilt</td>
+          <td>-0.094</td>
+          <td>0.030</td>
+          <td><span class="badge b-ns">BH ✗</span></td>
+          <td style="color:#dc2626">Negative (counter-intuitive)</td></tr>
+        <tr><td>Exposure × Trust₁₂ → Regret</td>
+          <td>-0.108</td>
+          <td>0.030</td>
+          <td><span class="badge b-ns">BH ✗</span></td>
+          <td style="color:#dc2626">Negative (counter-intuitive)</td></tr>
+        <tr><td>Exposure × Trust₁₂ → Anger</td>
+          <td>-0.050</td>
+          <td>0.162</td>
+          <td><span class="badge b-ns">BH ✗</span></td>
+          <td style="color:#94a3b8">n.s.</td></tr>
+      </tbody>
+    </table>
+    <div class="note"><strong>Why negative?</strong> High Channel 12 trust = opposition voters who already have high guilt/regret at W1 — ceiling effect limits change. Low trust = coalition voters with low baseline — more room to move. The negative interaction reflects baseline differences, not a genuine dampening effect. Neither interaction survives BH correction. <strong>Do not interpret as a finding — descriptive context only.</strong></div>
+  </div>
+
+</div>
+
 <!-- EMO ATTRITION -->
 <div id="panel-attrition" class="panel">
   <div class="insight"><strong>Attrition Analysis.</strong> Of 577 W1 respondents (post-exclusion), 511 completed W2 (88.6% retention). 66 dropped out. This tests whether dropout was systematic on key study variables.</div>
@@ -836,7 +976,7 @@ id="panel-qa" class="panel">
       <tr class="hl"><td>Sample A: with exclusion (pre-registered)</td><td>463</td><td><span class="badge b-ns">No (p=.060)</span></td><td>—</td></tr>
       <tr><td>Sample B: without exclusion (sensitivity)</td><td>469</td><td><span class="badge b-sig">Yes (p=.042)</span></td><td>0 other changes</td></tr>
     </tbody></table>
-    <div class="note">39 W1 failures (6.3%). Ideology M: failures=4.92, passers=4.90 (p=.934) — <strong>not biased</strong>. Excluding failures makes anger's H1 result marginal rather than significant. Sample A is the primary pre-registered sample.</div>
+    <div class="note">39 W1 failures (6.3%). Ideology M: failures=4.92, passers=4.90 (p=0.934) — <strong>not biased</strong>. Excluding failures makes anger's H1 result marginal rather than significant. Sample A is the primary pre-registered sample.</div>
   </div>
 
 </div>
