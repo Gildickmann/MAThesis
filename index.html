@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -52,6 +53,10 @@ tr.scan-sig td{background:#fefce8}
   <button class="ntab" style="background:#fff1f2;color:#9f1239;font-weight:500" onclick="P('eff',this)">★ Efficacy</button>
   <button class="ntab" style="background:#fff1f2;color:#9f1239;font-weight:500" onclick="P('inter',this)">★ IMM (detailed)</button>
   <button class="ntab" style="background:#fff1f2;color:#9f1239;font-weight:500" onclick="P('add',this)">★ H1 by Bloc</button>
+  <button class="ntab" style="background:#fff1f2;color:#9f1239;font-weight:500" onclick="P('bloc_new',this)">★ New Items by Bloc</button>
+  <button class="ntab" style="background:#fff1f2;color:#9f1239;font-weight:500" onclick="P('ideo_thirds',this)">★ Ideology Thirds</button>
+  <button class="ntab" style="background:#fff1f2;color:#9f1239;font-weight:500" onclick="P('bloc_new',this)">★ New Items by Bloc</button>
+  <button class="ntab" style="background:#fff1f2;color:#9f1239;font-weight:500" onclick="P('ideo_thirds',this)">★ Ideology Thirds</button>
   <button class="ntab" style="background:#fff1f2;color:#9f1239;font-weight:500" onclick="P('beh_items',this)">★ Behavioral Items</button>
   <button class="ntab" style="background:#fff1f2;color:#9f1239;font-weight:500" onclick="P('framing',this)">★ Framing</button>
   <button class="ntab" style="background:#f0fdf4;color:#14532d;font-weight:500" onclick="P('scan',this)">⬦ Descriptives</button>
@@ -156,6 +161,8 @@ tr.scan-sig td{background:#fefce8}
   </div>
   <div class="card"><div class="card-title">Channel trust by political bloc</div><table><thead><tr><th>Channel</th><th>M Coalition</th><th>M Opposition</th><th>Gap</th><th>r(ideology)</th></tr></thead><tbody><tr><td>Ch. 12 (Uvda)</td><td>2.37</td><td>4.99</td><td>+2.61</td><td>-0.469</td></tr><tr><td>Ch. 11</td><td>3.36</td><td>5.15</td><td>+1.79</td><td>-0.403</td></tr><tr><td>Ch. 14</td><td>4.92</td><td>1.95</td><td>-2.97</td><td>0.527</td></tr><tr><td>News sites</td><td>3.39</td><td>4.68</td><td>+1.30</td><td>-0.298</td></tr></tbody></table><div class="note">Measured at W2 (post-exposure); reverse causation possible. Descriptive context only.</div></div>
 </div>
+<div id="panel-bloc_new" class="panel"><div style="background:#fff1f2;border:0.5px solid #fda4af;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px;color:#9f1239">★ <strong>Exploratory (post-hoc).</strong> Exposure effects on attitude items — split by 2022 bloc. HC3, N=459.</div><div class="insight"><strong>Three bloc-specific findings:</strong> Coalition only: unjust β=+0.428 ★ — largest attitude shift in the dataset. Coalition stronger: isr_save_me β=+0.384 ★. Opposition only: murder_bibi β=+0.210 ★. Hamas: null everywhere.</div><div class="grid2"><div class="card"><div class="card-title">β by bloc (★ p&lt;.05, † p&lt;.10)</div><table><thead><tr><th>Item</th><th>Full β</th><th>Coal β</th><th>Oppo β</th></tr></thead><tbody><tr class="hl"><td><strong>unjust</strong> — govt delayed for wrong reasons</td><td>+0.276</td><td><strong>+0.428 ★</strong></td><td><strong>+0.137 </strong></td></tr><tr class="hl"><td><strong>isr_save_me</strong> — Israelis will save me</td><td>+0.302</td><td><strong>+0.384 ★</strong></td><td><strong>+0.217 †</strong></td></tr><tr class="hl"><td><strong>murder_bibi</strong> — Bibi responsible for deaths</td><td>+0.215</td><td><strong>+0.181 </strong></td><td><strong>+0.210 ★</strong></td></tr><tr><td><strong>bibi_save_me</strong> — Bibi will save me (&darr;)</td><td>-0.203</td><td><strong>-0.224 †</strong></td><td><strong>-0.211 ★</strong></td></tr><tr><td><strong>release_terr</strong> — release terrorists for deal</td><td>+0.091</td><td><strong>-0.058 </strong></td><td><strong>+0.150 †</strong></td></tr><tr><td><strong>inevitable</strong> — outcome was inevitable (&darr;)</td><td>-0.168</td><td><strong>-0.144 </strong></td><td><strong>-0.080 </strong></td></tr><tr><td><strong>murder_hamas</strong> — Hamas responsible for deaths</td><td>+0.004</td><td><strong>+0.005 </strong></td><td><strong>+0.002 </strong></td></tr></tbody></table><div class="note">Coalition n=212, Opposition n=205.</div></div><div class="card"><div class="card-title">W1 baseline means</div><table><thead><tr><th>Item</th><th>M Coal W1</th><th>M Oppo W1</th><th>Gap</th></tr></thead><tbody><tr><td>unjust</td><td>2.79</td><td>6.00</td><td>+3.21</td></tr><tr><td>murder_bibi</td><td>2.60</td><td>5.26</td><td>+2.65</td></tr><tr><td>bibi_save_me</td><td>4.82</td><td>2.18</td><td>-2.65</td></tr><tr><td>isr_save_me</td><td>4.17</td><td>5.22</td><td>+1.05</td></tr><tr><td>release_terr</td><td>4.50</td><td>6.36</td><td>+1.85</td></tr><tr><td>murder_hamas</td><td>6.87</td><td>6.88</td><td>+0.01</td></tr></tbody></table><div class="note">Large baseline gaps = ceiling effects in opposition for unjust and murder_bibi.</div></div></div><div class="card"><div class="card-title">Exposure β by bloc</div><canvas id="blocNewChart" style="max-height:200px"></canvas></div></div>
+<div id="panel-ideo_thirds" class="panel"><div style="background:#fff1f2;border:0.5px solid #fda4af;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px;color:#9f1239">★ <strong>Exploratory (post-hoc).</strong> H1 within ideology thirds. Explains the H3 null. Not pre-registered.</div><div class="insight">Left-leaning participants showed <strong>no exposure effect on any emotion</strong> — ceiling effect from high W1 baseline (guilt M=3.95). Right-leaning showed the strongest effects: guilt β=+0.221 ★, regret and anger marginal. The H3 null is an artifact, not ideological equivalence.</div><div class="grid2"><div class="card"><div class="card-title">H1 β by ideology third (OLS HC3)</div><table><thead><tr><th>Group</th><th>N</th><th>Guilt β</th><th>p</th><th>Regret β</th><th>p</th><th>Anger β</th><th>p</th></tr></thead><tbody><tr><td>Left (1–3)</td><td>74</td><td>+0.118</td><td>.582</td><td>+0.200</td><td>.423</td><td>-0.035</td><td>.610</td></tr><tr><td>Centre (4)</td><td>88</td><td>+0.306 †</td><td>.075</td><td>+0.238</td><td>.210</td><td>+0.161</td><td>.348</td></tr><tr class="hl"><td><strong>Right (5–7)</strong></td><td>297</td><td><strong>+0.221 ★</strong></td><td>.032</td><td>+0.190 †</td><td>.084</td><td>+0.214 †</td><td>.060</td></tr></tbody></table></div><div class="card"><div class="card-title">Why left is null — W1 baseline</div><table><thead><tr><th>Group</th><th>Guilt W1</th><th>Anger W1</th><th>Interpretation</th></tr></thead><tbody><tr><td>Left</td><td style="color:#16a34a"><strong>3.95</strong></td><td>6.45</td><td>Ceiling — no room to move</td></tr><tr><td>Centre</td><td>3.01</td><td>5.69</td><td>Moderate</td></tr><tr class="hl"><td>Right</td><td style="color:#dc2626"><strong>2.05</strong></td><td>3.12</td><td>Low baseline → large change</td></tr></tbody></table><div class="note">1.5-point guilt gap (left 3.95 vs right 2.05) explains the null in H3.</div></div></div><div class="card"><div class="card-title">H1 β by ideology third</div><canvas id="ideoThirdsChart" style="max-height:200px"></canvas></div></div>
 <div id="panel-scan" class="panel">
   <div style="background:#f0fdf4;border:0.5px solid #86efac;color:#14532d;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px">N=459. Descriptives, wave change, and intercorrelation matrix at W2.</div>
   <div class="grid2">
@@ -290,95 +297,126 @@ const sigPlugin = {
 };
 Chart.register(sigPlugin);
 
-new Chart(document.getElementById('h1Chart'),{type:'bar',data:{
-  labels:['Collective Guilt','Collective Regret','Anger at Netanyahu'],
-  datasets:[{label:"Cohen's d",data:[0.375,0.368,0.147],sigLabels:["★","★","†"],
-    backgroundColor:['#3b82f6bb','#f97316bb','#22c55e66'],
-    borderColor:['#3b82f6','#f97316','#22c55e'],borderWidth:1.5,borderRadius:4}]
+new Chart(document.getElementById(‘h1Chart’),{type:‘bar’,data:{
+labels:[‘Collective Guilt’,‘Collective Regret’,‘Anger at Netanyahu’],
+datasets:[{label:“Cohen’s d”,data:[0.375,0.368,0.147],sigLabels:[“★”,“★”,”†”],
+backgroundColor:[’#3b82f6bb’,’#f97316bb’,’#22c55e66’],
+borderColor:[’#3b82f6’,’#f97316’,’#22c55e’],borderWidth:1.5,borderRadius:4}]
 },options:{responsive:true,plugins:{legend:{display:false}},
-  scales:{y:{beginAtZero:true,title:{display:true,text:"Cohen's d"}},x:{}}}
+scales:{y:{beginAtZero:true,title:{display:true,text:“Cohen’s d”}},x:{}}}
 });
 
-new Chart(document.getElementById('h1Means'),{type:'bar',data:{
-  labels:['Guilt','Regret','Anger'],
-  datasets:[
-    {label:'Ctrl W1',data:[2.112,1.952,3.226],backgroundColor:'#93c5fd44',borderColor:'#93c5fd',borderWidth:1.5,borderRadius:2},
-    {label:'Ctrl W2',data:[2.236,2.029,3.399],backgroundColor:'#3b82f688',borderColor:'#3b82f6',borderWidth:1.5,borderRadius:2},
-    {label:'Exp W1', data:[3.028,3.017,5.190], backgroundColor:'#fbbf2444',borderColor:'#f97316',borderWidth:1.5,borderRadius:2},
-    {label:'Exp W2', data:[3.426,3.306,5.250], backgroundColor:'#f9731688',borderColor:'#ea580c',borderWidth:1.5,borderRadius:2},
-  ]
-},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:10}}}},
-  scales:{y:{beginAtZero:true,title:{display:true,text:'Mean'}},x:{}}}
+new Chart(document.getElementById(‘h1Means’),{type:‘bar’,data:{
+labels:[‘Guilt’,‘Regret’,‘Anger’],
+datasets:[
+{label:‘Ctrl W1’,data:[2.112,1.952,3.226],backgroundColor:’#93c5fd44’,borderColor:’#93c5fd’,borderWidth:1.5,borderRadius:2},
+{label:‘Ctrl W2’,data:[2.236,2.029,3.399],backgroundColor:’#3b82f688’,borderColor:’#3b82f6’,borderWidth:1.5,borderRadius:2},
+{label:‘Exp W1’, data:[3.028,3.017,5.190], backgroundColor:’#fbbf2444’,borderColor:’#f97316’,borderWidth:1.5,borderRadius:2},
+{label:‘Exp W2’, data:[3.426,3.306,5.250], backgroundColor:’#f9731688’,borderColor:’#ea580c’,borderWidth:1.5,borderRadius:2},
+]
+},options:{responsive:true,plugins:{legend:{position:‘bottom’,labels:{font:{size:10}}}},
+scales:{y:{beginAtZero:true,title:{display:true,text:‘Mean’}},x:{}}}
 });
 
-new Chart(document.getElementById('h2Chart'),{type:'bar',data:{
-  labels:['Guilt→Comm','Regret→Comm','Anger→Comm','Guilt→Beh','Regret→Beh','Anger→Beh'],
-  datasets:[{label:'β',data:[0.029,0.077,0.172,0.124,0.195,0.176],sigLabels:["","★","★","★","★","★"],
-    backgroundColor:['#3b82f644','#f9731644','#22c55e44','#3b82f6aa','#f97316aa','#22c55eaa'],
-    borderColor:['#3b82f6','#f97316','#22c55e','#3b82f6','#f97316','#22c55e'],
-    borderWidth:1.5,borderRadius:4}]
+new Chart(document.getElementById(‘h2Chart’),{type:‘bar’,data:{
+labels:[‘Guilt→Comm’,‘Regret→Comm’,‘Anger→Comm’,‘Guilt→Beh’,‘Regret→Beh’,‘Anger→Beh’],
+datasets:[{label:‘β’,data:[0.029,0.077,0.172,0.124,0.195,0.176],sigLabels:[””,“★”,“★”,“★”,“★”,“★”],
+backgroundColor:[’#3b82f644’,’#f9731644’,’#22c55e44’,’#3b82f6aa’,’#f97316aa’,’#22c55eaa’],
+borderColor:[’#3b82f6’,’#f97316’,’#22c55e’,’#3b82f6’,’#f97316’,’#22c55e’],
+borderWidth:1.5,borderRadius:4}]
 },options:{responsive:true,plugins:{legend:{display:false}},
-  scales:{y:{beginAtZero:true,title:{display:true,text:'β'}},x:{ticks:{font:{size:10}}}}}
+scales:{y:{beginAtZero:true,title:{display:true,text:‘β’}},x:{ticks:{font:{size:10}}}}}
 });
 
-new Chart(document.getElementById('medChart'),{type:'bar',data:{
-  labels:['Guilt→Comm','Regret→Comm','Anger→Comm','Guilt→Beh','Regret→Beh','Anger→Beh'],
-  datasets:[{label:'ab',data:[0.007,0.031,0.019,0.047,0.026,0.027],sigLabels:["","★","★","★","★","★"],
-    backgroundColor:['#3b82f644','#f9731644','#22c55e44','#3b82f6aa','#f97316aa','#22c55eaa'],
-    borderColor:['#3b82f6','#f97316','#22c55e','#3b82f6','#f97316','#22c55e'],
-    borderWidth:1.5,borderRadius:4}]
+new Chart(document.getElementById(‘medChart’),{type:‘bar’,data:{
+labels:[‘Guilt→Comm’,‘Regret→Comm’,‘Anger→Comm’,‘Guilt→Beh’,‘Regret→Beh’,‘Anger→Beh’],
+datasets:[{label:‘ab’,data:[0.007,0.031,0.019,0.047,0.026,0.027],sigLabels:[””,“★”,“★”,“★”,“★”,“★”],
+backgroundColor:[’#3b82f644’,’#f9731644’,’#22c55e44’,’#3b82f6aa’,’#f97316aa’,’#22c55eaa’],
+borderColor:[’#3b82f6’,’#f97316’,’#22c55e’,’#3b82f6’,’#f97316’,’#22c55e’],
+borderWidth:1.5,borderRadius:4}]
 },options:{responsive:true,plugins:{legend:{display:false}},
-  scales:{y:{beginAtZero:true,title:{display:true,text:'ab'}},x:{ticks:{font:{size:10}}}}}
+scales:{y:{beginAtZero:true,title:{display:true,text:‘ab’}},x:{ticks:{font:{size:10}}}}}
 });
 
-new Chart(document.getElementById('blocH2'),{type:'bar',data:{
-  labels:['Guilt→Comm','Regret→Comm','Anger→Comm','Guilt→Beh','Regret→Beh','Anger→Beh'],
-  datasets:[
-    {label:'Coalition (n=212)',data:[0.038,0.079,0.155,0.147,0.214,0.204],sigLabels:["","","","","★","★"],
-      backgroundColor:'#3b82f688',borderColor:'#3b82f6',borderWidth:1.5,borderRadius:3},
-    {label:'Opposition (n=205)',data:[-0.008,0.140,-0.003,0.206,0.052,0.170],sigLabels:["","★","","★","","★"],
-      backgroundColor:'#f9731688',borderColor:'#f97316',borderWidth:1.5,borderRadius:3},
-  ]
-},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:11}}}},
-  scales:{y:{beginAtZero:true,title:{display:true,text:'β'}},x:{ticks:{font:{size:10}}}}}
+new Chart(document.getElementById(‘blocH2’),{type:‘bar’,data:{
+labels:[‘Guilt→Comm’,‘Regret→Comm’,‘Anger→Comm’,‘Guilt→Beh’,‘Regret→Beh’,‘Anger→Beh’],
+datasets:[
+{label:‘Coalition (n=212)’,data:[0.038,0.079,0.155,0.147,0.214,0.204],sigLabels:[””,””,””,””,“★”,“★”],
+backgroundColor:’#3b82f688’,borderColor:’#3b82f6’,borderWidth:1.5,borderRadius:3},
+{label:‘Opposition (n=205)’,data:[-0.008,0.140,-0.003,0.206,0.052,0.170],sigLabels:[””,“★”,””,“★”,””,“★”],
+backgroundColor:’#f9731688’,borderColor:’#f97316’,borderWidth:1.5,borderRadius:3},
+]
+},options:{responsive:true,plugins:{legend:{position:‘bottom’,labels:{font:{size:11}}}},
+scales:{y:{beginAtZero:true,title:{display:true,text:‘β’}},x:{ticks:{font:{size:10}}}}}
 });
 
-new Chart(document.getElementById('effA'),{type:'bar',data:{
-  labels:['Full sample','Coalition','Opposition'],
-  datasets:[
-    {label:'eff_actions',data:[0.261,0.176,0.301],sigLabels:["★","","★"],
-      backgroundColor:'#22c55e88',borderColor:'#22c55e',borderWidth:1.5,borderRadius:3},
-    {label:'eff_general',data:[0.118,0.052,0.139],
-      backgroundColor:'#22c55e33',borderColor:'#22c55e',borderWidth:1.5,borderRadius:3},
-  ]
-},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:11}}}},
-  scales:{y:{beginAtZero:true,title:{display:true,text:'β'}},x:{}}}
+new Chart(document.getElementById(‘effA’),{type:‘bar’,data:{
+labels:[‘Full sample’,‘Coalition’,‘Opposition’],
+datasets:[
+{label:‘eff_actions’,data:[0.261,0.176,0.301],sigLabels:[“★”,””,“★”],
+backgroundColor:’#22c55e88’,borderColor:’#22c55e’,borderWidth:1.5,borderRadius:3},
+{label:‘eff_general’,data:[0.118,0.052,0.139],
+backgroundColor:’#22c55e33’,borderColor:’#22c55e’,borderWidth:1.5,borderRadius:3},
+]
+},options:{responsive:true,plugins:{legend:{position:‘bottom’,labels:{font:{size:11}}}},
+scales:{y:{beginAtZero:true,title:{display:true,text:‘β’}},x:{}}}
 });
 
-new Chart(document.getElementById('specChart'),{type:'bar',data:{
-  labels:["Guilt","Regret","Anger-Bibi","Anger-Hamas","Anger-Isr.","Sadness","Shame","Indif."],
-  datasets:[
-    {label:'→ Commission',data:[-0.112,0.100,0.169,-0.058,0.022,0.059,0.006,-0.004],sigLabels:["","","★","","","","",""],
-      backgroundColor:'#3b82f677',borderColor:'#3b82f6',borderWidth:1.5,borderRadius:3},
-    {label:'→ Behavioral',data:[-0.061,0.184,0.163,0.020,0.068,-0.122,0.002,-0.013],sigLabels:["","★","★","","","","",""],
-      backgroundColor:'#f9731677',borderColor:'#f97316',borderWidth:1.5,borderRadius:3},
-  ]
-},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:11}}}},
-  scales:{y:{title:{display:true,text:'β'}},x:{ticks:{font:{size:10}}}}}
+new Chart(document.getElementById(‘specChart’),{type:‘bar’,data:{
+labels:[“Guilt”,“Regret”,“Anger-Bibi”,“Anger-Hamas”,“Anger-Isr.”,“Sadness”,“Shame”,“Indif.”],
+datasets:[
+{label:‘→ Commission’,data:[-0.112,0.100,0.169,-0.058,0.022,0.059,0.006,-0.004],sigLabels:[””,””,“★”,””,””,””,””,””],
+backgroundColor:’#3b82f677’,borderColor:’#3b82f6’,borderWidth:1.5,borderRadius:3},
+{label:‘→ Behavioral’,data:[-0.061,0.184,0.163,0.020,0.068,-0.122,0.002,-0.013],sigLabels:[””,“★”,“★”,””,””,””,””,””],
+backgroundColor:’#f9731677’,borderColor:’#f97316’,borderWidth:1.5,borderRadius:3},
+]
+},options:{responsive:true,plugins:{legend:{position:‘bottom’,labels:{font:{size:11}}}},
+scales:{y:{title:{display:true,text:‘β’}},x:{ticks:{font:{size:10}}}}}
 });
 
-new Chart(document.getElementById('h2CompChart'),{type:'bar',data:{
-  labels:['Guilt→Comm','Regret→Comm','Anger→Comm','Guilt→Beh','Regret→Beh','Anger→Beh'],
-  datasets:[
-    {label:'Pre-registered (no W1)',data:[0.485,0.605,0.772,0.583,0.703,0.620],
-      backgroundColor:'#94a3b877',borderColor:'#94a3b8',borderWidth:1.5,borderRadius:3},
-    {label:'Corrected (+W1 baseline)',data:[0.029,0.077,0.172,0.124,0.195,0.176],sigLabels:["","★","★","★","★","★"],
-      backgroundColor:'#2e75b677',borderColor:'#2e75b6',borderWidth:1.5,borderRadius:3},
-  ]
-},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:11}}}},
-  scales:{y:{beginAtZero:true,title:{display:true,text:'β'}},x:{ticks:{font:{size:10}}}}}
+new Chart(document.getElementById(‘h2CompChart’),{type:‘bar’,data:{
+labels:[‘Guilt→Comm’,‘Regret→Comm’,‘Anger→Comm’,‘Guilt→Beh’,‘Regret→Beh’,‘Anger→Beh’],
+datasets:[
+{label:‘Pre-registered (no W1)’,data:[0.485,0.605,0.772,0.583,0.703,0.620],
+backgroundColor:’#94a3b877’,borderColor:’#94a3b8’,borderWidth:1.5,borderRadius:3},
+{label:‘Corrected (+W1 baseline)’,data:[0.029,0.077,0.172,0.124,0.195,0.176],sigLabels:[””,“★”,“★”,“★”,“★”,“★”],
+backgroundColor:’#2e75b677’,borderColor:’#2e75b6’,borderWidth:1.5,borderRadius:3},
+]
+},options:{responsive:true,plugins:{legend:{position:‘bottom’,labels:{font:{size:11}}}},
+scales:{y:{beginAtZero:true,title:{display:true,text:‘β’}},x:{ticks:{font:{size:10}}}}}
 });
+
+// ── New Items by Bloc ─────────────────────────────────────────────────────────
+new Chart(document.getElementById(‘blocNewChart’),{type:‘bar’,data:{
+labels:[‘unjust’,‘isr_save_me’,‘murder_bibi’,‘bibi_save_me’,‘release_terr’,‘inevitable’],
+datasets:[
+{label:‘Coalition’,
+data:[0.428,0.384,0.181,-0.224,-0.058,-0.144],
+sigLabels:[‘★’,‘★’,’’,’’,’’,’’],
+backgroundColor:’#3b82f688’,borderColor:’#3b82f6’,borderWidth:1.5,borderRadius:3},
+{label:‘Opposition’,
+data:[0.137,0.217,0.210,-0.211,0.150,-0.080],
+sigLabels:[’’,’’,‘★’,‘★’,’’,’’],
+backgroundColor:’#f9731688’,borderColor:’#f97316’,borderWidth:1.5,borderRadius:3},
+]
+,options:{responsive:true,plugins:{legend:{position:‘bottom’,labels:{font:{size:11}}}},
+scales:{y:{title:{display:true,text:‘β’}},x:{ticks:{font:{size:10}}}}}}
+});
+
+// ── Ideology Thirds ───────────────────────────────────────────────────────────
+new Chart(document.getElementById(‘ideoThirdsChart’),{type:‘bar’,data:{
+labels:[‘Guilt’,‘Regret’,‘Anger’],
+datasets:[
+{label:‘Left (1–3)’,data:[0.118,0.200,-0.035],backgroundColor:’#3b82f644’,borderColor:’#3b82f6’,borderWidth:1.5,borderRadius:3},
+{label:‘Centre (4)’,data:[0.306,0.238,0.161],sigLabels:[’†’,’’,’’],backgroundColor:’#f9731666’,borderColor:’#f97316’,borderWidth:1.5,borderRadius:3},
+{label:‘Right (5–7)’,data:[0.221,0.190,0.214],sigLabels:[‘★’,’†’,’†’],backgroundColor:’#22c55e88’,borderColor:’#22c55e’,borderWidth:1.5,borderRadius:3},
+]
+,options:{responsive:true,plugins:{legend:{position:‘bottom’,labels:{font:{size:11}}}},
+scales:{y:{beginAtZero:true,title:{display:true,text:‘β’}},x:{}}}}
+});
+
 }); // end window.onload
 </script>
+
 </body>
 </html>
