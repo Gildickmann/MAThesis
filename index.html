@@ -1,422 +1,739 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Uvda Study — N=459</title>
+<title>Eiran Meeting — Uvda Study Complete Dashboard</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',Arial,sans-serif;font-size:13px;background:#f8fafc;color:#1e293b}
 #app{display:flex;flex-direction:column;height:100vh}
-#header{background:linear-gradient(135deg,#1e3a5f,#2e75b6);color:#fff;padding:10px 16px;display:flex;align-items:center;gap:12px}
-#header h1{font-size:16px;font-weight:600}
-#header span{font-size:12px;opacity:.8}
-#nav{background:#fff;border-bottom:1px solid #e2e8f0;padding:6px 10px;display:flex;flex-wrap:wrap;gap:5px;position:sticky;top:0;z-index:100}
-.ntab{border:none;border-radius:5px;padding:4px 9px;font-size:11.5px;cursor:pointer;transition:opacity .15s}
+#header{background:linear-gradient(135deg,#1e3a5f,#2e75b6);color:#fff;padding:10px 16px;display:flex;align-items:center;justify-content:space-between}
+#header h1{font-size:15px;font-weight:600}
+#header span{font-size:11.5px;opacity:.75}
+#nav{background:#fff;border-bottom:2px solid #e2e8f0;padding:5px 10px;display:flex;flex-wrap:wrap;gap:4px;position:sticky;top:0;z-index:100;align-items:center}
+.nav-sep{width:1px;background:#e2e8f0;margin:2px 4px;align-self:stretch}
+.nav-label{font-size:10px;font-weight:700;letter-spacing:.04em;padding:0 4px;align-self:center;opacity:.6}
+.ntab{border:none;border-radius:5px;padding:4px 10px;font-size:11.5px;cursor:pointer;font-weight:500;transition:opacity .15s}
 .ntab:hover{opacity:.75}
 .ntab.active{outline:2px solid #1e3a5f;font-weight:700}
 #content{flex:1;overflow-y:auto;padding:14px 16px}
-.panel{display:none}
-.panel.active{display:block}
+.panel{display:none}.panel.active{display:block}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px}
 .card{background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:12px;margin-bottom:10px}
 .card-title{font-weight:600;font-size:12.5px;margin-bottom:8px;color:#1e3a5f;border-bottom:1px solid #f1f5f9;padding-bottom:4px}
 .insight{background:#eff6ff;border-left:4px solid #2e75b6;padding:10px 14px;margin-bottom:10px;border-radius:0 6px 6px 0;font-size:12.5px;line-height:1.6}
+.insight-green{background:#f0fdf4;border-left:4px solid #16a34a;padding:10px 14px;margin-bottom:10px;border-radius:0 6px 6px 0;font-size:12.5px;line-height:1.6}
+.insight-yellow{background:#fef9c3;border-left:4px solid #ca8a04;padding:10px 14px;margin-bottom:10px;border-radius:0 6px 6px 0;font-size:12.5px;line-height:1.6}
+.q-banner{background:#fef9c3;border-left:4px solid #ca8a04;padding:10px 14px;margin-bottom:10px;border-radius:0 6px 6px 0;font-size:12px;font-weight:500;color:#713f12;direction:rtl;text-align:right}
 .note{font-size:11px;color:#64748b;margin-top:8px;line-height:1.5}
+.rtl{direction:rtl;text-align:right}
 table{width:100%;border-collapse:collapse;font-size:12px}
 th{background:#1e3a5f;color:#fff;padding:5px 8px;text-align:left;font-weight:500;font-size:11.5px}
 td{padding:4px 8px;border-bottom:1px solid #f1f5f9}
 tr:hover td{background:#f8fafc}
 tr.hl td{background:#f0fdf4}
-tr.scan-sig td{background:#fefce8}
-.badge{display:inline-block;padding:1px 6px;border-radius:10px;font-size:10.5px;font-weight:600}
-.b-sig{background:#dcfce7;color:#166534}
-.b-ns{background:#f1f5f9;color:#64748b}
-.b-mar{background:#fef9c3;color:#713f12}
+tr.dim td{opacity:.5}
+.b-sig{background:#dcfce7;color:#166534;display:inline-block;padding:1px 6px;border-radius:10px;font-size:10.5px;font-weight:600}
+.b-ns{background:#f1f5f9;color:#64748b;display:inline-block;padding:1px 6px;border-radius:10px;font-size:10.5px;font-weight:600}
+.b-mar{background:#fef9c3;color:#713f12;display:inline-block;padding:1px 6px;border-radius:10px;font-size:10.5px;font-weight:600}
 .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;vertical-align:middle}
-@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.num-big{font-size:26px;font-weight:300;color:#1e3a5f}
+.stat-card{text-align:center;padding:10px}
 </style>
 </head>
 <body>
 <div id="app">
-  <div id="header">
-    <h1>Uvda Hostage Study — Results Dashboard</h1>
-    <span>N=459 | AsPredicted #262879 | Attention check: both waves | HC3 OLS | BH-FDR q=.05</span>
-  </div>
-  <div id="nav">
-  <button class="ntab" style="background:#eff6ff;color:#1e3a5f;font-weight:500" onclick="P('h1',this)">H1: Exposure→Emotions</button>
-  <button class="ntab" style="background:#eff6ff;color:#1e3a5f;font-weight:500" onclick="P('h2',this)">H2: Emotions→Outcomes</button>
-  <button class="ntab" style="background:#eff6ff;color:#1e3a5f;font-weight:500" onclick="P('h3',this)">H3: Ideology×Exposure</button>
-  <button class="ntab" style="background:#eff6ff;color:#1e3a5f;font-weight:500" onclick="P('h4',this)">H4: Ideology×Emotion</button>
-  <button class="ntab" style="background:#eff6ff;color:#1e3a5f;font-weight:500" onclick="P('med',this)">Mediation</button>
-  <button class="ntab" style="background:#fff1f2;color:#9f1239;font-weight:500" onclick="P('bloc',this)">★ H2 by Bloc</button>
-  <button class="ntab" style="background:#fff1f2;color:#9f1239;font-weight:500" onclick="P('eff',this)">★ Efficacy</button>
-  <button class="ntab" style="background:#fff1f2;color:#9f1239;font-weight:500" onclick="P('inter',this)">★ IMM (detailed)</button>
-  <button class="ntab" style="background:#fff1f2;color:#9f1239;font-weight:500" onclick="P('add',this)">★ H1 by Bloc</button>
-  <button class="ntab" style="background:#fff1f2;color:#9f1239;font-weight:500" onclick="P('bloc_new',this)">★ New Items by Bloc</button>
-  <button class="ntab" style="background:#fff1f2;color:#9f1239;font-weight:500" onclick="P('ideo_thirds',this)">★ Ideology Thirds</button>
-  <button class="ntab" style="background:#fff1f2;color:#9f1239;font-weight:500" onclick="P('bloc_new',this)">★ New Items by Bloc</button>
-  <button class="ntab" style="background:#fff1f2;color:#9f1239;font-weight:500" onclick="P('ideo_thirds',this)">★ Ideology Thirds</button>
-  <button class="ntab" style="background:#fff1f2;color:#9f1239;font-weight:500" onclick="P('beh_items',this)">★ Behavioral Items</button>
-  <button class="ntab" style="background:#fff1f2;color:#9f1239;font-weight:500" onclick="P('framing',this)">★ Framing</button>
-  <button class="ntab" style="background:#f0fdf4;color:#14532d;font-weight:500" onclick="P('scan',this)">⬦ Descriptives</button>
-  <button class="ntab" style="background:#f0fdf4;color:#14532d;font-weight:500" onclick="P('dv',this)">⬦ Discriminant Val.</button>
-  <button class="ntab" style="background:#f0fdf4;color:#14532d;font-weight:500" onclick="P('spec',this)">⬦ Emotion Specificity</button>
-  <button class="ntab" style="background:#f0fdf4;color:#14532d;font-weight:500" onclick="P('blame',this)">⬦ Bibi Blame</button>
-  <button class="ntab" style="background:#fefce8;color:#713f12;font-weight:500" onclick="P('h2compare',this)">◈ H2 Pre-reg vs Corrected</button>
-  <button class="ntab" style="background:#fefce8;color:#713f12;font-weight:500" onclick="P('prereg_h1',this)">◈ H1 Ordinal + Slopes</button>
-  <button class="ntab" style="background:#f0fdf4;color:#14532d;font-weight:500" onclick="P('attrition',this)">⬦ Attrition</button>
-  <button class="ntab" style="background:#fff1f2;color:#9f1239;font-weight:500" onclick="P('emo_watch',this)">★ Emo-Watching</button>
-  <button class="ntab" style="background:#fff1f2;color:#9f1239;font-weight:500" onclick="P('imm_panel',this)">★ IMM</button>
-  <button class="ntab" style="background:#fafaf9;color:#44403c;font-weight:500" onclick="P('qa',this)">? שאלות עירן</button>
-  <button class="ntab" style="background:#fafaf9;color:#44403c;font-weight:500" onclick="P('sum',this)">✦ Summary</button>
-  </div>
-  <div id="content">
+<div id="header">
+  <h1>עירן — Uvda Study · Complete Meeting Dashboard</h1>
+  <span>N=459 · HC3 OLS · BH-FDR q=.05 · AsPredicted #262879</span>
+</div>
+<div id="nav">
+  <span class="nav-label" style="color:#92400e">עירן שאל ←</span>
+  <button class="ntab" style="background:#fef3c7;color:#92400e" onclick="P('q1',this)">Q1 · בדלי בייסליין</button>
+  <button class="ntab" style="background:#fef3c7;color:#92400e" onclick="P('q2',this)">Q2 · השפעה ישירה</button>
+  <button class="ntab" style="background:#fef3c7;color:#92400e" onclick="P('q3',this)">Q3 · Threshold</button>
+  <div class="nav-sep"></div>
+  <span class="nav-label" style="color:#1e3a5f">פרה-רגיסטרציה</span>
+  <button class="ntab" style="background:#eff6ff;color:#1e3a5f" onclick="P('h1',this)">H1 · חשיפה → רגשות</button>
+  <button class="ntab" style="background:#eff6ff;color:#1e3a5f" onclick="P('h2',this)">H2 · רגשות → אחריות</button>
+  <button class="ntab" style="background:#eff6ff;color:#1e3a5f" onclick="P('h3h4',this)">H3/H4 · מודרציה</button>
+  <div class="nav-sep"></div>
+  <span class="nav-label" style="color:#166534">רובסטנס</span>
+  <button class="ntab" style="background:#dcfce7;color:#166534" onclick="P('evidence',this)">3 עמודי ראיות</button>
+  <button class="ntab" style="background:#dcfce7;color:#166534" onclick="P('framing',this)">פריימינג</button>
+  <div class="nav-sep"></div>
+  <span class="nav-label" style="color:#7e22ce">JN</span>
+  <button class="ntab" style="background:#fdf4ff;color:#7e22ce" onclick="P('jn',this)">Johnson-Neyman</button>
+  <div class="nav-sep"></div>
+  <span class="nav-label" style="color:#9f1239">גוש</span>
+  <button class="ntab" style="background:#fff1f2;color:#9f1239" onclick="P('bloc',this)">גוש · ממצאים</button>
+  <button class="ntab" style="background:#fff1f2;color:#9f1239" onclick="P('bloc_deep',this)">גוש · עומק</button>
+  <div class="nav-sep"></div>
+  <button class="ntab" style="background:#f8fafc;color:#475569" onclick="P('open_q',this)">? שאלות פתוחות</button>
+  <button class="ntab" style="background:#f1f5f9;color:#64748b;font-size:10.5px" onclick="P('ord_bin',this)">⊞ Ordinal vs Binary</button>
+</div>
+<div id="content">
 
-<div id="panel-h1" class="panel">
-  <div style="background:#eff6ff;border:0.5px solid #93c5fd;color:#1e3a5f;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px"><strong>H1 (pre-registered).</strong> OLS HC3. IV: exposure ordinal (1=none,2=partial,3=full). DV: W2 emotion controlling W1. BH-FDR q=.05, k=3.<div class="grid2" style="margin-top:10px">
-      <div class="card"><div class="card-title">Cohen's d (binary exposure)</div><canvas id="h1Chart" style="max-height:200px"></canvas></div>
-      <div class="card"><div class="card-title">Emotion means W1→W2 by exposure group</div><canvas id="h1Means" style="max-height:200px"></canvas></div>
+<!-- ═══════════════════════════════════════════════
+     Q1 — PRE-EXPOSURE DIFFERENCES
+═══════════════════════════════════════════════ -->
+<div id="panel-q1" class="panel">
+  <div class="q-banner">שאלת עירן: מה ההבדל בין הנחשפים ללא נחשפים לפני השידור, בהיבט של אידיאולוגיה ועוד סוציו-דמוגרפיים?</div>
+  <div class="insight rtl">מי שנחשף לעובדה הגיע <strong>כבר לגל 1</strong> שונה ממי שלא. ההבדלים גדולים מאוד — ובדיוק בגלל זה בחרנו מראש ב-ANCOVA: שולטים בבייסליין, מודדים שינוי נטו ולא רמה מוחלטת.</div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">הבדלים סוציו-דמוגרפיים (W1)</div>
+      <table><thead><tr><th>Variable</th><th>M Exposed</th><th>M Control</th><th>d</th><th>p</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td>Ideology (1=L, 7=R)</td><td>4.60</td><td>5.17</td><td>−0.43</td><td>&lt;.001</td></tr>
+        <tr class="hl"><td>Religiosity</td><td>1.63</td><td>2.16</td><td>−0.43</td><td>&lt;.001</td></tr>
+        <tr class="hl"><td>Past protest</td><td>3.90</td><td>4.66</td><td>−0.73</td><td>&lt;.001</td></tr>
+        <tr><td>Education</td><td>3.16</td><td>3.40</td><td>−0.20</td><td>.037</td></tr>
+        <tr><td>Age</td><td>49.7</td><td>46.8</td><td>+0.17</td><td>.079</td></tr>
+        <tr><td>Gender</td><td>1.52</td><td>1.50</td><td>+0.04</td><td>.666</td></tr>
+      </tbody></table>
     </div>
+    <div class="card">
+      <div class="card-title">הבדלי רגשות ועמדות בגל 1 — לפני כל חשיפה</div>
+      <table><thead><tr><th>Variable</th><th>M Exposed</th><th>M Control</th><th>d</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td>Anger at Netanyahu</td><td>5.19</td><td>3.23</td><td>+0.84</td></tr>
+        <tr class="hl"><td>Bibi blame</td><td>5.25</td><td>3.50</td><td>+0.72</td></tr>
+        <tr class="hl"><td>Petition intention</td><td>5.49</td><td>3.82</td><td>+0.71</td></tr>
+        <tr class="hl"><td>Regret</td><td>3.02</td><td>1.95</td><td>+0.68</td></tr>
+        <tr class="hl"><td>Commission support</td><td>5.72</td><td>4.18</td><td>+0.67</td></tr>
+        <tr class="hl"><td>Collective guilt</td><td>3.03</td><td>2.11</td><td>+0.57</td></tr>
+      </tbody></table>
+      <div class="note rtl">כל ההבדלים p&lt;.001. זו סלקציה עצמית צפויה — הפתרון: ANCOVA, לא הסבר.</div>
+    </div>
+  </div>
+  <div class="card"><div class="card-title">Cohen's d — exposed vs. control (W1)</div><canvas id="q1Chart" style="max-height:220px"></canvas></div>
 </div>
-  <div class="insight">Exposure to Uvda predicted significant increases in both <strong>collective guilt</strong> (β=+0.249, BH ✓) and <strong>internalized regret</strong> (β=+0.241, BH ✓). Anger at Netanyahu showed a marginal association (β=+0.152, p=.054) that did not survive BH correction. A concave dose–response curve emerged for guilt and regret, suggesting threshold-level effects consistent with moral shock theory.</div>
+
+<!-- ═══════════════════════════════════════════════
+     Q2 — DIRECT EFFECTS ALL OUTCOMES
+═══════════════════════════════════════════════ -->
+<div id="panel-q2" class="panel">
+  <div class="q-banner">שאלת עירן: אשמח לראות את ההשפעה הישירה של החשיפה עצמה על כל המשתנים — גם מדיניות ופעולה. חכה עם מתווכים.</div>
+  <div class="insight rtl"><strong>15 מתוך 20 מובהקים לאחר BH-FDR.</strong> האפקטים ספציפיים לאשכול האחריות הפנים-קבוצתית. חמאס, גאווה בצה"ל, פטליזם — <strong>אפס</strong> השפעה.</div>
   <div class="grid2">
-    <div class="card"><div class="card-title">Primary results (ordinal model + quadratic test)</div><table><thead><tr><th>Emotion</th><th>β (ordinal)</th><th>p</th><th>BH-FDR</th><th>Quadratic β</th></tr></thead><tbody><tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>+0.249</td><td>.003</td><td><span class="badge b-sig">BH ✓</span></td><td>-0.380 (p=.008)</td></tr><tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>+0.241</td><td>.007</td><td><span class="badge b-sig">BH ✓</span></td><td>-0.425 (p=.004)</td></tr><tr><td><span class="dot" style="background:#22c55e"></span>Anger (Bibi)</td><td>+0.152</td><td>.054</td><td><span class="badge b-ns">BH ✗</span></td><td>+0.005 (p=.965)</td></tr></tbody></table><div class="note">Quadratic β negative = concave curve — most change from no-exposure to partial; full adds less.</div></div>
-    <div class="card"><div class="card-title">Binary sensitivity & wave descriptives</div><table><thead><tr><th>Emotion</th><th>d (binary)</th><th>M W1</th><th>M W2</th><th>Δ</th><th>p(paired t)</th></tr></thead><tbody><tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>0.37</td><td>2.54</td><td>2.80</td><td>+0.25</td><td>&lt;.001</td></tr><tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>0.37</td><td>2.45</td><td>2.63</td><td>+0.18</td><td>.005</td></tr><tr><td><span class="dot" style="background:#22c55e"></span>Anger (Bibi)</td><td>0.15</td><td>4.15</td><td>4.27</td><td>+0.12</td><td>.043</td></tr></tbody></table><div class="note">N=459. Binary model (exposed vs. not) as sensitivity check.</div></div>
+    <div class="card">
+      <div class="card-title">רגשות</div>
+      <table><thead><tr><th>Outcome</th><th>β</th><th>p</th><th>BH</th></tr></thead><tbody>
+        <tr class="hl"><td>Collective guilt</td><td>+0.249</td><td>.003</td><td><span class="b-sig">✓</span></td></tr>
+        <tr class="hl"><td>Internalized regret</td><td>+0.241</td><td>.008</td><td><span class="b-sig">✓</span></td></tr>
+        <tr><td>Anger at Netanyahu</td><td>+0.152</td><td>.057</td><td><span class="b-ns">✗ ceiling</span></td></tr>
+        <tr class="dim"><td>Sadness, shame, fear</td><td>—</td><td>&gt;.10</td><td><span class="b-ns">✗</span></td></tr>
+      </tbody></table>
+    </div>
+    <div class="card">
+      <div class="card-title">אחריות מוסדית</div>
+      <table><thead><tr><th>Outcome</th><th>β</th><th>p</th><th>BH</th></tr></thead><tbody>
+        <tr class="hl"><td>Govt delayed unjustly</td><td>+0.276</td><td>&lt;.001</td><td><span class="b-sig">✓</span></td></tr>
+        <tr class="hl"><td>Commission support</td><td>+0.176</td><td>.006</td><td><span class="b-sig">✓</span></td></tr>
+        <tr class="hl"><td>Bibi blame</td><td>+0.220</td><td>.003</td><td><span class="b-sig">✓</span></td></tr>
+        <tr class="hl"><td>Bibi resp. for deaths</td><td>+0.215</td><td>.008</td><td><span class="b-sig">✓</span></td></tr>
+        <tr class="hl"><td>Bibi could do more</td><td>+0.201</td><td>.007</td><td><span class="b-sig">✓</span></td></tr>
+        <tr class="hl"><td>Bibi will save me (↓)</td><td>−0.203</td><td>.005</td><td><span class="b-sig">✓</span></td></tr>
+        <tr class="hl"><td>Israelis will save me</td><td>+0.302</td><td>&lt;.001</td><td><span class="b-sig">✓</span></td></tr>
+      </tbody></table>
+    </div>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">עמדות מדיניות</div>
+      <table><thead><tr><th>Outcome</th><th>β</th><th>p</th><th>BH</th></tr></thead><tbody>
+        <tr class="hl"><td>Hostages = nat. interest</td><td>+0.195</td><td>.004</td><td><span class="b-sig">✓</span></td></tr>
+        <tr class="hl"><td>End war for deal</td><td>+0.194</td><td>.008</td><td><span class="b-sig">✓</span></td></tr>
+        <tr class="hl"><td>Risk hostages → war (↓)</td><td>−0.308</td><td>.002</td><td><span class="b-sig">✓</span></td></tr>
+        <tr><td>Release terrorists</td><td>+0.091</td><td>.205</td><td><span class="b-ns">✗</span></td></tr>
+        <tr class="dim"><td>Hamas resp. (neg.ctrl) ⊘</td><td>+0.006</td><td>.807</td><td><span class="b-ns">✗</span></td></tr>
+        <tr class="dim"><td>Destroy Hamas (neg.ctrl) ⊘</td><td>+0.026</td><td>.652</td><td><span class="b-ns">✗</span></td></tr>
+      </tbody></table>
+    </div>
+    <div class="card">
+      <div class="card-title">פעולה ומסוגלות</div>
+      <table><thead><tr><th>Outcome</th><th>β</th><th>p</th><th>BH</th></tr></thead><tbody>
+        <tr class="hl"><td>Petition</td><td>+0.211</td><td>.009</td><td><span class="b-sig">✓</span></td></tr>
+        <tr class="hl"><td>Demo intention</td><td>+0.197</td><td>.022</td><td><span class="b-sig">✓</span></td></tr>
+        <tr class="hl"><td>Efficacy — actions</td><td>+0.261</td><td>.003</td><td><span class="b-sig">✓</span></td></tr>
+        <tr class="dim"><td>IDF pride (neg.ctrl) ⊘</td><td>+0.045</td><td>.276</td><td><span class="b-ns">✗</span></td></tr>
+        <tr class="dim"><td>Fatalism (neg.ctrl) ⊘</td><td>−0.031</td><td>.729</td><td><span class="b-ns">✗</span></td></tr>
+      </tbody></table>
+    </div>
+  </div>
+  <div class="card"><div class="card-title">Forest plot — 15 BH-significant effects (β)</div><canvas id="q2Forest" style="max-height:300px"></canvas></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     Q3 — THRESHOLD
+═══════════════════════════════════════════════ -->
+<div id="panel-q3" class="panel">
+  <div class="q-banner">שאלת עירן: האם יש רמות שונות של חשיפה והאם יש threshold?</div>
+  <div class="insight rtl">יש <strong>threshold effect</strong>. הקפיצה הגדולה: <strong>לא ראה → ראה חלקי</strong>, לא בין חלקי למלא. לאשמה וחרטה, חשיפה חלקית מייצרת שינוי גדול יותר מחשיפה מלאה — עקבי עם Moral Shock Theory. לאחריות ביבי — יש accumulation.</div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">Δ (W2−W1) לפי רמת חשיפה</div>
+      <table><thead><tr><th>Outcome</th><th>Δ None (n=243)</th><th>Δ Partial (n=125)</th><th>Δ Full (n=91)</th><th>Pattern</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td>Collective guilt</td><td>+0.13</td><td style="color:#1d4ed8;font-weight:700">+0.53</td><td>+0.21</td><td>Threshold ✓</td></tr>
+        <tr class="hl"><td>Internalized regret</td><td>+0.08</td><td style="color:#1d4ed8;font-weight:700">+0.44</td><td>+0.08</td><td>Threshold ✓</td></tr>
+        <tr><td>Efficacy actions</td><td>+0.09</td><td>+0.34</td><td>+0.23</td><td>Threshold</td></tr>
+        <tr><td>Bibi blame</td><td>+0.02</td><td>+0.11</td><td style="color:#1d4ed8;font-weight:700">+0.22</td><td>Accumulation</td></tr>
+        <tr><td>Govt delayed unjustly</td><td>+0.00</td><td>−0.12</td><td style="color:#1d4ed8;font-weight:700">+0.13</td><td>Accumulation</td></tr>
+        <tr><td>Commission</td><td>−0.23</td><td>+0.07</td><td>−0.03</td><td>Stopping decline</td></tr>
+        <tr><td>Anger at Netanyahu</td><td>+0.17</td><td>+0.05</td><td>+0.08</td><td>Flat (ceiling)</td></tr>
+      </tbody></table>
+      <div class="note rtl">Moral Shock Theory: שוק מוסרי = איכות הרגע הראשוני, לא כמות חשיפה. חשיפה מלאה עשויה לעורר defensive processing שמחליש את הרגש.</div>
+    </div>
+    <div class="card"><div class="card-title">W1→W2 change by exposure level</div><canvas id="q3Chart" style="max-height:280px"></canvas></div>
   </div>
 </div>
+
+<!-- ═══════════════════════════════════════════════
+     H1
+═══════════════════════════════════════════════ -->
+<div id="panel-h1" class="panel">
+  <div style="background:#eff6ff;border:0.5px solid #93c5fd;color:#1e3a5f;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px"><strong>H1 (pre-registered).</strong> Model: W2_emotion ~ exposure_ordinal (1–3) + W1_emotion. HC3, BH-FDR k=3. מודד: כמה גבוה ה-W2 ביחס לנקודת ההתחלה, לפי רמת חשיפה.</div>
+  <div class="insight"><strong>Guilt BH ✓, Regret BH ✓.</strong> Anger: p=.057, לא שורד BH — ceiling effect (exposed W1=5.20/7). Non-monotone dose-response לאשמה וחרטה = ראיה נוספת נגד פרשנות סלקציה טהורה.</div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">Primary results</div>
+      <table><thead><tr><th>Emotion</th><th>β (ordinal)</th><th>p</th><th>BH</th><th>d W2 binary</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td><span class="dot" style="background:#3b82f6"></span>Collective guilt</td><td>+0.249</td><td>.003</td><td><span class="b-sig">✓</span></td><td>0.683</td></tr>
+        <tr class="hl"><td><span class="dot" style="background:#f97316"></span>Internalized regret</td><td>+0.241</td><td>.008</td><td><span class="b-sig">✓</span></td><td>0.754</td></tr>
+        <tr><td><span class="dot" style="background:#22c55e"></span>Anger at Netanyahu</td><td>+0.152</td><td>.057</td><td><span class="b-ns">✗</span></td><td>0.810†</td></tr>
+      </tbody></table>
+      <div class="note">†d for anger reflects large pre-existing baseline gap (exposed W1=5.20 vs ctrl=3.23), not W1→W2 change. Quadratic β: guilt=−0.380 (p=.008), regret=−0.425 (p=.004) — confirms concave dose-response.</div>
+    </div>
+    <div class="card"><div class="card-title">Means W1→W2 by group</div><canvas id="h1Means" style="max-height:220px"></canvas></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     H2
+═══════════════════════════════════════════════ -->
 <div id="panel-h2" class="panel">
-  <div style="background:#eff6ff;border:0.5px solid #93c5fd;color:#1e3a5f;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px"><strong>H2 (pre-registered + corrected).</strong> Corrected model (primary): W2_outcome ~ emotion_W2 + W1_outcome. Pre-registered model (sensitivity): W2_outcome ~ emotion_W2. BH-FDR per outcome (k=3). Mediation: bootstrap n=5,000 seed=42, BC CIs.<div class="card" style="margin-top:10px"><div class="card-title">β coefficients — corrected model (★ = BH significant)</div><canvas id="h2Chart" style="max-height:220px"></canvas></div>
-</div>
-  <div class="insight">Regret and anger at Netanyahu predicted commission support; all three emotions predicted behavioral mobilization. Guilt alone failed to predict commission support — consistent with the target-attribution logic of SIMCA: institutional demands require knowing <em>who</em> to hold accountable.</div>
+  <div style="background:#eff6ff;border:0.5px solid #93c5fd;color:#1e3a5f;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px"><strong>H2 (pre-registered, corrected).</strong> Model: W2_outcome ~ W2_emotion + W1_outcome. HC3, BH-FDR k=3. זהו association at W2 עם שליטה בבייסליין — לא change-on-change. 14/15 BH-significant.</div>
+  <div class="insight"><strong>הnull המרכזי: אשמה → ועדת חקירה (p=.36).</strong> אשמה מופנית פנימה ומניעה לפעולה עצמית — אבל לא ייחוס לאחראי חיצוני. שלושת הרגשות פועלים בנתיבים פונקציונליים שונים — זה החידוש התיאורטי.</div>
   <div class="grid2">
-    <div class="card"><div class="card-title">Commission of inquiry (institutional accountability)</div><table><thead><tr><th>Emotion</th><th>β (corrected)</th><th>p</th><th>BH-FDR</th><th>β (pre-registered)</th></tr></thead><tbody><tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>+0.029</td><td>.359</td><td><span class="badge b-ns">BH ✗</span></td><td>+0.485 (pre-reg)</td></tr><tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>+0.077</td><td>.012</td><td><span class="badge b-sig">BH ✓</span></td><td>+0.605 (pre-reg)</td></tr><tr><td><span class="dot" style="background:#22c55e"></span>Anger (Bibi)</td><td>+0.172</td><td>&lt;.001</td><td><span class="badge b-sig">BH ✓</span></td><td>+0.772 (pre-reg)</td></tr></tbody></table></div>
-    <div class="card"><div class="card-title">Behavioral composite — petition + social + demo</div><table><thead><tr><th>Emotion</th><th>β (corrected)</th><th>p</th><th>BH-FDR</th><th>β (pre-registered)</th></tr></thead><tbody><tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>+0.124</td><td>&lt;.001</td><td><span class="badge b-sig">BH ✓</span></td><td>+0.583 (pre-reg)</td></tr><tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>+0.195</td><td>&lt;.001</td><td><span class="badge b-sig">BH ✓</span></td><td>+0.703 (pre-reg)</td></tr><tr><td><span class="dot" style="background:#22c55e"></span>Anger (Bibi)</td><td>+0.176</td><td>&lt;.001</td><td><span class="badge b-sig">BH ✓</span></td><td>+0.620 (pre-reg)</td></tr></tbody></table><div class="note">α_W2=0.857. Pre-registered composite.</div></div>
+    <div class="card">
+      <div class="card-title">All 15 H2 cells</div>
+      <table><thead><tr><th>Emotion</th><th>→ Commission</th><th>BH</th><th>→ Behavioral</th><th>BH</th><th>Pathway</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td><span class="dot" style="background:#22c55e"></span>Anger at Netanyahu</td><td>+0.172***</td><td><span class="b-sig">✓</span></td><td>+0.177***</td><td><span class="b-sig">✓</span></td><td>Target → blame</td></tr>
+        <tr class="hl"><td><span class="dot" style="background:#f97316"></span>Internalized regret</td><td>+0.077*</td><td><span class="b-sig">✓</span></td><td>+0.195***</td><td><span class="b-sig">✓</span></td><td>Bridges both</td></tr>
+        <tr><td><span class="dot" style="background:#3b82f6"></span>Collective guilt</td><td style="color:#dc2626">+0.029 n.s.</td><td><span class="b-ns">✗ KEY NULL</span></td><td>+0.124***</td><td><span class="b-sig">✓</span></td><td>Behavioral only</td></tr>
+      </tbody></table>
+    </div>
+    <div class="card"><div class="card-title">β by emotion and outcome</div><canvas id="h2Chart" style="max-height:220px"></canvas></div>
   </div>
-  <div class="card"><div class="card-title">Mediation via exposure_ordinal → emotion → outcome (bootstrap)</div><table><thead><tr><th>Emotion</th><th>Outcome</th><th>ab</th><th>95% BC CI</th><th>Sig</th></tr></thead><tbody><tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>Commission</td><td>0.007</td><td>[-0.006, 0.030]</td><td>BC ✗</td></tr><tr class="hl"><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>Behavioral</td><td>0.031</td><td>[0.010, 0.067]</td><td><strong>BC ✓</strong></td></tr><tr class="hl"><td><span class="dot" style="background:#f97316"></span>Regret</td><td>Commission</td><td>0.019</td><td>[0.003, 0.050]</td><td><strong>BC ✓</strong></td></tr><tr class="hl"><td><span class="dot" style="background:#f97316"></span>Regret</td><td>Behavioral</td><td>0.047</td><td>[0.013, 0.093]</td><td><strong>BC ✓</strong></td></tr><tr class="hl"><td><span class="dot" style="background:#22c55e"></span>Anger (Bibi)</td><td>Commission</td><td>0.026</td><td>[0.002, 0.075]</td><td><strong>BC ✓</strong></td></tr><tr class="hl"><td><span class="dot" style="background:#22c55e"></span>Anger (Bibi)</td><td>Behavioral</td><td>0.027</td><td>[0.002, 0.062]</td><td><strong>BC ✓</strong></td></tr></tbody></table><div class="note">All paths except guilt→commission: BC CI excludes zero.</div></div>
-  <div style="background:#fff7ed;border:0.5px solid #fdba74;color:#7c2d12;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px">Pre-reg deviation (transparent): pre-registered model was cross-sectional (no W1 baseline control). Corrected model adds W1 outcome as lagged-DV covariate — standard for panel data. Both reported; corrected model is primary.</div>
+  <div class="insight-green">שלושת הרגשות <strong>אינם ניתנים להחלפה</strong>. כעס ממוקד מניע ייחוס אחריות לגורם ספציפי. חרטה מגשרת בין מוסדי לפעולה. אשמה מניעה לפעול — אך לא לדרוש ועדה. SIMCA אוחדת אותם; הנתונים מפרידים אותם.</div>
 </div>
-<div id="panel-h3" class="panel">
-  <div style="background:#eff6ff;border:0.5px solid #93c5fd;color:#1e3a5f;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px"><strong>H3 (pre-registered).</strong> Model: W2_emotion ~ exposure_c + ideology_c + exposure_c × ideology_c + W1_emotion (HC3). All predictors mean-centered.</div>
-  <div class="insight">No significant exposure × ideology interactions (all p > .44). Ideology does not moderate the emotional response to the Uvda broadcast. Political ideology predicts baseline emotional levels — right-leaning participants start with lower guilt, regret, and anger at Netanyahu — but the <em>rate of change</em> in response to exposure is equivalent across the ideological spectrum.</div>
-  <div class="card"><div class="card-title">Interaction coefficients</div><table><thead><tr><th>Emotion</th><th>β exposure</th><th>β ideology</th><th>β interaction</th><th>p interaction</th><th>Conclusion</th></tr></thead><tbody><tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>+0.234</td><td>+0.005</td><td>-0.040</td><td>.544</td><td>n.s.</td></tr><tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>+0.217</td><td>-0.180</td><td>-0.001</td><td>.991</td><td>n.s.</td></tr><tr><td><span class="dot" style="background:#22c55e"></span>Anger (Bibi)</td><td>+0.164</td><td>-0.202</td><td>+0.033</td><td>.456</td><td>n.s.</td></tr></tbody></table><div class="note">H3 null. Ideology = baseline determinant, not a moderator of exposure-emotion change.</div></div>
-</div>
-<div id="panel-h4" class="panel">
-  <div style="background:#eff6ff;border:0.5px solid #93c5fd;color:#1e3a5f;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px"><strong>H4 (pre-registered).</strong> Corrected model (primary): emotion_c × ideology_c → outcome, with W1_outcome control. Pre-registered (sensitivity): cross-sectional, no W1 control.</div>
-  <div class="insight">After controlling for W1 baseline, all six emotion × ideology interactions are null (p = .07–.94). Apparent interactions in the cross-sectional model were a baseline artifact: right-leaning participants start with lower accountability support, not lower emotional sensitivity to the broadcast. Motivated reasoning appears to operate through prior attitude formation, not differential in-the-moment processing.</div>
+
+<!-- ═══════════════════════════════════════════════
+     H3/H4
+═══════════════════════════════════════════════ -->
+<div id="panel-h3h4" class="panel">
+  <div style="background:#eff6ff;border:0.5px solid #93c5fd;color:#1e3a5f;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px"><strong>H3/H4 (pre-registered).</strong> ניבאנו שאידיאולוגיה תרכך את הקשר בין חשיפה לרגש (H3) ובין רגש לאחריות (H4). כל האינטראקציות n.s. לאחר שליטה ב-W1. זה לא אומר שאידיאולוגיה לא משנה.</div>
+  <div class="insight-yellow rtl">ה-null הוא <strong>artifact של ceiling effect</strong>, לא שוויון אידיאולוגי. שמאלנים הגיעו ל-W1 עם כעס 6.37/7 — אין לאן לעלות. ימנים (כעס W1=3.12) <strong>כן זזו</strong>: guilt β=+0.221* (p=.032).</div>
   <div class="grid2">
-    <div class="card"><div class="card-title">Corrected model — primary (with W1 baseline control)</div><table><thead><tr><th>Emotion</th><th>Outcome</th><th>β interaction</th><th>p</th><th>Result</th></tr></thead><tbody><tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>Comm</td><td>-0.001</td><td>.943</td><td>n.s.</td></tr><tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>Beh</td><td>+0.013</td><td>.517</td><td>n.s.</td></tr><tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>Comm</td><td>+0.006</td><td>.753</td><td>n.s.</td></tr><tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>Beh</td><td>+0.014</td><td>.512</td><td>n.s.</td></tr><tr><td><span class="dot" style="background:#22c55e"></span>Anger (Bibi)</td><td>Comm</td><td>+0.034</td><td>.069</td><td>n.s.</td></tr><tr><td><span class="dot" style="background:#22c55e"></span>Anger (Bibi)</td><td>Beh</td><td>+0.003</td><td>.846</td><td>n.s.</td></tr></tbody></table></div>
-    <div class="card"><div class="card-title">Pre-registered model — sensitivity (cross-sectional, no W1)</div><table><thead><tr><th>Emotion</th><th>Outcome</th><th>β interaction</th><th>p</th><th>Result</th></tr></thead><tbody><tr class="hl"><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>Comm</td><td>+0.125</td><td>&lt;.001</td><td><strong>sig*</strong></td></tr><tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>Beh</td><td>+0.029</td><td>.335</td><td>n.s.</td></tr><tr class="hl"><td><span class="dot" style="background:#f97316"></span>Regret</td><td>Comm</td><td>+0.182</td><td>&lt;.001</td><td><strong>sig*</strong></td></tr><tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>Beh</td><td>+0.059</td><td>.065</td><td>n.s.</td></tr><tr class="hl"><td><span class="dot" style="background:#22c55e"></span>Anger (Bibi)</td><td>Comm</td><td>+0.118</td><td>&lt;.001</td><td><strong>sig*</strong></td></tr><tr><td><span class="dot" style="background:#22c55e"></span>Anger (Bibi)</td><td>Beh</td><td>-0.005</td><td>.803</td><td>n.s.</td></tr></tbody></table><div class="note">Apparent ideology moderation here is a baseline artifact. Three interactions significant in this model disappear when W1 is controlled.</div></div>
-  </div>
-  <div class="card"><div class="card-title">Simple slopes (pre-registered model only, sig interactions)</div><table><thead><tr><th>Emotion</th><th>Outcome</th><th>Ideology level</th><th>Slope</th><th>p</th></tr></thead><tbody><tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>comm</td><td>low</td><td>+0.123</td><td>.013</td></tr><tr><td></td><td>comm</td><td>mean</td><td>+0.294</td><td>&lt;.001</td></tr><tr><td></td><td>comm</td><td>high</td><td>+0.465</td><td>&lt;.001</td></tr><tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>comm</td><td>low</td><td>+0.157</td><td>.007</td></tr><tr><td></td><td>comm</td><td>mean</td><td>+0.406</td><td>&lt;.001</td></tr><tr><td></td><td>comm</td><td>high</td><td>+0.654</td><td>&lt;.001</td></tr><tr><td><span class="dot" style="background:#22c55e"></span>Anger (Bibi)</td><td>comm</td><td>low</td><td>+0.494</td><td>&lt;.001</td></tr><tr><td></td><td>comm</td><td>mean</td><td>+0.655</td><td>&lt;.001</td></tr><tr><td></td><td>comm</td><td>high</td><td>+0.816</td><td>&lt;.001</td></tr></tbody></table></div>
-</div>
-<div id="panel-med" class="panel">
-  <div style="background:#eff6ff;border:0.5px solid #93c5fd;color:#1e3a5f;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px">Bootstrap mediation (n=5,000, seed=42). Path: exposure_ordinal → W2_emotion → W2_outcome. Both percentile and bias-corrected (BC) 95% CIs reported.<div class="card" style="margin-top:10px"><div class="card-title">Bootstrap indirect effects ab (★ = BC significant)</div><canvas id="medChart" style="max-height:200px"></canvas></div>
-</div>
-  <div class="insight">Five of six mediation paths are BC-significant. Only guilt→commission fails — consistent with the target-attribution interpretation: guilt drives direct action but not institutional demands, which require blame attribution to a specific target.</div>
-  <div class="card"><div class="card-title">Bootstrap indirect effects</div><table><thead><tr><th>Emotion</th><th>Outcome</th><th>ab point est.</th><th>Percentile CI</th><th>BC CI</th><th>BC sig</th></tr></thead><tbody><tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>Commission</td><td>0.007</td><td>[-0.007, 0.028]</td><td>[-0.006, 0.030]</td><td><span class="badge b-ns">BH ✗</span></td></tr><tr class="hl"><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>Behavioral</td><td>0.031</td><td>[0.009, 0.065]</td><td>[0.010, 0.067]</td><td><span class="badge b-sig">BH ✓</span></td></tr><tr class="hl"><td><span class="dot" style="background:#f97316"></span>Regret</td><td>Commission</td><td>0.019</td><td>[0.002, 0.046]</td><td>[0.003, 0.050]</td><td><span class="badge b-sig">BH ✓</span></td></tr><tr class="hl"><td><span class="dot" style="background:#f97316"></span>Regret</td><td>Behavioral</td><td>0.047</td><td>[0.013, 0.092]</td><td>[0.013, 0.093]</td><td><span class="badge b-sig">BH ✓</span></td></tr><tr class="hl"><td><span class="dot" style="background:#22c55e"></span>Anger (Bibi)</td><td>Commission</td><td>0.026</td><td>[-0.000, 0.068]</td><td>[0.002, 0.075]</td><td><span class="badge b-sig">BH ✓</span></td></tr><tr class="hl"><td><span class="dot" style="background:#22c55e"></span>Anger (Bibi)</td><td>Behavioral</td><td>0.027</td><td>[-0.000, 0.059]</td><td>[0.002, 0.062]</td><td><span class="badge b-sig">BH ✓</span></td></tr></tbody></table></div>
-</div>
-<div id="panel-bloc" class="panel">
-  <div style="background:#fff1f2;border:0.5px solid #fda4af;color:#9f1239;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px">★ Supplementary. H2 replicated within 2022 election blocs. BH-FDR within bloc × outcome (k=3). Coalition = vote_2022 ∈ {{1,3,5,6}}; Opposition = {{2,4,7,9,11,12}}.<div class="card" style="margin-top:10px"><div class="card-title">Coalition vs. opposition β — ★ = BH significant</div><canvas id="blocH2" style="max-height:230px"></canvas></div>
-</div>
-  <div class="insight">Two distinct accountability pathways emerge. In the <strong>coalition</strong>, only anger at Netanyahu predicts both commission support and behavioral mobilization — anger serves as the psychological permission slip to cross partisan loyalty. In the <strong>opposition</strong>, commission support shows a ceiling effect (already near-unanimous at W1); all three emotions predict behavioral mobilization.</div>
-  <div class="grid2">
-    <div class="card"><div class="card-title">Coalition (n=212)</div><table><thead><tr><th>Coalition (n=212)</th><th>Outcome</th><th>β</th><th>p</th><th>BH</th></tr></thead><tbody><tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>Commission</td><td>+0.038</td><td>.630</td><td><span class="badge b-ns">BH ✗</span></td></tr><tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>Commission</td><td>+0.155</td><td>.037</td><td><span class="badge b-ns">BH ✗</span></td></tr><tr class="hl"><td><span class="dot" style="background:#22c55e"></span>Anger (Bibi)</td><td>Commission</td><td>+0.214</td><td>.010</td><td><span class="badge b-sig">BH ✓</span></td></tr><tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>Behavioral</td><td>+0.079</td><td>.220</td><td><span class="badge b-ns">BH ✗</span></td></tr><tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>Behavioral</td><td>+0.147</td><td>.054</td><td><span class="badge b-ns">BH ✗</span></td></tr><tr class="hl"><td><span class="dot" style="background:#22c55e"></span>Anger (Bibi)</td><td>Behavioral</td><td>+0.204</td><td>.001</td><td><span class="badge b-sig">BH ✓</span></td></tr></tbody></table></div>
-    <div class="card"><div class="card-title">Opposition (n=205)</div><table><thead><tr><th>Opposition (n=205)</th><th>Outcome</th><th>β</th><th>p</th><th>BH</th></tr></thead><tbody><tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>Commission</td><td>-0.008</td><td>.713</td><td><span class="badge b-ns">BH ✗</span></td></tr><tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>Commission</td><td>-0.003</td><td>.926</td><td><span class="badge b-ns">BH ✗</span></td></tr><tr><td><span class="dot" style="background:#22c55e"></span>Anger (Bibi)</td><td>Commission</td><td>+0.052</td><td>.300</td><td><span class="badge b-ns">BH ✗</span></td></tr><tr class="hl"><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>Behavioral</td><td>+0.140</td><td>&lt;.001</td><td><span class="badge b-sig">BH ✓</span></td></tr><tr class="hl"><td><span class="dot" style="background:#f97316"></span>Regret</td><td>Behavioral</td><td>+0.206</td><td>&lt;.001</td><td><span class="badge b-sig">BH ✓</span></td></tr><tr class="hl"><td><span class="dot" style="background:#22c55e"></span>Anger (Bibi)</td><td>Behavioral</td><td>+0.170</td><td>.001</td><td><span class="badge b-sig">BH ✓</span></td></tr></tbody></table><div class="note">Commission = ceiling effect. Opposition voters already support commission at W1 near-unanimously — no room to move.</div></div>
-  </div>
-</div>
-<div id="panel-eff" class="panel">
-  <div style="background:#fff1f2;border:0.5px solid #fda4af;color:#9f1239;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px">★ Supplementary. Political efficacy (SIMCA). Path A: exposure → efficacy. Path B: mediation via efficacy to behavioral outcome.<div class="card" style="margin-top:10px"><div class="card-title">Path A: exposure → efficacy β (★ = p&lt;.05)</div><canvas id="effA" style="max-height:200px"></canvas></div>
-</div>
-  <div class="insight">Exposure elevated eff_actions (β=+0.261, p=.003) overall. When split by bloc, the effect concentrates in the opposition (β=+0.301, p=.016) with no significant effect in the coalition. Mediation of eff_actions→behavioral is BC-significant.</div>
-  <div class="grid2">
-    <div class="card"><div class="card-title">Path A: Exposure → Efficacy</div><table><thead><tr><th>Efficacy measure</th><th>Scope</th><th>β</th><th>p</th><th></th></tr></thead><tbody><tr><td>eff_actions</td><td>Full</td><td>+0.261</td><td>.003</td><td>**</td></tr><tr><td>eff_general</td><td>Full</td><td>+0.118</td><td>.116</td><td></td></tr><tr><td>eff_actions</td><td>Coalition</td><td>+0.176</td><td>.242</td><td></td></tr><tr><td>eff_general</td><td>Coalition</td><td>+0.052</td><td>.674</td><td></td></tr><tr><td>eff_actions</td><td>Opposition</td><td>+0.301</td><td>.016</td><td>*</td></tr><tr><td>eff_general</td><td>Opposition</td><td>+0.139</td><td>.185</td><td></td></tr></tbody></table></div>
-    <div class="card"><div class="card-title">Mediation: Exposure → Efficacy → Behavioral</div><table><thead><tr><th>Efficacy path</th><th>ab</th><th>BC CI</th><th>sig</th></tr></thead><tbody><tr><td>eff_general</td><td>0.017</td><td>[-0.002,0.046]</td><td>✗</td></tr><tr><td>eff_actions</td><td>0.034</td><td>[0.012,0.066]</td><td>✓</td></tr></tbody></table></div>
+    <div class="card">
+      <div class="card-title">Ceiling effect — Anger W1 by ideology group</div>
+      <canvas id="ceilingChart" style="max-height:160px"></canvas>
+    </div>
+    <div class="card">
+      <div class="card-title">H1 β by ideology thirds</div>
+      <table><thead><tr><th>Group</th><th>N</th><th>Anger W1</th><th>β Guilt</th><th>p</th><th>β Anger</th><th>p</th></tr></thead>
+      <tbody>
+        <tr><td>Left (1–3)</td><td>74</td><td style="color:#dc2626">6.37 ⚠</td><td>+0.118</td><td>.582 n.s.</td><td>−0.035</td><td>.610 n.s.</td></tr>
+        <tr><td>Centre (4)</td><td>88</td><td style="color:#f97316">5.70</td><td>+0.306†</td><td>.075</td><td>+0.161</td><td>.348 n.s.</td></tr>
+        <tr class="hl"><td>Right (5–7)</td><td>297</td><td style="color:#16a34a">3.12</td><td><strong>+0.221*</strong></td><td>.032</td><td>+0.214†</td><td>.060</td></tr>
+      </tbody></table>
+      <div class="note">H4 null: apparent interactions in cross-sectional model disappear when W1 controlled — baseline artifact, not absence of motivated reasoning.</div>
+    </div>
   </div>
 </div>
-<div id="panel-inter" class="panel">
-  <div style="background:#fff1f2;border:0.5px solid #fda4af;color:#9f1239;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px">★ Supplementary. Index of Moderated Mediation (IMM): does ideology moderate the indirect path exposure → emotion → accountability? Bootstrap n=5,000 seed=42.</div>
-  <div class="insight">Five of six IMM paths are null — the indirect effects of exposure via emotions on accountability are equally strong across the ideological spectrum. The exception: anger→commission shows a marginal positive IMM (BC ✓), meaning the anger mediation pathway to institutional accountability is slightly stronger for right-leaning participants. This is consistent with the bloc finding: anger is the rare emotion that crosses coalition loyalty.</div>
-  <div class="card"><div class="card-title">Index of Moderated Mediation (all paths)</div><table><thead><tr><th>Emotion</th><th>Outcome</th><th>IMM</th><th>BC CI</th><th>Sig</th></tr></thead><tbody><tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>Commission</td><td>-0.0001</td><td>[-0.0087,0.0094]</td><td>n.s.</td></tr><tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>Behavioral</td><td>0.0031</td><td>[-0.0059,0.0157]</td><td>n.s.</td></tr><tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>Commission</td><td>0.0013</td><td>[-0.0080,0.0125]</td><td>n.s.</td></tr><tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>Behavioral</td><td>0.0033</td><td>[-0.0062,0.0175]</td><td>n.s.</td></tr><tr class="hl"><td><span class="dot" style="background:#22c55e"></span>Anger (Bibi)</td><td>Commission</td><td>0.0052</td><td>[0.0000,0.0184]</td><td><strong>BC ✓</strong></td></tr><tr><td><span class="dot" style="background:#22c55e"></span>Anger (Bibi)</td><td>Behavioral</td><td>0.0004</td><td>[-0.0035,0.0066]</td><td>n.s.</td></tr></tbody></table></div>
-</div>
-<div id="panel-add" class="panel">
-  <div style="background:#fff1f2;border:0.5px solid #fda4af;color:#9f1239;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px">★ Supplementary (exploratory). H1 replicated within 2022 political blocs. Note: bloc-specific H1 not pre-registered; interpret with caution.</div>
-  <div class="insight">Coalition members showed a significant guilt increase in response to exposure (β={b_fmt(h1b["coalition"]["guilt_comp"]["beta_exposure"])}, BH ✓) while regret and anger showed marginal trends. Opposition members showed no significant exposure effects on any emotion — consistent with ceiling effects and pre-existing high emotional engagement.</div>
-  <div class="card"><div class="card-title">H1 by political bloc (exploratory)</div><table><thead><tr><th>Emotion</th><th>Bloc</th><th>β</th><th>d</th><th>p</th><th>BH</th></tr></thead><tbody><tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>Coalition n=212</td><td>+0.329</td><td>0.481</td><td>.004</td><td><span class="badge b-sig">BH ✓</span></td></tr><tr><td></td><td></td><td>+0.231</td><td>0.424</td><td>.055</td><td><span class="badge b-ns">BH ✗</span></td></tr><tr><td></td><td></td><td>+0.296</td><td>0.252</td><td>.062</td><td><span class="badge b-ns">BH ✗</span></td></tr><tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>Opposition n=205</td><td>+0.116</td><td>0.264</td><td>.350</td><td><span class="badge b-ns">BH ✗</span></td></tr><tr><td></td><td></td><td>+0.093</td><td>0.239</td><td>.458</td><td><span class="badge b-ns">BH ✗</span></td></tr><tr><td></td><td></td><td>+0.101</td><td>0.165</td><td>.271</td><td><span class="badge b-ns">BH ✗</span></td></tr></tbody></table><div class="note">Opposition null may reflect ceiling effects: emotions already elevated at W1. Coalition guilt effect is noteworthy — ideological opponents responding emotionally to the broadcast.</div></div>
-</div>
-<div id="panel-beh_items" class="panel">
-  <div style="background:#fff1f2;border:0.5px solid #fda4af;color:#9f1239;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px">★ Exploratory (post-hoc). Pre-registered composite (α=0.857) decomposed into three items. Not pre-registered; interpret as hypothesis-generating.</div>
-  <div class="insight">Anger at Netanyahu strongly predicts petition signing (β=+0.396) but weakly predicts demonstrations (β=+0.126). Guilt and regret show the reverse: stronger for demos. Social media and demo cluster together (r=.823), while petition is more distinct — consistent with petition as a targeted, attribution-focused action.</div>
-  <div class="grid2">
-    <div class="card"><div class="card-title">H2 by behavioral item (exploratory)</div><table><thead><tr><th>Emotion</th><th>→ Petition</th><th>→ Social media</th><th>→ Demo</th><th>→ Composite</th></tr></thead><tbody><tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>+0.139**</td><td>+0.170***</td><td>+0.195***</td><td>+0.124***</td></tr><tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>+0.192***</td><td>+0.277***</td><td>+0.259***</td><td>+0.195***</td></tr><tr class="hl"><td><span class="dot" style="background:#22c55e"></span>Anger (Bibi)</td><td>+0.396***</td><td>+0.177***</td><td>+0.126***</td><td>+0.176***</td></tr></tbody></table><div class="note">* p<.05  ** p<.01  *** p<.001. BH applied within each item (k=3).</div></div>
-    <div class="card"><div class="card-title">Item properties</div><table><thead><tr><th>Item</th><th>test-retest r</th><th>× Social</th><th>× Demo</th></tr></thead><tbody><tr><td>Petition</td><td>0.864</td><td>0.634</td><td>0.589</td></tr><tr><td>Social media</td><td>0.763</td><td>—</td><td>0.823</td></tr><tr><td>Demo</td><td>0.790</td><td>0.823</td><td>—</td></tr></tbody></table><div class="note">Petition × demo: r=.589 — most distinct pair.</div></div>
+
+<!-- ═══════════════════════════════════════════════
+     EVIDENCE — 3 PILLARS
+═══════════════════════════════════════════════ -->
+<div id="panel-evidence" class="panel">
+  <div style="background:#f0fdf4;border:0.5px solid #86efac;color:#14532d;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px">שלוש שיטות עצמאיות נגד טענת הסלקציה הטהורה. כולן מצביעות לאותו כיוון.</div>
+  <div class="insight-green">שלושת העמודים יחד: סלקציה דיפוזית נשללת (עמוד 1). הסבר על ידי 8 משתנים נמדדים נשלל (עמוד 2). "אותם אנשים" נשלל — כי קבוצה B ראתה את אותם סרטונים (עמוד 3).</div>
+  <div class="grid3">
+    <div class="card" style="border-color:#86efac">
+      <div class="card-title" style="color:#166534">עמוד 1 — Negative Controls</div>
+      <div style="font-size:12px;line-height:1.9">
+        <div>Target outcomes: <strong style="color:#16a34a">10/11 BH-sig</strong></div>
+        <div>Negative controls: <strong style="color:#16a34a">0/4 BH-sig</strong></div>
+        <div style="margin-top:6px;color:#64748b">Hamas resp.: β=+0.006</div>
+        <div style="color:#64748b">Destroy Hamas: β=+0.026</div>
+        <div style="color:#64748b">IDF pride: β=+0.045</div>
+        <div style="color:#64748b">Fatalism: β=−0.031</div>
+        <div style="margin-top:8px;font-size:11px;color:#166534">אם סלקציה — כולם אמורים לזוז. הם לא.</div>
+      </div>
+    </div>
+    <div class="card" style="border-color:#86efac">
+      <div class="card-title" style="color:#166534">עמוד 2 — PSM</div>
+      <div style="font-size:12px;line-height:1.9">
+        <div>AUC=0.769 | 103 pairs | 7/8 balanced</div>
+        <div style="margin-top:6px"><strong>ATT significant:</strong></div>
+        <div>Regret: ATT=+0.424 <span class="b-sig">*</span></div>
+        <div>Bibi blame: ATT=+0.359 <span class="b-sig">*</span></div>
+        <div>Guilt: ATT=+0.353 <span class="b-mar">†</span></div>
+        <div>Commission: ATT=+0.291 <span class="b-mar">†</span></div>
+        <div style="margin-top:8px;font-size:11px;color:#166534">Matched on 8 covariates — עדיין שורד.</div>
+      </div>
+    </div>
+    <div class="card" style="border-color:#86efac">
+      <div class="card-title" style="color:#166534">עמוד 3 — Framing Specificity ★</div>
+      <div style="font-size:12px;line-height:1.9">
+        <div>Group A (Uvda, N=154): guilt β=+0.41</div>
+        <div>Group B (videos, no Uvda, N=235): <strong style="color:#dc2626">0/10 sig</strong></div>
+        <div style="margin-top:6px;color:#64748b">אותם סרטונים, פריימינג שונה.</div>
+        <div>לאחר שליטה באידיאולוגיה+מחאה: עדיין 0/10 ב-B.</div>
+        <div style="margin-top:8px;font-size:11px;color:#166534">הכי חזק — מסלק "אותם אנשים".</div>
+      </div>
+    </div>
   </div>
 </div>
+
+<!-- ═══════════════════════════════════════════════
+     FRAMING
+═══════════════════════════════════════════════ -->
 <div id="panel-framing" class="panel">
-  <div style="background:#fff1f2;border:0.5px solid #fda4af;color:#9f1239;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px">★ Supplementary. Does journalistic packaging matter beyond raw content? N≈450 (exclude "unsure" on general exposure).</div>
-  <div class="insight">173 respondents (37.7%) saw general hostage videos but did NOT watch Uvda — for them, exposure produced zero emotional change. Uvda-specific exposure remained significant for all three emotions controlling for general exposure. Coalition voters trust Channel 12 at M=2.38/7 vs. opposition M=4.98 — yet the Uvda effect persisted even among skeptical viewers, making simple confirmation-bias interpretations untenable.</div>
+  <div style="background:#f0fdf4;border:0.5px solid #86efac;color:#14532d;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px">★ Exploratory. שלוש קבוצות הדרגתיות לפי אופן החשיפה.</div>
+  <div class="insight-green rtl">קבוצה B ראתה את אותם סרטוני חטופים — אבל לא דרך עובדה. <strong>0/10 תוצאות מובהקות</strong> לאחר שליטה. פריימינג עיתונאי — לא תוכן גולמי — היה המרכיב הפעיל.</div>
+  <div class="grid3" style="margin-bottom:10px">
+    <div class="card" style="border-color:#93c5fd">
+      <div class="card-title" style="color:#1d4ed8">A — עובדה (N=154)</div>
+      <div style="font-size:12px;line-height:1.9">
+        Coalition: 31% | Opposition: 62%<br>Anger W1: 5.35<br>Guilt β vs C: <strong>+0.411</strong><br>Regret β vs C: <strong>+0.561</strong>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">B — וידאו, ללא עובדה (N=235)</div>
+      <div style="font-size:11.5px;color:#64748b;margin-bottom:4px">TV אחר / סושיאל / וואטסאפ / טלגרם</div>
+      <div style="font-size:12px;line-height:1.9">
+        Coalition: 57% | Opposition: 35%<br>Anger W1: 3.49<br>כל התוצאות: <strong style="color:#dc2626">0/10 sig</strong>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">C — לא נחשף (N=63)</div>
+      <div style="font-size:12px;line-height:1.9">
+        Coalition: 43% | Opposition: 41%<br>Anger W1: 3.79<br><em>Baseline reference group</em>
+      </div>
+    </div>
+  </div>
+  <div class="card"><div class="card-title">β coefficient: A vs C (Uvda) vs B vs C (no framing)</div><canvas id="framingChart" style="max-height:280px"></canvas></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     JOHNSON-NEYMAN
+═══════════════════════════════════════════════ -->
+<div id="panel-jn" class="panel">
+  <div style="background:#fdf4ff;border:0.5px solid #d8b4fe;color:#6b21a8;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px"><strong>Johnson-Neyman (exploratory).</strong> Model: W2_emotion ~ exp_c + ideo_c + exp_c×ideo_c + W1_emotion (HC3). באיזה ערך אידיאולוגי מפסיק/מתחיל להיות מובהק אפקט החשיפה?</div>
+  <div class="insight-green rtl">אפקט החשיפה על אשמה מובהק לאידיאולוגיה <strong>2.72–5.65</strong> — כולל שמאל, מרכז, ורוב הימין. ה-null הגלובלי ב-H3 הוא artifact של שני גבולות שמבטלים זה את זה: שמאל = ceiling, ימין קיצוני = עמידות.</div>
   <div class="grid2">
-    <div class="card"><div class="card-title">General hostage video exposure alone → emotions</div><table><thead><tr><th>Emotion</th><th>β (general exposure)</th><th>p</th><th>BH</th></tr></thead><tbody><tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>+0.131</td><td>.128</td><td><span class="badge b-ns">BH ✗</span></td></tr><tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>+0.176</td><td>.066</td><td><span class="badge b-ns">BH ✗</span></td></tr><tr><td><span class="dot" style="background:#22c55e"></span>Anger (Bibi)</td><td>+0.014</td><td>.877</td><td><span class="badge b-ns">BH ✗</span></td></tr></tbody></table><div class="note">All null. Raw content ≠ emotional change.</div></div>
-    <div class="card"><div class="card-title">Unique Uvda effect (controlling general exposure)</div><table><thead><tr><th>Emotion</th><th>β general (in joint)</th><th>β Uvda (in joint)</th><th>p Uvda</th></tr></thead><tbody><tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>-0.025 (p=.801)</td><td>+0.276**</td><td>.004</td></tr><tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>+0.037 (p=.709)</td><td>+0.246*</td><td>.010</td></tr><tr><td><span class="dot" style="background:#22c55e"></span>Anger (Bibi)</td><td>-0.107 (p=.332)</td><td>+0.210*</td><td>.037</td></tr></tbody></table><div class="note">β_general ≈ 0; β_Uvda survives across all three emotions.</div></div>
+    <div class="card">
+      <div class="card-title">JN boundaries & simple slopes</div>
+      <table><thead><tr><th>Emotion</th><th>JN lower</th><th>JN upper</th><th>Region</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td>Collective Guilt</td><td>2.72</td><td>5.65</td><td>Sig: 2.72–5.65</td></tr>
+        <tr class="hl"><td>Internalized Regret</td><td>3.94</td><td>5.76</td><td>Sig: 3.94–5.76</td></tr>
+        <tr><td>Anger at Netanyahu</td><td>—</td><td>—</td><td>Only †, ~4.3–4.9</td></tr>
+      </tbody></table>
+      <div style="margin-top:10px">
+      <table><thead><tr><th>Ideology</th><th>Guilt slope</th><th>p</th><th>Regret slope</th><th>p</th></tr></thead>
+      <tbody>
+        <tr><td>1 (far left)</td><td>+0.391</td><td>.152 n.s.</td><td>+0.222</td><td>.433 n.s.</td></tr>
+        <tr><td>2</td><td>+0.350†</td><td>.093</td><td>+0.220</td><td>.313 n.s.</td></tr>
+        <tr class="hl"><td>3</td><td>+0.310*</td><td>.037</td><td>+0.219</td><td>.166 n.s.</td></tr>
+        <tr class="hl"><td>4 (centre)</td><td>+0.270**</td><td>.007</td><td>+0.218*</td><td>.046</td></tr>
+        <tr class="hl"><td>5</td><td>+0.230**</td><td>.008</td><td>+0.217*</td><td>.018</td></tr>
+        <tr><td>6</td><td>+0.189</td><td>.113 n.s.</td><td>+0.215†</td><td>.073</td></tr>
+        <tr><td>7 (far right)</td><td>+0.149</td><td>.394 n.s.</td><td>+0.214</td><td>.217 n.s.</td></tr>
+      </tbody></table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Simple slope — Guilt (שטח ירוק = אזור מובהק)</div>
+      <canvas id="jnGuiltChart" style="max-height:230px"></canvas>
+      <div class="card-title" style="margin-top:10px">Simple slope — Regret</div>
+      <canvas id="jnRegretChart" style="max-height:180px"></canvas>
+    </div>
   </div>
-  <div class="card"><div class="card-title">Channel trust by political bloc</div><table><thead><tr><th>Channel</th><th>M Coalition</th><th>M Opposition</th><th>Gap</th><th>r(ideology)</th></tr></thead><tbody><tr><td>Ch. 12 (Uvda)</td><td>2.37</td><td>4.99</td><td>+2.61</td><td>-0.469</td></tr><tr><td>Ch. 11</td><td>3.36</td><td>5.15</td><td>+1.79</td><td>-0.403</td></tr><tr><td>Ch. 14</td><td>4.92</td><td>1.95</td><td>-2.97</td><td>0.527</td></tr><tr><td>News sites</td><td>3.39</td><td>4.68</td><td>+1.30</td><td>-0.298</td></tr></tbody></table><div class="note">Measured at W2 (post-exposure); reverse causation possible. Descriptive context only.</div></div>
 </div>
-<div id="panel-bloc_new" class="panel"><div style="background:#fff1f2;border:0.5px solid #fda4af;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px;color:#9f1239">★ <strong>Exploratory (post-hoc).</strong> Exposure effects on attitude items — split by 2022 bloc. HC3, N=459.</div><div class="insight"><strong>Three bloc-specific findings:</strong> Coalition only: unjust β=+0.428 ★ — largest attitude shift in the dataset. Coalition stronger: isr_save_me β=+0.384 ★. Opposition only: murder_bibi β=+0.210 ★. Hamas: null everywhere.</div><div class="grid2"><div class="card"><div class="card-title">β by bloc (★ p&lt;.05, † p&lt;.10)</div><table><thead><tr><th>Item</th><th>Full β</th><th>Coal β</th><th>Oppo β</th></tr></thead><tbody><tr class="hl"><td><strong>unjust</strong> — govt delayed for wrong reasons</td><td>+0.276</td><td><strong>+0.428 ★</strong></td><td><strong>+0.137 </strong></td></tr><tr class="hl"><td><strong>isr_save_me</strong> — Israelis will save me</td><td>+0.302</td><td><strong>+0.384 ★</strong></td><td><strong>+0.217 †</strong></td></tr><tr class="hl"><td><strong>murder_bibi</strong> — Bibi responsible for deaths</td><td>+0.215</td><td><strong>+0.181 </strong></td><td><strong>+0.210 ★</strong></td></tr><tr><td><strong>bibi_save_me</strong> — Bibi will save me (&darr;)</td><td>-0.203</td><td><strong>-0.224 †</strong></td><td><strong>-0.211 ★</strong></td></tr><tr><td><strong>release_terr</strong> — release terrorists for deal</td><td>+0.091</td><td><strong>-0.058 </strong></td><td><strong>+0.150 †</strong></td></tr><tr><td><strong>inevitable</strong> — outcome was inevitable (&darr;)</td><td>-0.168</td><td><strong>-0.144 </strong></td><td><strong>-0.080 </strong></td></tr><tr><td><strong>murder_hamas</strong> — Hamas responsible for deaths</td><td>+0.004</td><td><strong>+0.005 </strong></td><td><strong>+0.002 </strong></td></tr></tbody></table><div class="note">Coalition n=212, Opposition n=205.</div></div><div class="card"><div class="card-title">W1 baseline means</div><table><thead><tr><th>Item</th><th>M Coal W1</th><th>M Oppo W1</th><th>Gap</th></tr></thead><tbody><tr><td>unjust</td><td>2.79</td><td>6.00</td><td>+3.21</td></tr><tr><td>murder_bibi</td><td>2.60</td><td>5.26</td><td>+2.65</td></tr><tr><td>bibi_save_me</td><td>4.82</td><td>2.18</td><td>-2.65</td></tr><tr><td>isr_save_me</td><td>4.17</td><td>5.22</td><td>+1.05</td></tr><tr><td>release_terr</td><td>4.50</td><td>6.36</td><td>+1.85</td></tr><tr><td>murder_hamas</td><td>6.87</td><td>6.88</td><td>+0.01</td></tr></tbody></table><div class="note">Large baseline gaps = ceiling effects in opposition for unjust and murder_bibi.</div></div></div><div class="card"><div class="card-title">Exposure β by bloc</div><canvas id="blocNewChart" style="max-height:200px"></canvas></div></div>
-<div id="panel-ideo_thirds" class="panel"><div style="background:#fff1f2;border:0.5px solid #fda4af;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px;color:#9f1239">★ <strong>Exploratory (post-hoc).</strong> H1 within ideology thirds. Explains the H3 null. Not pre-registered.</div><div class="insight">Left-leaning participants showed <strong>no exposure effect on any emotion</strong> — ceiling effect from high W1 baseline (guilt M=3.95). Right-leaning showed the strongest effects: guilt β=+0.221 ★, regret and anger marginal. The H3 null is an artifact, not ideological equivalence.</div><div class="grid2"><div class="card"><div class="card-title">H1 β by ideology third (OLS HC3)</div><table><thead><tr><th>Group</th><th>N</th><th>Guilt β</th><th>p</th><th>Regret β</th><th>p</th><th>Anger β</th><th>p</th></tr></thead><tbody><tr><td>Left (1–3)</td><td>74</td><td>+0.118</td><td>.582</td><td>+0.200</td><td>.423</td><td>-0.035</td><td>.610</td></tr><tr><td>Centre (4)</td><td>88</td><td>+0.306 †</td><td>.075</td><td>+0.238</td><td>.210</td><td>+0.161</td><td>.348</td></tr><tr class="hl"><td><strong>Right (5–7)</strong></td><td>297</td><td><strong>+0.221 ★</strong></td><td>.032</td><td>+0.190 †</td><td>.084</td><td>+0.214 †</td><td>.060</td></tr></tbody></table></div><div class="card"><div class="card-title">Why left is null — W1 baseline</div><table><thead><tr><th>Group</th><th>Guilt W1</th><th>Anger W1</th><th>Interpretation</th></tr></thead><tbody><tr><td>Left</td><td style="color:#16a34a"><strong>3.95</strong></td><td>6.45</td><td>Ceiling — no room to move</td></tr><tr><td>Centre</td><td>3.01</td><td>5.69</td><td>Moderate</td></tr><tr class="hl"><td>Right</td><td style="color:#dc2626"><strong>2.05</strong></td><td>3.12</td><td>Low baseline → large change</td></tr></tbody></table><div class="note">1.5-point guilt gap (left 3.95 vs right 2.05) explains the null in H3.</div></div></div><div class="card"><div class="card-title">H1 β by ideology third</div><canvas id="ideoThirdsChart" style="max-height:200px"></canvas></div></div>
-<div id="panel-scan" class="panel">
-  <div style="background:#f0fdf4;border:0.5px solid #86efac;color:#14532d;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px">N=459. Descriptives, wave change, and intercorrelation matrix at W2.</div>
+
+<!-- ═══════════════════════════════════════════════
+     BLOC — BASIC
+═══════════════════════════════════════════════ -->
+<div id="panel-bloc" class="panel">
+  <div style="background:#fff1f2;border:0.5px solid #fda4af;color:#9f1239;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px">★ Supplementary. Coalition=212 (vote_2022 ∈ {1,3,5,6}), Opposition=205 ({2,4,7,9,11,12}).</div>
+  <div class="insight">קואליציה מעדכנת קוגניציות (עיכוב ממשלה, האשמת ביבי). אופוזיציה — פעולה ומסוגלות. Ceiling effect באופוזיציה על ועדת חקירה.</div>
   <div class="grid2">
-    <div class="card"><div class="card-title">Descriptives: W1→W2 change and stability</div><table><thead><tr><th>Variable</th><th>M W1</th><th>SD W1</th><th>M W2</th><th>Δ</th><th>p (paired)</th><th>test-retest r</th></tr></thead><tbody><tr><td>Guilt comp</td><td>2.54</td><td>1.67</td><td>2.80</td><td>+0.25</td><td>&lt;.001</td><td>0.726</td></tr><tr><td>Regret comp</td><td>2.45</td><td>1.65</td><td>2.63</td><td>+0.18</td><td>.005</td><td>0.707</td></tr><tr><td>Anger Bibi</td><td>4.15</td><td>2.54</td><td>4.27</td><td>+0.12</td><td>.043</td><td>0.873</td></tr><tr><td>Commission</td><td>4.90</td><td>2.43</td><td>4.84</td><td>-0.06</td><td>.221</td><td>0.912</td></tr><tr><td>Behavioral</td><td>3.30</td><td>1.99</td><td>3.29</td><td>-0.01</td><td>.855</td><td>0.872</td></tr></tbody></table></div>
-    <div class="card"><div class="card-title">Intercorrelation matrix at W2</div><table><thead><tr><th>Variable 1</th><th>Variable 2</th><th>r W2</th></tr></thead><tbody><tr><td>guilt</td><td>regret</td><td>0.832</td></tr><tr><td>guilt</td><td>anger (Bibi)</td><td>0.490</td></tr><tr><td>guilt</td><td>commission general</td><td>0.360</td></tr><tr><td>guilt</td><td>behavioral</td><td>0.525</td></tr><tr><td>guilt</td><td>political_ideology</td><td>-0.359</td></tr><tr><td>regret</td><td>anger (Bibi)</td><td>0.545</td></tr><tr><td>regret</td><td>commission general</td><td>0.440</td></tr><tr><td>regret</td><td>behavioral</td><td>0.621</td></tr><tr><td>regret</td><td>political_ideology</td><td>-0.431</td></tr><tr><td>anger (Bibi)</td><td>commission general</td><td>0.776</td></tr><tr><td>anger (Bibi)</td><td>behavioral</td><td>0.756</td></tr><tr><td>anger (Bibi)</td><td>political_ideology</td><td>-0.571</td></tr><tr><td>commission general</td><td>behavioral</td><td>0.724</td></tr><tr><td>commission general</td><td>political_ideology</td><td>-0.537</td></tr><tr><td>behavioral</td><td>political_ideology</td><td>-0.523</td></tr></tbody></table></div>
+    <div class="card">
+      <div class="card-title">H1 by bloc — exposure → emotions</div>
+      <table><thead><tr><th>Emotion</th><th>Full β</th><th>Coalition β</th><th>Opposition β</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td>Collective guilt</td><td>+0.249**</td><td style="color:#dc2626">+0.329**</td><td>+0.116 n.s.</td></tr>
+        <tr><td>Internalized regret</td><td>+0.241**</td><td>+0.231†</td><td>+0.093 n.s.</td></tr>
+        <tr><td>Anger at Netanyahu</td><td>+0.152†</td><td>+0.296†</td><td>+0.101 n.s.</td></tr>
+      </tbody></table>
+      <div class="note">Coalition: more room to move (anger W1=2.37 ctrl). Opposition: ceiling (anger W1=5.33 ctrl).</div>
+    </div>
+    <div class="card">
+      <div class="card-title">H1 by bloc — key outcomes</div>
+      <table><thead><tr><th>Outcome</th><th>Full β</th><th>Coalition β</th><th>Opposition β</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td>Govt delayed unjustly</td><td>+0.276***</td><td style="color:#dc2626">+0.428**</td><td>+0.137 n.s.</td></tr>
+        <tr class="hl"><td>Commission</td><td>+0.176**</td><td style="color:#dc2626">+0.273*</td><td>+0.071 n.s.</td></tr>
+        <tr class="hl"><td>Behavioral composite</td><td>+0.121†</td><td>+0.040 n.s.</td><td style="color:#16a34a">+0.173*</td></tr>
+        <tr><td>Efficacy actions</td><td>+0.261**</td><td>+0.176 n.s.</td><td style="color:#16a34a">+0.301*</td></tr>
+        <tr><td>Bibi blame</td><td>+0.220**</td><td style="color:#dc2626">+0.347*</td><td>+0.073 n.s.</td></tr>
+        <tr><td>Israelis will save me</td><td>+0.302***</td><td style="color:#dc2626">+0.384*</td><td>+0.217†</td></tr>
+      </tbody></table>
+    </div>
   </div>
+  <div class="card"><div class="card-title">β by bloc — all outcomes</div><canvas id="blocChart" style="max-height:230px"></canvas></div>
 </div>
-<div id="panel-dv" class="panel">
-  <div style="background:#f0fdf4;border:0.5px solid #86efac;color:#14532d;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px">◆ Reviewer supplement. Discriminant and convergent validity of accountability measures.</div>
-  <div class="insight">Commission and behavioral items are related but distinct (r=.724). Demo shows lowest test-retest stability (.790) — reflecting context-sensitivity of protest intentions — while commission support is highly stable (.912). This validates treating institutional and behavioral accountability as separate constructs.</div>
+
+<!-- ═══════════════════════════════════════════════
+     BLOC — DEEP DIVE
+═══════════════════════════════════════════════ -->
+<div id="panel-bloc_deep" class="panel">
+  <div class="q-banner">ניתוח עומק: מה באמת קרה בכל גוש? ארבעה ממצאים שלא הוצגו בסיכומים הבסיסיים.</div>
+  <div class="insight rtl">
+    (1) <strong>שיעורי חשיפה שונים דרמטית</strong> — 61% אופוזיציה, 35% קואליציה. (2) עובדה <strong>עצרה ירידה</strong> בתמיכה בוועדה, לא הגדילה אותה. (3) <strong>Freeze התנהגותי</strong> בקואליציה לעומת גיוס באופוזיציה. (4) <strong>העברת אמון</strong> מביבי לחברה הישראלית — בקואליציה חשופה בלבד.
+  </div>
   <div class="grid2">
-    <div class="card"><div class="card-title">Test-retest reliability (W1×W2)</div><table><thead><tr><th>Item</th><th>test-retest r</th><th>p</th></tr></thead><tbody><tr><td>commission general</td><td>0.912</td><td>&lt;.001</td></tr><tr><td>commission demo</td><td>0.790</td><td>&lt;.001</td></tr><tr><td>commission petition</td><td>0.864</td><td>&lt;.001</td></tr><tr><td>commission all home</td><td>0.845</td><td>&lt;.001</td></tr><tr><td>commission bibi blame</td><td>0.924</td><td>&lt;.001</td></tr></tbody></table></div>
-    <div class="card"><div class="card-title">Intercorrelations at W2</div><table><thead><tr><th>Pair</th><th>r W2</th><th>p</th></tr></thead><tbody><tr><td>commission general × commission demo</td><td>0.499</td><td>&lt;.001</td></tr><tr><td>commission general × commission petition</td><td>0.836</td><td>&lt;.001</td></tr><tr><td>commission general × commission all home</td><td>0.658</td><td>&lt;.001</td></tr><tr><td>commission general × commission bibi blame</td><td>0.854</td><td>&lt;.001</td></tr><tr><td>commission demo × commission petition</td><td>0.589</td><td>&lt;.001</td></tr><tr><td>commission demo × commission all home</td><td>0.391</td><td>&lt;.001</td></tr><tr><td>commission demo × commission bibi blame</td><td>0.562</td><td>&lt;.001</td></tr><tr><td>commission petition × commission all home</td><td>0.670</td><td>&lt;.001</td></tr><tr><td>commission petition × commission bibi blame</td><td>0.817</td><td>&lt;.001</td></tr><tr><td>commission all home × commission bibi blame</td><td>0.665</td><td>&lt;.001</td></tr></tbody></table></div>
+    <div class="card">
+      <div class="card-title">1. שיעורי חשיפה לפי גוש</div>
+      <table><thead><tr><th>גוש</th><th>N</th><th>נחשפו</th><th>שיעור</th><th>ביקורת</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td>קואליציה</td><td>212</td><td>75</td><td style="color:#dc2626;font-weight:700">35.4%</td><td>137 (64.6%)</td></tr>
+        <tr class="hl"><td>אופוזיציה</td><td>205</td><td>125</td><td style="color:#16a34a;font-weight:700">61.0%</td><td>80 (39.0%)</td></tr>
+      </tbody></table>
+      <div class="note rtl">רוב הנחשפים הם אנשי אופוזיציה — context הכרחי לכל שאר הניתוחים.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">2. ועדת חקירה — עצירת ירידה (לא עלייה)</div>
+      <table><thead><tr><th>קבוצה</th><th>W1</th><th>W2</th><th>Δ</th><th>פרשנות</th></tr></thead>
+      <tbody>
+        <tr><td>קואליציה ביקורת</td><td>2.85</td><td>2.62</td><td style="color:#dc2626;font-weight:700">−0.226</td><td>ירידה טבעית</td></tr>
+        <tr class="hl"><td>קואליציה נחשפו</td><td>4.11</td><td>4.18</td><td style="color:#16a34a;font-weight:700">+0.067</td><td>יציבות ✓</td></tr>
+        <tr><td>אופוזיציה ביקורת</td><td>6.04</td><td>6.03</td><td>−0.013</td><td>ceiling</td></tr>
+        <tr><td>אופוזיציה נחשפו</td><td>6.66</td><td>6.71</td><td>+0.056</td><td>ceiling</td></tr>
+      </tbody></table>
+      <div class="note rtl">ה-ANCOVA קורא לזה β=+0.273* — נכון. אבל הסיפור: ביקורת ירדה, חשופים נשארו. לא שכנוע — מניעת שחיקה.</div>
+    </div>
   </div>
-</div>
-<div id="panel-spec" class="panel">
-  <div style="background:#f0fdf4;border:0.5px solid #86efac;color:#14532d;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px">◆ Reviewer supplement. Emotion specificity: 8 predictors entered simultaneously (+ W1 baseline). BH-FDR k=8 per outcome.<div class="card" style="margin-top:10px"><div class="card-title">8 emotions simultaneously — ★ = BH significant</div><canvas id="specChart" style="max-height:220px"></canvas></div>
-</div>
-  <div class="insight">Anger at Netanyahu is the sole significant predictor of commission support when all emotions compete simultaneously. Regret and anger predict behavioral mobilization. Critically, anger at Hamas shows no significant effect — target attribution matters, not valence alone.</div>
   <div class="grid2">
-    <div class="card"><div class="card-title">Commission of inquiry</div><table><thead><tr><th>Commission — all 8 emotions simultaneous</th><th>β</th><th>p</th><th>BH</th></tr></thead><tbody><tr><td>guilt</td><td>-0.112</td><td>.142</td><td><span class="badge b-ns">BH ✗</span></td></tr><tr><td>regret</td><td>+0.100</td><td>.148</td><td><span class="badge b-ns">BH ✗</span></td></tr><tr class="hl"><td>anger (Bibi)</td><td>+0.169</td><td>.002</td><td><span class="badge b-sig">BH ✓</span></td></tr><tr><td>angerhamas</td><td>-0.058</td><td>.294</td><td><span class="badge b-ns">BH ✗</span></td></tr><tr><td>angerisraelis</td><td>+0.022</td><td>.496</td><td><span class="badge b-ns">BH ✗</span></td></tr><tr><td>sadness</td><td>+0.059</td><td>.258</td><td><span class="badge b-ns">BH ✗</span></td></tr><tr><td>shame</td><td>+0.006</td><td>.821</td><td><span class="badge b-ns">BH ✗</span></td></tr><tr><td>indif</td><td>-0.004</td><td>.909</td><td><span class="badge b-ns">BH ✗</span></td></tr></tbody></table></div>
-    <div class="card"><div class="card-title">Behavioral composite</div><table><thead><tr><th>Behavioral — all 8 emotions simultaneous</th><th>β</th><th>p</th><th>BH</th></tr></thead><tbody><tr><td>guilt</td><td>-0.061</td><td>.178</td><td><span class="badge b-ns">BH ✗</span></td></tr><tr class="hl"><td>regret</td><td>+0.184</td><td>&lt;.001</td><td><span class="badge b-sig">BH ✓</span></td></tr><tr class="hl"><td>anger (Bibi)</td><td>+0.163</td><td>&lt;.001</td><td><span class="badge b-sig">BH ✓</span></td></tr><tr><td>angerhamas</td><td>+0.020</td><td>.725</td><td><span class="badge b-ns">BH ✗</span></td></tr><tr><td>angerisraelis</td><td>+0.068</td><td>.076</td><td><span class="badge b-ns">BH ✗</span></td></tr><tr><td>sadness</td><td>-0.122</td><td>.129</td><td><span class="badge b-ns">BH ✗</span></td></tr><tr><td>shame</td><td>+0.002</td><td>.946</td><td><span class="badge b-ns">BH ✗</span></td></tr><tr><td>indif</td><td>-0.013</td><td>.741</td><td><span class="badge b-ns">BH ✗</span></td></tr></tbody></table></div>
+    <div class="card">
+      <div class="card-title">3. Behavioral freeze vs. גיוס</div>
+      <table><thead><tr><th>קבוצה</th><th>Δ ביקורת</th><th>Δ נחשפו</th><th>נטו</th><th>כיוון</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td>קואליציה</td><td style="color:#16a34a">+0.095</td><td style="color:#dc2626">−0.080</td><td style="color:#dc2626;font-weight:700">−0.175</td><td>⬇ Freeze</td></tr>
+        <tr class="hl"><td>אופוזיציה</td><td style="color:#dc2626">−0.137</td><td style="color:#16a34a">+0.035</td><td style="color:#16a34a;font-weight:700">+0.172</td><td>⬆ גיוס</td></tr>
+      </tbody></table>
+      <div class="note rtl">קואליציה: עדכון קוגניטיבי (אשמה, האשמת ביבי) לא תורגם לפעולה — אולי עצר אותה. אופוזיציה: חשיפה שינתה כיוון ממגמת ירידה לעלייה.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">4. העברת אמון — מביבי לחברה (קואליציה חשופה בלבד)</div>
+      <table><thead><tr><th>קבוצה</th><th>"ביבי יציל" Δ</th><th>"ישראלים יצילו" Δ</th></tr></thead>
+      <tbody>
+        <tr><td>קואליציה ביקורת</td><td>−0.190</td><td>−0.124</td></tr>
+        <tr class="hl"><td>קואליציה <strong>נחשפו</strong></td><td>−0.120</td><td style="color:#16a34a;font-weight:700">+0.120</td></tr>
+        <tr><td>אופוזיציה ביקורת</td><td>+0.237</td><td>−0.087</td></tr>
+        <tr><td>אופוזיציה נחשפו</td><td>−0.112</td><td>−0.128</td></tr>
+      </tbody></table>
+      <div class="note rtl">Mirror effect בקואליציה חשופה בלבד. העברה מאמון מוסדי לאמון חברתי.</div>
+    </div>
+  </div>
+  <div class="card"><div class="card-title">Net Δ (exposed − control) לפי גוש — כל התוצאות</div>
+    <canvas id="blocNetDeltaChart" style="max-height:230px"></canvas>
+    <div class="note rtl" style="margin-top:6px">אדום = קואליציה, כחול = אופוזיציה. ממחיש את ה-dissociation: קואליציה = קוגניציה ואשמה, אופוזיציה = פעולה ומסוגלות.</div>
   </div>
 </div>
-<div id="panel-blame" class="panel">
-  <div style="background:#f0fdf4;border:0.5px solid #86efac;color:#14532d;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px">◆ Reviewer supplement. Bibi blame (causal attribution) as a separate mediator: exposure → bibi_blame → accountability.</div>
-  <div class="insight">Exposure elevated bibi_blame (β=+0.220, d=0.30, p=.003). bibi_blame mediates both outcomes (BC ✓). In a joint model with all three emotions, bibi_blame absorbs the effect on commission (β=.320***) while behavioral mobilization retains direct emotional pathways. Note: r(anger_bibi × bibi_blame) at W2 = 0.876 — the two constructs are nearly collinear.</div>
+
+<!-- ═══════════════════════════════════════════════
+     OPEN QUESTIONS
+═══════════════════════════════════════════════ -->
+<div id="panel-open_q" class="panel">
+  <div class="insight rtl"><strong>שאלות לדיון עם עירן — לא חד-צדדי</strong></div>
   <div class="grid2">
-    <div class="card"><div class="card-title">Path A: Exposure → bibi_blame</div><table><thead><tr><th>Group</th><th>bibi_blame W1</th><th>bibi_blame W2</th><th>Δ</th></tr></thead><tbody><tr><td>Exposed (n=216)</td><td>5.25</td><td>5.40</td><td>+0.16</td></tr><tr><td>Control (n=243)</td><td>3.50</td><td>3.52</td><td>+0.02</td></tr></tbody></table><div class="note">β=+0.220 (HC3), d=0.30, p=.003</div></div>
-    <div class="card"><div class="card-title">Mediation: exposure → bibi_blame → outcome</div><table><thead><tr><th>Outcome</th><th>ab</th><th>BC CI</th><th>Sig</th></tr></thead><tbody><tr class="hl"><td>Commission</td><td>0.068</td><td>[0.027,0.139]</td><td>✓ BC</td></tr><tr class="hl"><td>Behavioral</td><td>0.036</td><td>[0.014,0.072]</td><td>✓ BC</td></tr></tbody></table></div>
+    <div class="card">
+      <div class="card-title">שאלות תיאורטיות ומתודולוגיות</div>
+      <table><thead><tr><th>#</th><th>שאלה</th><th>הרקע</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>H2 — association או pathway?</td><td>ANCOVA = association at W2 עם W1 control. לא change-on-change. עד כמה אפשר לדבר על "מיתווך"?</td></tr>
+        <tr><td>2</td><td>הnull של אשמה → ועדה</td><td>זה ממצא תיאורטי מעניין, לא כשל. איך לנסח: "guilt does not predict institutional accountability"?</td></tr>
+        <tr><td>3</td><td>H3/H4 null — ניסוח</td><td>JN מראה שהאפקט קיים לאידיאולוגיה 2.72–5.65. האם מספיק לכתוב "ideology doesn't block the effect"?</td></tr>
+        <tr><td>4</td><td>Behavioral freeze בקואליציה</td><td>Exploratory. אבל מעניין — עדכון קוגניטיבי בלי תרגום לפעולה. System Justification?</td></tr>
+        <tr><td>5</td><td>פריימינג — גוף או נספח?</td><td>לא פרה-רגיסטרתי. אבל הראיה הכי חזקה נגד סלקציה. איפה שמים אותה בנייר?</td></tr>
+      </tbody></table>
+    </div>
+    <div class="card">
+      <div class="card-title">החלטות כתיבה</div>
+      <table><thead><tr><th>#</th><th>נושא</th><th>אופציות</th></tr></thead>
+      <tbody>
+        <tr><td>A</td><td>Coalition guilt β=+0.329** (H1 by bloc)</td><td>Finding ראשי? נספח? מה המשמעות — ימנים מגיבים רגשית לעובדה.</td></tr>
+        <tr><td>B</td><td>IMM — anger→commission BC✓</td><td>Section נפרד? הערת שוליים? מה המשמעות — כשקואליציה כועסת, זה עובד יותר.</td></tr>
+        <tr><td>C</td><td>N = 459 vs 458</td><td>הקובץ הקנוני (CSV דצמבר 19) נותן 459. אם יש שאלה — זה הנכון.</td></tr>
+        <tr><td>D</td><td>Regret vs. guilt — הבחנה</td><td>חרטה = "לא עשיתי מספיק", אשמה = "אני אחראי". נרטיב שמבחין ביניהם — מספיק מבוסס על הנתונים?</td></tr>
+        <tr><td>E</td><td>Anger ceiling</td><td>לדווח כ-"could not be tested" או לדווח כ-null עם הסבר? המבחר משנה את המסר.</td></tr>
+      </tbody></table>
+    </div>
   </div>
-  <div class="card"><div class="card-title">Joint model: bibi_blame + emotions simultaneously → commission</div><table><thead><tr><th>Predictor</th><th>β</th><th>p</th><th></th></tr></thead><tbody><tr><td>bibi_blame</td><td>+0.320</td><td>&lt;.001</td><td>***</td></tr><tr><td>anger_bibi</td><td>-0.023</td><td>.666</td><td></td></tr></tbody></table><div class="note">bibi_blame absorbs emotion effects for commission; behavioral retains emotion pathways.</div></div>
+  <div class="insight-yellow rtl"><strong>הממצא הכי חשוב לפגישה:</strong> שלושת הרגשות פועלים שונה — לא כי חרטה ואשמה חלשות מכעס, אלא כי הן מפנות <em>פנימה</em>. כשעירן שואל "מה זה אומר על SIMCA" — התשובה: SIMCA אוחדת רגשות שהנתונים מפרידים. זו התרומה התיאורטית.</div>
 </div>
-<div id="panel-h2compare" class="panel">
-  <div style="background:#fff7ed;border:0.5px solid #fdba74;color:#7c2d12;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px">Pre-registration correction — H2. Pre-registered: cross-sectional W2_emotion → W2_outcome. Corrected: + W1_outcome as lagged-DV covariate. Both shown.<div class="card" style="margin-top:10px"><div class="card-title">Pre-registered vs. corrected model β</div><canvas id="h2CompChart" style="max-height:200px"></canvas></div>
-</div>
-  <div class="insight">The corrected model is more conservative (higher bar for significance) but conclusions are substantively the same: regret and anger predict commission; all three predict behavioral mobilization. The W1 control accounts for pre-existing differences between high- and low-emotion respondents.</div>
-  <div class="card"><div class="card-title">Pre-registered vs. corrected model comparison</div><table><thead><tr><th>Emotion</th><th>Outcome</th><th>β pre-reg (no W1)</th><th>BH pre-reg</th><th>β corrected (+ W1)</th><th>p corrected</th><th>BH corrected</th></tr></thead><tbody><tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>Commission</td><td>+0.485</td><td>—</td><td>+0.029</td><td>.359</td><td><span class="badge b-ns">BH ✗</span></td></tr><tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>Behavioral</td><td>+0.583</td><td>—</td><td>+0.124</td><td>&lt;.001</td><td><span class="badge b-sig">BH ✓</span></td></tr><tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>Commission</td><td>+0.605</td><td>—</td><td>+0.077</td><td>.012</td><td><span class="badge b-sig">BH ✓</span></td></tr><tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>Behavioral</td><td>+0.703</td><td>—</td><td>+0.195</td><td>&lt;.001</td><td><span class="badge b-sig">BH ✓</span></td></tr><tr><td><span class="dot" style="background:#22c55e"></span>Anger (Bibi)</td><td>Commission</td><td>+0.772</td><td>—</td><td>+0.172</td><td>&lt;.001</td><td><span class="badge b-sig">BH ✓</span></td></tr><tr><td><span class="dot" style="background:#22c55e"></span>Anger (Bibi)</td><td>Behavioral</td><td>+0.620</td><td>—</td><td>+0.176</td><td>&lt;.001</td><td><span class="badge b-sig">BH ✓</span></td></tr></tbody></table></div>
-</div>
-<div id="panel-prereg_h1" class="panel">
-  <div style="background:#fff7ed;border:0.5px solid #fdba74;color:#7c2d12;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px">Pre-registration corrections: (1) ordinal exposure as pre-registered vs. binary; (2) H4 simple slopes for pre-registered (cross-sectional) model.</div>
-  <div class="insight">Ordinal exposure coding (1/2/3) is the pre-registered specification and is the primary model. Binary (exposed/not) is a sensitivity check. Conclusions are identical across both coding approaches.</div>
-  <div class="card"><div class="card-title">H1 ordinal (primary) vs. binary (sensitivity)</div><table><thead><tr><th>Emotion</th><th>Binary β (sensitivity)</th><th>BH binary</th><th>Ordinal β (primary)</th><th>p ordinal</th><th>BH ordinal</th></tr></thead><tbody><tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>+0.501 (d=0.37)</td><td>—</td><td>+0.249</td><td>.003</td><td><span class="badge b-sig">BH ✓</span></td></tr><tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>+0.513 (d=0.37)</td><td>—</td><td>+0.241</td><td>.007</td><td><span class="badge b-sig">BH ✓</span></td></tr><tr><td><span class="dot" style="background:#22c55e"></span>Anger (Bibi)</td><td>+0.208 (d=0.15)</td><td>—</td><td>+0.152</td><td>.054</td><td><span class="badge b-ns">BH ✗</span></td></tr></tbody></table></div>
-  <div class="card"><div class="card-title">Simple slopes — H4 pre-registered model (sig. interactions only)</div><table><thead><tr><th>Emotion</th><th>Outcome</th><th>Ideology</th><th>Slope</th><th>p</th><th></th></tr></thead><tbody><tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>commi</td><td>low</td><td>+0.123</td><td>.013</td><td>*</td></tr><tr><td></td><td>commi</td><td>mean</td><td>+0.294</td><td>&lt;.001</td><td>***</td></tr><tr><td></td><td>commi</td><td>high</td><td>+0.465</td><td>&lt;.001</td><td>***</td></tr><tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>commi</td><td>low</td><td>+0.157</td><td>.007</td><td>**</td></tr><tr><td></td><td>commi</td><td>mean</td><td>+0.406</td><td>&lt;.001</td><td>***</td></tr><tr><td></td><td>commi</td><td>high</td><td>+0.654</td><td>&lt;.001</td><td>***</td></tr><tr><td><span class="dot" style="background:#22c55e"></span>Anger (Bibi)</td><td>commi</td><td>low</td><td>+0.494</td><td>&lt;.001</td><td>***</td></tr><tr><td></td><td>commi</td><td>mean</td><td>+0.655</td><td>&lt;.001</td><td>***</td></tr><tr><td></td><td>commi</td><td>high</td><td>+0.816</td><td>&lt;.001</td><td>***</td></tr></tbody></table></div>
-</div>
-<div id="panel-attrition" class="panel">
-  <div style="background:#f0fdf4;border:0.5px solid #86efac;color:#14532d;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px">⬦ Sample quality. N completers=521, N dropouts=95. Attention check applied to both W1 (39 excluded) and W2 (42 excluded).</div>
-  <div class="insight">Dropout is age-related (older respondents more likely to complete) but not ideology-related (p=.740) — the key moderator is not differentially affected by attrition.</div>
+
+<!-- ═══════════════════════════════════════════════
+     ORDINAL vs BINARY — SENSITIVITY CHECK
+═══════════════════════════════════════════════ -->
+<div id="panel-ord_bin" class="panel">
+  <div style="background:#f1f5f9;border:0.5px solid #cbd5e1;color:#475569;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px">
+    <strong>Sensitivity check (not pre-registered).</strong> Pre-registration specifies ordinal coding (1–3). Binary (0/1) collapses partial and full exposure. N=459 in both. ◀ marks outcomes where BH verdict differs.
+  </div>
+  <div class="insight-yellow">
+    <strong>Bottom line:</strong> Ordinal is both the pre-registered operationalization <em>and</em> the more sensitive one — 14/23 BH-sig vs. 8/23 for binary. Binary loses 6 outcomes, gains none. The threshold effect documented in Q3 (partial > none > full for emotions) explains why: binary discards that within-exposed variance. If asked — ordinal is correct for both methodological and empirical reasons.
+  </div>
   <div class="grid2">
-    <div class="card"><div class="card-title">Attrition analysis: completers vs. dropouts</div><table><thead><tr><th>Variable</th><th>M completers</th><th>M dropouts</th><th>p</th><th>Verdict</th></tr></thead><tbody><tr><td>Age</td><td>47.4</td><td>42.5</td><td>.005</td><td>⚠ sig (older completed)</td></tr><tr><td>Political ideology</td><td>4.91</td><td>4.86</td><td>.740</td><td>✓ n.s.</td></tr><tr><td>Survey duration (W1)</td><td>617s</td><td>6633s</td><td>.199</td><td>✓ n.s.</td></tr></tbody></table></div>
-    <div class="card"><div class="card-title">Pipeline — step-by-step N</div><table><thead><tr><th>Step</th><th>W1</th><th>W2</th></tr></thead><tbody><tr><td>Raw W1 / W2</td><td>690</td><td>568</td></tr><tr><td>After date cutoff</td><td>677</td><td>559</td></tr><tr><td>After quality (dur+dedup)</td><td>616</td><td>526</td></tr><tr><td>After attention check</td><td>577 (excl. 39)</td><td>484 (excl. 42)</td></tr><tr><td>After merge + exposure filter</td><td>N=459</td><td></td></tr><tr><td>Exposed (2+3) / Control (1)</td><td>216</td><td>243</td></tr><tr><td>Coalition / Opposition / Unclassified</td><td>212</td><td>205 / 42</td></tr></tbody></table></div>
+    <div class="card">
+      <div class="card-title">Full comparison — all 23 outcomes (N=459)</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Outcome</th>
+            <th colspan="2">Ordinal β / BH</th>
+            <th colspan="2">Binary β / BH</th>
+            <th>d W2</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background:#f0fdf4"><td colspan="6" style="font-size:10.5px;color:#166534;font-weight:600;padding:3px 8px">Emotions</td></tr>
+          <tr class="hl"><td>Collective guilt</td><td>+0.249**</td><td><span class="b-sig">BH✓</span></td><td>+0.502***</td><td><span class="b-sig">BH✓</span></td><td>+0.68</td></tr>
+          <tr class="hl"><td>Internalized regret</td><td>+0.241**</td><td><span class="b-sig">BH✓</span></td><td>+0.513***</td><td><span class="b-sig">BH✓</span></td><td>+0.75</td></tr>
+          <tr><td>Anger at Netanyahu</td><td>+0.152†</td><td><span class="b-ns">BH✗</span></td><td>+0.210†</td><td><span class="b-ns">BH✗</span></td><td>+0.81</td></tr>
+          <tr style="background:#f0fdf4"><td colspan="6" style="font-size:10.5px;color:#166534;font-weight:600;padding:3px 8px">Institutional accountability</td></tr>
+          <tr class="hl"><td>Commission support</td><td>+0.170**</td><td><span class="b-sig">BH✓</span></td><td>+0.321**</td><td><span class="b-sig">BH✓</span></td><td>+0.74</td></tr>
+          <tr class="hl"><td>Bibi blame</td><td>+0.221**</td><td><span class="b-sig">BH✓</span></td><td>+0.330**</td><td><span class="b-sig">BH✓</span></td><td>+0.80</td></tr>
+          <tr class="hl"><td>Govt delayed unjustly</td><td>+0.291***</td><td><span class="b-sig">BH✓</span></td><td>+0.359**</td><td><span class="b-sig">BH✓</span></td><td>+0.74</td></tr>
+          <tr class="hl"><td>Bibi resp. for deaths ◀</td><td>+0.216**</td><td><span class="b-sig">BH✓</span></td><td>+0.247*</td><td><span class="b-ns">BH✗</span></td><td>+0.73</td></tr>
+          <tr class="hl"><td>Bibi could do more</td><td>+0.221**</td><td><span class="b-sig">BH✓</span></td><td>+0.360**</td><td><span class="b-sig">BH✓</span></td><td>+0.70</td></tr>
+          <tr style="background:#f0fdf4"><td colspan="6" style="font-size:10.5px;color:#166534;font-weight:600;padding:3px 8px">Behavioral accountability</td></tr>
+          <tr class="hl"><td>Petition ◀</td><td>+0.211**</td><td><span class="b-sig">BH✓</span></td><td>+0.310*</td><td><span class="b-ns">BH✗</span></td><td>+0.73</td></tr>
+          <tr><td>Social media</td><td>+0.166†</td><td><span class="b-ns">BH✗</span></td><td>+0.252†</td><td><span class="b-ns">BH✗</span></td><td>+0.58</td></tr>
+          <tr class="hl"><td>Demo intention ◀</td><td>+0.197*</td><td><span class="b-sig">BH✓</span></td><td>+0.287*</td><td><span class="b-ns">BH✗</span></td><td>+0.69</td></tr>
+          <tr><td>Behavioral composite</td><td>+0.121†</td><td><span class="b-ns">BH✗</span></td><td>+0.174†</td><td><span class="b-ns">BH✗</span></td><td>+0.77</td></tr>
+          <tr class="hl"><td>Efficacy actions</td><td>+0.261**</td><td><span class="b-sig">BH✓</span></td><td>+0.490***</td><td><span class="b-sig">BH✓</span></td><td>+0.51</td></tr>
+          <tr><td>Efficacy general</td><td>+0.117 n.s.</td><td><span class="b-ns">BH✗</span></td><td>+0.242†</td><td><span class="b-ns">BH✗</span></td><td>+0.33</td></tr>
+          <tr style="background:#f0fdf4"><td colspan="6" style="font-size:10.5px;color:#166534;font-weight:600;padding:3px 8px">Policy attitudes</td></tr>
+          <tr class="hl"><td>End war for deal ◀</td><td>+0.193**</td><td><span class="b-sig">BH✓</span></td><td>+0.280*</td><td><span class="b-ns">BH✗</span></td><td>+0.66</td></tr>
+          <tr><td>Hostages = natl interest</td><td>+0.169†</td><td><span class="b-ns">BH✗</span></td><td>+0.315*</td><td><span class="b-ns">BH✗</span></td><td>+0.35</td></tr>
+          <tr class="hl"><td>Risk hostages→war (↓)</td><td>−0.325**</td><td><span class="b-sig">BH✓</span></td><td>−0.476**</td><td><span class="b-sig">BH✓</span></td><td>−0.52</td></tr>
+          <tr style="background:#f0fdf4"><td colspan="6" style="font-size:10.5px;color:#166534;font-weight:600;padding:3px 8px">Trust</td></tr>
+          <tr class="hl"><td>Israelis will save me ◀</td><td>+0.299***</td><td><span class="b-sig">BH✓</span></td><td>+0.326*</td><td><span class="b-ns">BH✗</span></td><td>+0.47</td></tr>
+          <tr class="hl"><td>Bibi will save me (↓) ◀</td><td>−0.204**</td><td><span class="b-sig">BH✓</span></td><td>−0.193†</td><td><span class="b-ns">BH✗</span></td><td>−0.49</td></tr>
+          <tr style="background:#fef9c3"><td colspan="6" style="font-size:10.5px;color:#713f12;font-weight:600;padding:3px 8px">Negative controls — should be zero</td></tr>
+          <tr><td>Hamas resp.</td><td>+0.006 n.s.</td><td><span class="b-ns">BH✗</span></td><td>−0.010 n.s.</td><td><span class="b-ns">BH✗</span></td><td>−0.05</td></tr>
+          <tr><td>IDF pride</td><td>+0.045 n.s.</td><td><span class="b-ns">BH✗</span></td><td>+0.087 n.s.</td><td><span class="b-ns">BH✗</span></td><td>+0.10</td></tr>
+          <tr><td>No point acting</td><td>−0.035 n.s.</td><td><span class="b-ns">BH✗</span></td><td>+0.008 n.s.</td><td><span class="b-ns">BH✗</span></td><td>−0.01</td></tr>
+          <tr><td>Outcome inevitable</td><td>−0.170†</td><td><span class="b-ns">BH✗</span></td><td>−0.291*</td><td><span class="b-ns">BH✗</span></td><td>−0.42</td></tr>
+        </tbody>
+      </table>
+      <div class="note" style="margin-top:8px">◀ = BH verdict differs between ordinal and binary. All 6 differences: ordinal ✓, binary ✗. Ordinal is pre-registered (AsPredicted #262879: "ordinal predictor 1–3, consistent across all models").</div>
+    </div>
+    <div class="card">
+      <div class="card-title">BH-significant count: Ordinal vs Binary</div>
+      <canvas id="ordBinChart" style="max-height:200px"></canvas>
+      <div class="card-title" style="margin-top:14px">Why ordinal is more sensitive</div>
+      <div style="font-size:12px;line-height:1.8;color:#475569;margin-top:6px">
+        Binary collapses partial and full exposure into one group. But from Q3 we know:<br>
+        — Partial exposure: Δguilty=<strong>+0.53</strong>, Δregret=<strong>+0.44</strong><br>
+        — Full exposure: Δguilt=+0.21, Δregret=+0.08<br><br>
+        Ordinal uses this within-exposed variance. Binary discards it. Outcomes that benefit most from this information (behavioral actions, policy attitudes) are exactly the ones that drop out in binary.<br><br>
+        <strong>Negative controls unchanged:</strong> 0/4 BH-sig in both — the specificity argument holds regardless of coding.
+      </div>
+      <div class="card-title" style="margin-top:14px">The 1-person pipeline note (N=459 vs 458)</div>
+      <div style="font-size:11.5px;line-height:1.7;color:#475569;margin-top:6px">
+        Pre-registration: "excluded if they <em>failed</em> the attention check." One W1 participant had <strong>NaN</strong> on the attention check item (did not answer, but did not fail). Strict coding (==4 only) → N=458. Liberal coding (==4 or NaN) → N=459, consistent with pre-registration language. The extra participant is control, W1 mostly missing — no BH verdict changes either way.
+      </div>
+    </div>
   </div>
 </div>
-<div id="panel-emo_watch" class="panel">
-  <div style="background:#fff1f2;border:0.5px solid #fda4af;color:#9f1239;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px">★ Supplementary. In-broadcast emotional experience (exposed subsample only, N≈216).</div>
-  <div class="insight">Items 4 (anger-like, r=.844 with anger_bibi) and 7 (regret-like, r=.789 with regret_comp) show strong convergent validity with the general emotion measures. Full-exposure participants report higher in-broadcast intensity on most items, consistent with the quadratic dose-response pattern in H1.</div>
-  <div class="grid2">
-    <div class="card"><div class="card-title">Convergent validity: in-broadcast items × W2 emotions</div><table><thead><tr><th>Item</th><th>M</th><th>r(anger)</th><th>r(regret)</th><th>r(guilt)</th></tr></thead><tbody><tr><td>#1</td><td>6.07</td><td>0.030</td><td>0.090</td><td>0.124</td></tr><tr><td>#2</td><td>6.20</td><td>0.164</td><td>0.021</td><td>0.005</td></tr><tr><td>#3</td><td>2.74</td><td>-0.148</td><td>0.182</td><td>0.099</td></tr><tr><td>#4</td><td>5.25</td><td>0.844</td><td>0.443</td><td>0.358</td></tr><tr><td>#5</td><td>6.72</td><td>-0.053</td><td>-0.101</td><td>-0.039</td></tr><tr><td>#6</td><td>5.05</td><td>0.341</td><td>0.492</td><td>0.525</td></tr><tr><td>#7</td><td>3.83</td><td>0.417</td><td>0.789</td><td>0.681</td></tr><tr><td>#8</td><td>2.69</td><td>0.089</td><td>0.496</td><td>0.350</td></tr><tr><td>#9</td><td>2.67</td><td>0.212</td><td>0.573</td><td>0.568</td></tr><tr><td>#10</td><td>5.31</td><td>0.777</td><td>0.425</td><td>0.297</td></tr><tr><td>#11</td><td>5.59</td><td>0.773</td><td>0.392</td><td>0.337</td></tr><tr><td>#12</td><td>4.93</td><td>0.590</td><td>0.433</td><td>0.300</td></tr><tr><td>#13</td><td>6.62</td><td>0.251</td><td>-0.034</td><td>-0.023</td></tr></tbody></table><div class="note">Items 4 and 7 are strongest convergent markers.</div></div>
-    <div class="card"><div class="card-title">Partial vs. full exposure: in-broadcast intensity</div><table><thead><tr><th>Item</th><th>M partial</th><th>M full</th><th>p (t-test)</th></tr></thead><tbody><tr><td>#1</td><td>5.96</td><td>6.21</td><td>.130</td></tr><tr><td>#2</td><td>5.81</td><td>6.72</td><td>&lt;.001</td></tr><tr><td>#3</td><td>2.66</td><td>2.83</td><td>.572</td></tr><tr><td>#4</td><td>4.85</td><td>5.79</td><td>&lt;.001</td></tr><tr><td>#5</td><td>6.60</td><td>6.88</td><td>.007</td></tr><tr><td>#6</td><td>4.80</td><td>5.38</td><td>.042</td></tr><tr><td>#7</td><td>3.74</td><td>3.96</td><td>.456</td></tr><tr><td>#8</td><td>2.76</td><td>2.59</td><td>.528</td></tr><tr><td>#9</td><td>2.78</td><td>2.52</td><td>.313</td></tr><tr><td>#10</td><td>4.92</td><td>5.81</td><td>.003</td></tr><tr><td>#11</td><td>5.09</td><td>6.24</td><td>&lt;.001</td></tr><tr><td>#12</td><td>4.45</td><td>5.57</td><td>&lt;.001</td></tr><tr><td>#13</td><td>6.51</td><td>6.76</td><td>.029</td></tr></tbody></table></div>
-  </div>
-</div>
-<div id="panel-imm_panel" class="panel">
-  <div style="background:#fff1f2;border:0.5px solid #fda4af;color:#9f1239;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px">★ Supplementary. Index of Moderated Mediation — ideology moderation of the full indirect path (exposure → emotion → accountability).</div>
-  <div class="insight">Five of six IMM paths are null. Only anger→commission shows BC-significant IMM — the indirect path of exposure through anger to institutional accountability is slightly steeper for right-leaning participants. Substantively: when coalition voters do get angry at Netanyahu (a rarer occurrence), that anger is particularly potent in generating commission demands.</div>
-  <div class="card"><div class="card-title">IMM: ideology moderation of exposure → emotion → accountability</div><table><thead><tr><th>Emotion</th><th>Outcome</th><th>IMM index</th><th>95% BC CI</th><th>Significance</th></tr></thead><tbody><tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>Commission</td><td>-0.0001</td><td>[-0.0087, 0.0094]</td><td>n.s.</td></tr><tr><td><span class="dot" style="background:#3b82f6"></span>Guilt</td><td>Behavioral</td><td>0.0031</td><td>[-0.0059, 0.0157]</td><td>n.s.</td></tr><tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>Commission</td><td>0.0013</td><td>[-0.0080, 0.0125]</td><td>n.s.</td></tr><tr><td><span class="dot" style="background:#f97316"></span>Regret</td><td>Behavioral</td><td>0.0033</td><td>[-0.0062, 0.0175]</td><td>n.s.</td></tr><tr class="hl"><td><span class="dot" style="background:#22c55e"></span>Anger (Bibi)</td><td>Commission</td><td>0.0052</td><td>[0.0000, 0.0184]</td><td><strong>BC ✓</strong></td></tr><tr><td><span class="dot" style="background:#22c55e"></span>Anger (Bibi)</td><td>Behavioral</td><td>0.0004</td><td>[-0.0035, 0.0066]</td><td>n.s.</td></tr></tbody></table></div>
-</div>
-<div id="panel-qa" class="panel">
-  <div style="background:#eff6ff;border:0.5px solid #93c5fd;color:#1e3a5f;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px">שאלות לדיון עם עירן | N=459 (attention check W1+W2)</div>
-  <div class="card">
-    <div class="card-title">Attention check sensitivity</div>
-    <table><thead><tr><th>Sample</th><th>N</th><th>H1 guilt β</th><th>H1 regret β</th><th>H1 anger β</th><th>conclusions change?</th></tr></thead><tbody><tr><td>A (primary, both att)</td><td>459</td><td>0.249 BH=✓</td><td>0.241 BH=✓</td><td>0.152 BH=✗</td><td>none</td></tr><tr><td>B (no att filter)</td><td>469</td><td>0.268</td><td>0.247</td><td>0.163</td><td>anger crosses BH in Sample B</td></tr></tbody></table>
-    <div class="note">W1 excluded ideology M=4.92 (p=.957); W2 excluded ideology M=4.86 (p=.837). Neither significantly different from included sample.</div>
-  </div>
-  <div class="card">
-    <div class="card-title">שאלות פתוחות לדיון</div>
-    <ul>
-      <li>Framing & Credibility: ראוי להיות ב-paper עצמו, או נספח בלבד?</li>
-      <li>H1 by bloc: קואליציה guilt BH ✓ — האם זה finding ראשי?</li>
-      <li>Bloc (H2): regret→commission בקואליציה p=.037, BH ✗ — כיצד לנסח?</li>
-      <li>H4 null: artifact לעומת motivated reasoning דרך baseline — מה הנרטיב?</li>
-    </ul>
-  </div>
-</div>
-<div id="panel-sum" class="panel">
-  <div style="background:#f0fdf4;border:0.5px solid #86efac;color:#14532d;border-radius:8px;padding:.65rem .9rem;margin-bottom:10px;font-size:12px">N=459 | OLS HC3 | BH-FDR q=.05 | Bootstrap n=5,000 seed=42 | AsPredicted #262879 | Attention check: both waves</div>
-  <div class="card"><div class="card-title">Summary of all main findings — N=459</div><table><thead><tr><th>Analysis</th><th>Question</th><th>Finding</th><th>Interpretation</th></tr></thead><tbody><tr><td>H1</td><td>Exposure → Emotions</td><td>Guilt BH ✓, Regret BH ✓; Anger marginal (p=.054)</td><td>Concave dose-response; threshold effect at partial exposure</td></tr><tr><td>H2</td><td>Emotions → Commission</td><td>Regret BH ✓, Anger BH ✓; Guilt n.s.</td><td>Target attribution required for institutional demand</td></tr><tr><td>H2</td><td>Emotions → Behavioral</td><td>All three BH ✓</td><td>Any moral emotion mobilizes action</td></tr><tr><td>H3</td><td>Ideology × Exposure</td><td>All null (p=.44–.99)</td><td>Ideology = baseline, not moderator of change</td></tr><tr><td>H4</td><td>Ideology × Emotion</td><td>All null after W1 control (p=.07–.94)</td><td>Apparent H4 effects = baseline artifact</td></tr><tr><td>Bloc</td><td>Coalition H2</td><td>Anger only BH ✓ (comm+beh)</td><td>Anger = permission slip to cross partisan loyalty</td></tr><tr><td>Bloc</td><td>Opposition H2</td><td>All three → behavioral BH ✓; commission = ceiling</td><td>Ceiling effect on commission; emotions mobilize action</td></tr><tr><td>Spec.</td><td>8 emotions simultaneous</td><td>Anger_bibi → comm (only); Regret+Anger → beh</td><td>Target specificity confirmed</td></tr><tr><td>Framing</td><td>Uvda vs. general videos</td><td>General null; Uvda sig all three</td><td>Journalistic packaging drove the effect</td></tr><tr><td>Bibi</td><td>Attribution mediator</td><td>β_path1=.220, d=.30; mediation BC ✓</td><td>Attribution mediates both outcomes; joint model shows attribution absorbs comm</td></tr></tbody></table></div>
-  <div class="card">
-    <div class="card-title">Sample</div>
-    <p style="font-family:Times New Roman;font-size:13px">
-      N=459 | Exposed=216 (47.1%) Control=243 (52.9%) |
-      Coalition=212 Opposition=205 Unclassified=42 |
-      Age M=48.2 SD=17.3 | Female 49.9% |
-      Ideology M=4.90 SD=1.37 |
-      α_guilt=0.929 α_regret=0.907 α_beh=0.857
-    </p>
-  </div>
-</div>
-  </div>
-</div>
+
+</div><!-- end content -->
+</div><!-- end app -->
+
 <script>
 const panels={};
 document.querySelectorAll('.panel').forEach(p=>panels[p.id.replace('panel-','')]=p);
 const tabs={};
-document.querySelectorAll('.ntab').forEach(b=>{const pid=b.getAttribute('onclick').match(/'(\w+)'/)[1];tabs[pid]=b;});
+document.querySelectorAll('.ntab').forEach(b=>{
+  const m=b.getAttribute('onclick').match(/'(\w+)'/);
+  if(m) tabs[m[1]]=b;
+});
 function P(id,btn){
   Object.values(panels).forEach(p=>p.classList.remove('active'));
   Object.values(tabs).forEach(b=>b.classList.remove('active'));
-  if(panels[id])panels[id].classList.add('active');
-  if(tabs[id])tabs[id].classList.add('active');
+  if(panels[id]) panels[id].classList.add('active');
+  if(btn) btn.classList.add('active');
 }
-P('h1', tabs['h1']);
+P('q1',tabs['q1']);
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
-window.addEventListener("load", function() {
-const sigPlugin = {
-  id:'sigLabel',
-  afterDatasetsDraw(chart) {
-    const {ctx} = chart; ctx.save();
-    chart.data.datasets.forEach((ds,di) => {
-      if (!ds.sigLabels) return;
-      const meta = chart.getDatasetMeta(di);
-      meta.data.forEach((bar,i) => {
-        const lbl = ds.sigLabels[i]; if (!lbl) return;
-        const x = bar.x; const top = bar.y;
-        ctx.fillStyle='#1e3a5f'; ctx.font='bold 12px sans-serif';
-        ctx.textAlign='center'; ctx.fillText(lbl,x,top-5);
-      });
-    });
-    ctx.restore();
-  }
-};
-Chart.register(sigPlugin);
+const sigPlugin={id:'sigLabel',afterDatasetsDraw(chart){const{ctx}=chart;ctx.save();chart.data.datasets.forEach((ds,di)=>{if(!ds.sigLabels)return;const meta=chart.getDatasetMeta(di);meta.data.forEach((bar,i)=>{const lbl=ds.sigLabels[i];if(!lbl)return;ctx.fillStyle='#1e3a5f';ctx.font='bold 11px sans-serif';ctx.textAlign='center';ctx.fillText(lbl,bar.x,bar.y-5);});});ctx.restore();}};
+const jnPlugin={id:'jnBand',beforeDraw(chart){if(!chart.config.options.jnBounds)return;const{ctx,chartArea,scales}=chart;const{lo,hi,color}=chart.config.options.jnBounds;const x0=scales.x.getPixelForValue(lo-1),x1=scales.x.getPixelForValue(hi-1);ctx.save();ctx.fillStyle=color||'rgba(34,197,94,.10)';ctx.fillRect(x0,chartArea.top,x1-x0,chartArea.bottom-chartArea.top);ctx.restore();}};
+Chart.register(sigPlugin,jnPlugin);
 
-new Chart(document.getElementById(‘h1Chart’),{type:‘bar’,data:{
-labels:[‘Collective Guilt’,‘Collective Regret’,‘Anger at Netanyahu’],
-datasets:[{label:“Cohen’s d”,data:[0.375,0.368,0.147],sigLabels:[“★”,“★”,”†”],
-backgroundColor:[’#3b82f6bb’,’#f97316bb’,’#22c55e66’],
-borderColor:[’#3b82f6’,’#f97316’,’#22c55e’],borderWidth:1.5,borderRadius:4}]
+window.addEventListener('load',function(){
+
+// Q1 — d chart
+new Chart(document.getElementById('q1Chart'),{type:'bar',data:{
+  labels:['Past protest','Anger W1','Bibi blame W1','Petition W1','Regret W1','Commission W1','Guilt W1','Ideology','Religiosity','Education','Age','Gender'],
+  datasets:[{label:"Cohen's d",data:[-0.73,0.84,0.72,0.71,0.68,0.67,0.57,-0.43,-0.43,-0.20,0.17,0.04],
+    backgroundColor:d=>d.raw<0?'#ef444488':'#3b82f688',borderColor:d=>d.raw<0?'#ef4444':'#3b82f6',borderWidth:1.5,borderRadius:3}]
+},options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false}},
+  scales:{x:{title:{display:true,text:"Cohen's d"}},y:{ticks:{font:{size:10}}}}}
+});
+
+// Q2 — forest
+new Chart(document.getElementById('q2Forest'),{type:'bar',data:{
+  labels:["Israelis save me","Risk hostages(↓)","Efficacy actions","Guilt","Regret","Bibi blame","Bibi resp.","Petition","Demo","Bibi do more","Hostages=natl","End war","Commission","Bibi save me(↓)","Govt delayed"],
+  datasets:[{label:'β',data:[0.302,-0.308,0.261,0.249,0.241,0.220,0.215,0.211,0.197,0.201,0.195,0.194,0.176,-0.203,0.276],
+    backgroundColor:d=>d.raw<0?'#ef444488':'#22c55e88',borderColor:d=>d.raw<0?'#ef4444':'#22c55e',borderWidth:1.5,borderRadius:3}]
+},options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false}},
+  scales:{x:{title:{display:true,text:'β coefficient'}},y:{ticks:{font:{size:10}}}}}
+});
+
+// Q3 — dose-response
+new Chart(document.getElementById('q3Chart'),{type:'bar',data:{
+  labels:['Guilt','Regret','Efficacy','Bibi blame','Commission','Govt delayed','Anger'],
+  datasets:[
+    {label:'None (n=243)',data:[0.13,0.08,0.09,0.02,-0.23,0.00,0.17],backgroundColor:'#94a3b844',borderColor:'#94a3b8',borderWidth:1.5,borderRadius:3},
+    {label:'Partial (n=125)',data:[0.53,0.44,0.34,0.11,0.07,-0.12,0.05],backgroundColor:'#3b82f688',borderColor:'#3b82f6',borderWidth:1.5,borderRadius:3},
+    {label:'Full (n=91)',data:[0.21,0.08,0.23,0.22,-0.03,0.13,0.08],backgroundColor:'#1e3a5f99',borderColor:'#1e3a5f',borderWidth:1.5,borderRadius:3},
+  ]
+},options:{responsive:true,plugins:{legend:{position:'bottom'}},
+  scales:{y:{title:{display:true,text:'Δ (W2−W1)'},grid:{color:'#f1f5f9'}},x:{ticks:{font:{size:10}}}}}
+});
+
+// H1 means
+new Chart(document.getElementById('h1Means'),{type:'bar',data:{
+  labels:['Guilt','Regret','Anger'],
+  datasets:[
+    {label:'Ctrl W1',data:[2.11,1.95,3.23],backgroundColor:'#93c5fd44',borderColor:'#93c5fd',borderWidth:1.5,borderRadius:2},
+    {label:'Ctrl W2',data:[2.24,2.03,3.40],backgroundColor:'#3b82f688',borderColor:'#3b82f6',borderWidth:1.5,borderRadius:2},
+    {label:'Exp W1',data:[3.02,3.01,5.20],backgroundColor:'#fbbf2444',borderColor:'#f97316',borderWidth:1.5,borderRadius:2},
+    {label:'Exp W2',data:[3.42,3.30,5.26],backgroundColor:'#f9731688',borderColor:'#ea580c',borderWidth:1.5,borderRadius:2},
+  ]
+},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:10}}}},
+  scales:{y:{beginAtZero:true,title:{display:true,text:'Mean'}},x:{}}}
+});
+
+// H2 chart
+new Chart(document.getElementById('h2Chart'),{type:'bar',data:{
+  labels:['Guilt→Comm','Regret→Comm','Anger→Comm','Guilt→Beh','Regret→Beh','Anger→Beh'],
+  datasets:[{label:'β',data:[0.029,0.077,0.172,0.124,0.195,0.177],
+    sigLabels:['','★','★','★','★','★'],
+    backgroundColor:['#3b82f622','#f9731644','#22c55e44','#3b82f688','#f97316aa','#22c55eaa'],
+    borderColor:['#3b82f6','#f97316','#22c55e','#3b82f6','#f97316','#22c55e'],borderWidth:1.5,borderRadius:4}]
 },options:{responsive:true,plugins:{legend:{display:false}},
-scales:{y:{beginAtZero:true,title:{display:true,text:“Cohen’s d”}},x:{}}}
+  scales:{y:{beginAtZero:true,title:{display:true,text:'β'}},x:{ticks:{font:{size:10}}}}}
 });
 
-new Chart(document.getElementById(‘h1Means’),{type:‘bar’,data:{
-labels:[‘Guilt’,‘Regret’,‘Anger’],
-datasets:[
-{label:‘Ctrl W1’,data:[2.112,1.952,3.226],backgroundColor:’#93c5fd44’,borderColor:’#93c5fd’,borderWidth:1.5,borderRadius:2},
-{label:‘Ctrl W2’,data:[2.236,2.029,3.399],backgroundColor:’#3b82f688’,borderColor:’#3b82f6’,borderWidth:1.5,borderRadius:2},
-{label:‘Exp W1’, data:[3.028,3.017,5.190], backgroundColor:’#fbbf2444’,borderColor:’#f97316’,borderWidth:1.5,borderRadius:2},
-{label:‘Exp W2’, data:[3.426,3.306,5.250], backgroundColor:’#f9731688’,borderColor:’#ea580c’,borderWidth:1.5,borderRadius:2},
-]
-},options:{responsive:true,plugins:{legend:{position:‘bottom’,labels:{font:{size:10}}}},
-scales:{y:{beginAtZero:true,title:{display:true,text:‘Mean’}},x:{}}}
-});
-
-new Chart(document.getElementById(‘h2Chart’),{type:‘bar’,data:{
-labels:[‘Guilt→Comm’,‘Regret→Comm’,‘Anger→Comm’,‘Guilt→Beh’,‘Regret→Beh’,‘Anger→Beh’],
-datasets:[{label:‘β’,data:[0.029,0.077,0.172,0.124,0.195,0.176],sigLabels:[””,“★”,“★”,“★”,“★”,“★”],
-backgroundColor:[’#3b82f644’,’#f9731644’,’#22c55e44’,’#3b82f6aa’,’#f97316aa’,’#22c55eaa’],
-borderColor:[’#3b82f6’,’#f97316’,’#22c55e’,’#3b82f6’,’#f97316’,’#22c55e’],
-borderWidth:1.5,borderRadius:4}]
+// H3 ceiling
+new Chart(document.getElementById('ceilingChart'),{type:'bar',data:{
+  labels:['Left (1–3)\nN=74','Centre (4)\nN=88','Right (5–7)\nN=297'],
+  datasets:[{label:'Anger W1',data:[6.37,5.70,3.12],
+    backgroundColor:['#ef444488','#f9731688','#3b82f688'],borderColor:['#ef4444','#f97316','#3b82f6'],borderWidth:1.5,borderRadius:3}]
 },options:{responsive:true,plugins:{legend:{display:false}},
-scales:{y:{beginAtZero:true,title:{display:true,text:‘β’}},x:{ticks:{font:{size:10}}}}}
+  scales:{y:{min:0,max:7.5,title:{display:true,text:'Anger W1 mean'}},x:{ticks:{font:{size:10}}}}}
 });
 
-new Chart(document.getElementById(‘medChart’),{type:‘bar’,data:{
-labels:[‘Guilt→Comm’,‘Regret→Comm’,‘Anger→Comm’,‘Guilt→Beh’,‘Regret→Beh’,‘Anger→Beh’],
-datasets:[{label:‘ab’,data:[0.007,0.031,0.019,0.047,0.026,0.027],sigLabels:[””,“★”,“★”,“★”,“★”,“★”],
-backgroundColor:[’#3b82f644’,’#f9731644’,’#22c55e44’,’#3b82f6aa’,’#f97316aa’,’#22c55eaa’],
-borderColor:[’#3b82f6’,’#f97316’,’#22c55e’,’#3b82f6’,’#f97316’,’#22c55e’],
-borderWidth:1.5,borderRadius:4}]
-},options:{responsive:true,plugins:{legend:{display:false}},
-scales:{y:{beginAtZero:true,title:{display:true,text:‘ab’}},x:{ticks:{font:{size:10}}}}}
+// Framing chart
+new Chart(document.getElementById('framingChart'),{type:'bar',data:{
+  labels:['Guilt','Regret','Anger','Commission','Bibi blame','Petition','Demo','Behavioral','Unjust','Bibi resp.'],
+  datasets:[
+    {label:'A vs C (Uvda)',data:[0.411,0.561,0.263,0.054,0.219,0.315,0.200,0.218,0.173,0.298],backgroundColor:'#3b82f655',borderColor:'#3b82f6',borderWidth:1.5,borderRadius:3},
+    {label:'B vs C (no Uvda)',data:[0.172,0.116,-0.128,-0.280,-0.048,-0.146,0.052,-0.011,-0.289,-0.095],backgroundColor:'#ef444455',borderColor:'#ef4444',borderWidth:1.5,borderRadius:3},
+  ]
+},options:{responsive:true,plugins:{legend:{position:'bottom'}},
+  scales:{y:{title:{display:true,text:'β coefficient'}},x:{ticks:{font:{size:10}}}}}
 });
 
-new Chart(document.getElementById(‘blocH2’),{type:‘bar’,data:{
-labels:[‘Guilt→Comm’,‘Regret→Comm’,‘Anger→Comm’,‘Guilt→Beh’,‘Regret→Beh’,‘Anger→Beh’],
-datasets:[
-{label:‘Coalition (n=212)’,data:[0.038,0.079,0.155,0.147,0.214,0.204],sigLabels:[””,””,””,””,“★”,“★”],
-backgroundColor:’#3b82f688’,borderColor:’#3b82f6’,borderWidth:1.5,borderRadius:3},
-{label:‘Opposition (n=205)’,data:[-0.008,0.140,-0.003,0.206,0.052,0.170],sigLabels:[””,“★”,””,“★”,””,“★”],
-backgroundColor:’#f9731688’,borderColor:’#f97316’,borderWidth:1.5,borderRadius:3},
-]
-},options:{responsive:true,plugins:{legend:{position:‘bottom’,labels:{font:{size:11}}}},
-scales:{y:{beginAtZero:true,title:{display:true,text:‘β’}},x:{ticks:{font:{size:10}}}}}
+// JN guilt
+new Chart(document.getElementById('jnGuiltChart'),{type:'line',data:{
+  labels:[1,2,3,4,5,6,7],
+  datasets:[
+    {label:'Slope',data:[0.391,0.350,0.310,0.270,0.230,0.189,0.149],
+     borderColor:'#3b82f6',pointBackgroundColor:['#94a3b8','#f97316','#22c55e','#22c55e','#22c55e','#94a3b8','#94a3b8'],
+     pointRadius:6,borderWidth:2.5,fill:false,tension:0.3},
+    {label:'CI+',data:[0.924,0.774,0.600,0.466,0.398,0.423,0.491],borderColor:'rgba(59,130,246,.2)',borderWidth:1,pointRadius:0,fill:false,borderDash:[4,4]},
+    {label:'CI−',data:[-0.143,-0.073,0.019,0.074,0.062,-0.045,-0.193],borderColor:'rgba(59,130,246,.2)',borderWidth:1,pointRadius:0,fill:'1',backgroundColor:'rgba(59,130,246,.06)',borderDash:[4,4]},
+  ]
+},options:{responsive:true,jnBounds:{lo:2.72,hi:5.65,color:'rgba(34,197,94,.12)'},
+  plugins:{legend:{display:false}},
+  scales:{x:{title:{display:true,text:'Ideology (1=L, 7=R)'},ticks:{font:{size:10}}},y:{title:{display:true,text:'Simple slope'},grid:{color:'#f1f5f9'},suggestedMin:-0.25,suggestedMax:0.55}}}
 });
 
-new Chart(document.getElementById(‘effA’),{type:‘bar’,data:{
-labels:[‘Full sample’,‘Coalition’,‘Opposition’],
-datasets:[
-{label:‘eff_actions’,data:[0.261,0.176,0.301],sigLabels:[“★”,””,“★”],
-backgroundColor:’#22c55e88’,borderColor:’#22c55e’,borderWidth:1.5,borderRadius:3},
-{label:‘eff_general’,data:[0.118,0.052,0.139],
-backgroundColor:’#22c55e33’,borderColor:’#22c55e’,borderWidth:1.5,borderRadius:3},
-]
-},options:{responsive:true,plugins:{legend:{position:‘bottom’,labels:{font:{size:11}}}},
-scales:{y:{beginAtZero:true,title:{display:true,text:‘β’}},x:{}}}
+// JN regret
+new Chart(document.getElementById('jnRegretChart'),{type:'line',data:{
+  labels:[1,2,3,4,5,6,7],
+  datasets:[
+    {label:'Slope',data:[0.222,0.220,0.219,0.218,0.217,0.215,0.214],
+     borderColor:'#f97316',pointBackgroundColor:['#94a3b8','#94a3b8','#94a3b8','#22c55e','#22c55e','#f97316','#94a3b8'],
+     pointRadius:6,borderWidth:2.5,fill:false,tension:0.2},
+    {label:'CI+',data:[0.775,0.648,0.529,0.431,0.396,0.451,0.553],borderColor:'rgba(249,115,22,.2)',borderWidth:1,pointRadius:0,fill:false,borderDash:[4,4]},
+    {label:'CI−',data:[-0.331,-0.208,-0.091,0.005,0.037,-0.022,-0.124],borderColor:'rgba(249,115,22,.2)',borderWidth:1,pointRadius:0,fill:'1',backgroundColor:'rgba(249,115,22,.06)',borderDash:[4,4]},
+  ]
+},options:{responsive:true,jnBounds:{lo:3.94,hi:5.76,color:'rgba(249,115,22,.10)'},
+  plugins:{legend:{display:false}},
+  scales:{x:{title:{display:true,text:'Ideology (1=L, 7=R)'},ticks:{font:{size:10}}},y:{title:{display:true,text:'Simple slope'},grid:{color:'#f1f5f9'},suggestedMin:-0.45,suggestedMax:0.65}}}
 });
 
-new Chart(document.getElementById(‘specChart’),{type:‘bar’,data:{
-labels:[“Guilt”,“Regret”,“Anger-Bibi”,“Anger-Hamas”,“Anger-Isr.”,“Sadness”,“Shame”,“Indif.”],
-datasets:[
-{label:‘→ Commission’,data:[-0.112,0.100,0.169,-0.058,0.022,0.059,0.006,-0.004],sigLabels:[””,””,“★”,””,””,””,””,””],
-backgroundColor:’#3b82f677’,borderColor:’#3b82f6’,borderWidth:1.5,borderRadius:3},
-{label:‘→ Behavioral’,data:[-0.061,0.184,0.163,0.020,0.068,-0.122,0.002,-0.013],sigLabels:[””,“★”,“★”,””,””,””,””,””],
-backgroundColor:’#f9731677’,borderColor:’#f97316’,borderWidth:1.5,borderRadius:3},
-]
-},options:{responsive:true,plugins:{legend:{position:‘bottom’,labels:{font:{size:11}}}},
-scales:{y:{title:{display:true,text:‘β’}},x:{ticks:{font:{size:10}}}}}
+// Bloc β chart
+new Chart(document.getElementById('blocChart'),{type:'bar',data:{
+  labels:['Govt delayed','Commission','Bibi blame','Guilt','Israelis save','Behavioral','Efficacy','Bibi save(↓)'],
+  datasets:[
+    {label:'Full sample',data:[0.276,0.176,0.220,0.249,0.302,0.121,0.261,-0.203],backgroundColor:'#94a3b844',borderColor:'#94a3b8',borderWidth:1.5,borderRadius:3},
+    {label:'Coalition',data:[0.428,0.273,0.347,0.329,0.384,0.040,0.176,-0.224],sigLabels:['**','*','*','**','*','','','†'],backgroundColor:'#ef444455',borderColor:'#ef4444',borderWidth:1.5,borderRadius:3},
+    {label:'Opposition',data:[0.137,0.071,0.073,0.116,0.217,0.173,0.301,-0.211],sigLabels:['','','','','†','*','*','*'],backgroundColor:'#3b82f655',borderColor:'#3b82f6',borderWidth:1.5,borderRadius:3},
+  ]
+},options:{responsive:true,plugins:{legend:{position:'bottom'}},
+  scales:{y:{title:{display:true,text:'β coefficient'}},x:{ticks:{font:{size:9}}}}}
 });
 
-new Chart(document.getElementById(‘h2CompChart’),{type:‘bar’,data:{
-labels:[‘Guilt→Comm’,‘Regret→Comm’,‘Anger→Comm’,‘Guilt→Beh’,‘Regret→Beh’,‘Anger→Beh’],
-datasets:[
-{label:‘Pre-registered (no W1)’,data:[0.485,0.605,0.772,0.583,0.703,0.620],
-backgroundColor:’#94a3b877’,borderColor:’#94a3b8’,borderWidth:1.5,borderRadius:3},
-{label:‘Corrected (+W1 baseline)’,data:[0.029,0.077,0.172,0.124,0.195,0.176],sigLabels:[””,“★”,“★”,“★”,“★”,“★”],
-backgroundColor:’#2e75b677’,borderColor:’#2e75b6’,borderWidth:1.5,borderRadius:3},
-]
-},options:{responsive:true,plugins:{legend:{position:‘bottom’,labels:{font:{size:11}}}},
-scales:{y:{beginAtZero:true,title:{display:true,text:‘β’}},x:{ticks:{font:{size:10}}}}}
+// Bloc net delta
+new Chart(document.getElementById('blocNetDeltaChart'),{type:'bar',data:{
+  labels:['Govt delayed','Bibi blame','Guilt','Commission','Israelis save','Bibi resp.','Behavioral','Bibi save','Efficacy'],
+  datasets:[
+    {label:'Coalition net Δ',data:[-0.121,0.276,0.371,0.293,0.244,-0.196,-0.175,0.070,0.072],backgroundColor:'#ef444455',borderColor:'#ef4444',borderWidth:1.5,borderRadius:3},
+    {label:'Opposition net Δ',data:[0.010,-0.001,0.218,0.069,-0.041,0.112,0.172,-0.349,0.318],backgroundColor:'#3b82f655',borderColor:'#3b82f6',borderWidth:1.5,borderRadius:3},
+  ]
+},options:{responsive:true,plugins:{legend:{position:'bottom'}},
+  scales:{y:{title:{display:true,text:'Net Δ (exp − ctrl)'},grid:{color:'#f1f5f9'}},x:{ticks:{font:{size:9}}}}}
 });
 
-// ── New Items by Bloc ─────────────────────────────────────────────────────────
-new Chart(document.getElementById(‘blocNewChart’),{type:‘bar’,data:{
-labels:[‘unjust’,‘isr_save_me’,‘murder_bibi’,‘bibi_save_me’,‘release_terr’,‘inevitable’],
-datasets:[
-{label:‘Coalition’,
-data:[0.428,0.384,0.181,-0.224,-0.058,-0.144],
-sigLabels:[‘★’,‘★’,’’,’’,’’,’’],
-backgroundColor:’#3b82f688’,borderColor:’#3b82f6’,borderWidth:1.5,borderRadius:3},
-{label:‘Opposition’,
-data:[0.137,0.217,0.210,-0.211,0.150,-0.080],
-sigLabels:[’’,’’,‘★’,‘★’,’’,’’],
-backgroundColor:’#f9731688’,borderColor:’#f97316’,borderWidth:1.5,borderRadius:3},
-]
-,options:{responsive:true,plugins:{legend:{position:‘bottom’,labels:{font:{size:11}}}},
-scales:{y:{title:{display:true,text:‘β’}},x:{ticks:{font:{size:10}}}}}}
+
+// Ordinal vs Binary summary chart
+new Chart(document.getElementById('ordBinChart'),{type:'bar',data:{
+  labels:['Pre-reg Ordinal (1–3)','Sensitivity Binary (0/1)'],
+  datasets:[
+    {label:'BH-significant',data:[14,8],backgroundColor:['#22c55e88','#94a3b888'],borderColor:['#22c55e','#94a3b8'],borderWidth:1.5,borderRadius:4},
+    {label:'Not significant',data:[9,15],backgroundColor:['#f1f5f944','#f1f5f988'],borderColor:['#94a3b8','#94a3b8'],borderWidth:1,borderRadius:4},
+  ]
+},options:{responsive:true,
+  plugins:{legend:{position:'bottom',labels:{font:{size:10}}}},
+  scales:{x:{stacked:true},y:{stacked:true,max:23,title:{display:true,text:'Outcomes (of 23 total)'},grid:{color:'#f1f5f9'}}}}
 });
 
-// ── Ideology Thirds ───────────────────────────────────────────────────────────
-new Chart(document.getElementById(‘ideoThirdsChart’),{type:‘bar’,data:{
-labels:[‘Guilt’,‘Regret’,‘Anger’],
-datasets:[
-{label:‘Left (1–3)’,data:[0.118,0.200,-0.035],backgroundColor:’#3b82f644’,borderColor:’#3b82f6’,borderWidth:1.5,borderRadius:3},
-{label:‘Centre (4)’,data:[0.306,0.238,0.161],sigLabels:[’†’,’’,’’],backgroundColor:’#f9731666’,borderColor:’#f97316’,borderWidth:1.5,borderRadius:3},
-{label:‘Right (5–7)’,data:[0.221,0.190,0.214],sigLabels:[‘★’,’†’,’†’],backgroundColor:’#22c55e88’,borderColor:’#22c55e’,borderWidth:1.5,borderRadius:3},
-]
-,options:{responsive:true,plugins:{legend:{position:‘bottom’,labels:{font:{size:11}}}},
-scales:{y:{beginAtZero:true,title:{display:true,text:‘β’}},x:{}}}}
-});
-
-}); // end window.onload
+}); // end load
 </script>
-
 </body>
 </html>
