@@ -73,7 +73,9 @@ tr.dim td{opacity:.5}
   <button class="ntab" style="background:#eff6ff;color:#1e3a5f" onclick="P('h3h4',this)">H3/H4 — Moderation</button>
   <button class="ntab" style="background:#dcfce7;color:#166534" onclick="P('evidence',this)">3-Pillar Evidence</button>
   <button class="ntab" style="background:#dcfce7;color:#166534" onclick="P('framing',this)">Framing Specificity</button>
+  <button class="ntab" style="background:#fdf4ff;color:#7e22ce" onclick="P('jn',this)">⬡ Johnson-Neyman</button>
   <button class="ntab" style="background:#f1f5f9;color:#475569" onclick="P('bloc',this)">Bloc Differences</button>
+  <button class="ntab" style="background:#fff1f2;color:#9f1239" onclick="P('bloc_deep',this)">★ Bloc — Deep Dive</button>
 </div>
 <div id="content">
 
@@ -702,6 +704,149 @@ tr.dim td{opacity:.5}
   </div>
 </div>
 
+
+<div id="panel-bloc_deep" class="panel">
+  <div class="q-banner" style="direction:rtl;text-align:right">ניתוח מעמיק של הבדלי גוש — מעבר לממצאים הבסיסיים. מה באמת קרה בכל גוש?</div>
+
+  <div class="insight" style="direction:rtl;text-align:right">
+    ארבעה ממצאים שלא הוצגו עד כה: (1) <strong>שיעורי חשיפה שונים דרמטית</strong> לפי גוש. (2) עובדה <strong>לא הגדילה</strong> תמיכה בוועדה בקואליציה — היא עצרה ירידה. (3) חשיפה גרמה ל<strong>freeze התנהגותי</strong> בקואליציה ולגיוס באופוזיציה. (4) <strong>העברת אמון</strong> מביבי לחברה הישראלית — בקואליציה חשופה בלבד.
+  </div>
+
+  <div class="card">
+    <div class="card-title">1. שיעורי חשיפה לעובדה לפי גוש</div>
+    <div class="grid2">
+      <div>
+        <table>
+          <thead><tr><th>גוש</th><th>N</th><th>נחשפו</th><th>שיעור</th><th>ביקורת</th></tr></thead>
+          <tbody>
+            <tr class="hl"><td>קואליציה</td><td>212</td><td>75</td><td style="color:#dc2626;font-weight:700">35.4%</td><td>137 (64.6%)</td></tr>
+            <tr class="hl"><td>אופוזיציה</td><td>205</td><td>125</td><td style="color:#16a34a;font-weight:700">61.0%</td><td>80 (39.0%)</td></tr>
+          </tbody>
+        </table>
+        <div class="note" style="direction:rtl;text-align:right;margin-top:6px">רוב הנחשפים הם אנשי אופוזיציה. כשמדברים על "נחשפים" — מדברים בעיקר על ציבור אחד.</div>
+      </div>
+      <div><canvas id="blocExposureChart" style="max-height:150px"></canvas></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">2. תמיכה בוועדת חקירה — עובדה עצרה ירידה, לא הגדילה תמיכה (קואליציה)</div>
+    <div class="grid2">
+      <div>
+        <table>
+          <thead><tr><th>קבוצה</th><th>W1</th><th>W2</th><th>Δ</th><th>פרשנות</th></tr></thead>
+          <tbody>
+            <tr><td>קואליציה — ביקורת</td><td>2.85</td><td>2.62</td><td style="color:#dc2626;font-weight:700">−0.226</td><td>ירידה טבעית</td></tr>
+            <tr class="hl"><td>קואליציה — נחשפו</td><td>4.11</td><td>4.18</td><td style="color:#16a34a;font-weight:700">+0.067</td><td>יציבות ✓</td></tr>
+            <tr><td>אופוזיציה — ביקורת</td><td>6.04</td><td>6.03</td><td>−0.013</td><td>ceiling</td></tr>
+            <tr><td>אופוזיציה — נחשפו</td><td>6.66</td><td>6.71</td><td>+0.056</td><td>ceiling</td></tr>
+          </tbody>
+        </table>
+        <div class="note" style="direction:rtl;text-align:right;margin-top:6px">ה-ANCOVA לוכד β=+0.273*: ביקורת ירדה, חשופים נשארו. זה מה שהמודל קורא "עלייה". השאלה הנכונה היא לא "כמה עלו" אלא "כמה לא ירדו".</div>
+      </div>
+      <div><canvas id="blocCommissionDeltaChart" style="max-height:160px"></canvas></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">3. פעולה התנהגותית — freeze בקואליציה, גיוס באופוזיציה</div>
+    <div class="grid2">
+      <div>
+        <table>
+          <thead><tr><th>קבוצה</th><th>Δ ביקורת</th><th>Δ נחשפו</th><th>נטו</th><th>כיוון</th></tr></thead>
+          <tbody>
+            <tr class="hl"><td>קואליציה</td><td style="color:#16a34a">+0.095</td><td style="color:#dc2626">−0.080</td><td style="color:#dc2626;font-weight:700">−0.175</td><td>⬇ Freeze</td></tr>
+            <tr class="hl"><td>אופוזיציה</td><td style="color:#dc2626">−0.137</td><td style="color:#16a34a">+0.035</td><td style="color:#16a34a;font-weight:700">+0.172</td><td>⬆ גיוס</td></tr>
+          </tbody>
+        </table>
+        <div class="note" style="direction:rtl;text-align:right;margin-top:6px">פרשנות: עבור קואליציה, עדכון קוגניטיבי (אשמה, האשמת ביבי) לא הפך לפעולה — אולי דווקא עצר אותה ("מה אני יכול לעשות?"). באופוזיציה: חשיפה שינתה כיוון ממגמת ירידה לעלייה.</div>
+      </div>
+      <div><canvas id="blocBehFreezeChart" style="max-height:160px"></canvas></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">4. העברת אמון — מביבי לחברה הישראלית (קואליציה חשופה בלבד)</div>
+    <div class="grid2">
+      <div>
+        <table>
+          <thead><tr><th>קבוצה</th><th>"ביבי יציל" Δ</th><th>"ישראלים יצילו" Δ</th><th>פרשנות</th></tr></thead>
+          <tbody>
+            <tr><td>קואליציה — ביקורת</td><td>−0.190</td><td>−0.124</td><td>שניהם ירדו</td></tr>
+            <tr class="hl"><td>קואליציה — <strong>נחשפו</strong></td><td>−0.120</td><td style="color:#16a34a;font-weight:700">+0.120</td><td>העברת אמון ✓</td></tr>
+            <tr><td>אופוזיציה — ביקורת</td><td>+0.237</td><td>−0.087</td><td>—</td></tr>
+            <tr><td>אופוזיציה — נחשפו</td><td>−0.112</td><td>−0.128</td><td>שניהם ירדו</td></tr>
+          </tbody>
+        </table>
+        <div class="note" style="direction:rtl;text-align:right;margin-top:6px">בקואליציה חשופה בלבד: "ביבי יציל" ירד בדיוק כמה שה"ישראלים יצילו" עלה. העברה מאמון מוסדי לאמון חברתי — ממצא ייחודי לחשיפה בגוש הזה.</div>
+      </div>
+      <div><canvas id="blocTrustChart" style="max-height:160px"></canvas></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">5. Net effect (Δ_exposed − Δ_control) לפי גוש — כל התוצאות</div>
+    <canvas id="blocNetDeltaChart" style="max-height:250px"></canvas>
+    <div class="note" style="direction:rtl;text-align:right;margin-top:6px">כחול = קואליציה, כתום = אופוזיציה. אפקט נטו = (Δ חשופים) − (Δ ביקורת). ממחיש את דפוס ה-dissociation: קואליציה = קוגניציה ואשמה, אופוזיציה = פעולה ומסוגלות.</div>
+  </div>
+
+</div>
+<div id="panel-jn" class="panel">
+  <div class="q-banner" style="direction:rtl;text-align:right">שאלת עירן: האינטראקציות שכן עובדות ושלא — אשמח לראות בגרפים. Johnson-Neyman: באיזה טווח אידיאולוגי אפקט החשיפה מובהק?</div>
+
+  <div class="insight-green" style="direction:rtl;text-align:right">
+    <strong>הממצא המרכזי:</strong> אפקט החשיפה על אשמה מובהק לאורך אידיאולוגיה <strong>2.72–5.65</strong> — כולל שמאל, מרכז, ורוב הימין. רק הקצה הימני הקיצוני (&gt;5.65) ן-שמאל קיצוני (&lt;2.72) אינם מובהקים — ומסיבות שונות: שמאל = ceiling effect, ימין קיצוני = עמידות אפשרית. ה-null ב-H3 הוא artifact של ביטול שני הגבולות זה את זה, לא שוויון אידיאולוגי.
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">Johnson-Neyman — גבולות מובהקות</div>
+      <table>
+        <thead><tr><th>רגש</th><th>גבול תחתון</th><th>גבול עליון</th><th>אזור מובהק</th><th>פרשנות</th></tr></thead>
+        <tbody>
+          <tr class="hl"><td><span class="dot" style="background:#3b82f6"></span>אשמה קולקטיבית</td><td>2.72</td><td>5.65</td><td>אידיאולוגיה 2.72–5.65</td><td>מכסה רוב הספקטרום כולל ימין</td></tr>
+          <tr class="hl"><td><span class="dot" style="background:#f97316"></span>חרטה מופנמת</td><td>3.94</td><td>5.76</td><td>אידיאולוגיה 3.94–5.76</td><td>מרכז + ימין מתון; שמאל = ceiling</td></tr>
+          <tr><td><span class="dot" style="background:#22c55e"></span>כעס על נתניהו</td><td>—</td><td>—</td><td>חלון צר ~4.3–4.9 (†)</td><td>שולי בלבד; ceiling לאורך כל הספקטרום</td></tr>
+        </tbody>
+      </table>
+      <div class="note">גבולות JN חושבו אנליטית ממטריצת ה-HC3. t_crit=1.96.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Simple slopes לפי רמה אידיאולוגית</div>
+      <table>
+        <thead><tr><th>אידיאולוגיה</th><th>slope אשמה</th><th>p</th><th>slope חרטה</th><th>p</th></tr></thead>
+        <tbody>
+          <tr><td>1 (שמאל קיצוני)</td><td>+0.391</td><td>.152 n.s.</td><td>+0.222</td><td>.433 n.s.</td></tr>
+          <tr><td>2</td><td>+0.350 †</td><td>.093</td><td>+0.220</td><td>.313 n.s.</td></tr>
+          <tr class="hl"><td>3</td><td><strong>+0.310*</strong></td><td>.037</td><td>+0.219</td><td>.166 n.s.</td></tr>
+          <tr class="hl"><td>4 (מרכז)</td><td><strong>+0.270**</strong></td><td>.007</td><td><strong>+0.218*</strong></td><td>.046</td></tr>
+          <tr class="hl"><td>5</td><td><strong>+0.230**</strong></td><td>.008</td><td><strong>+0.217*</strong></td><td>.018</td></tr>
+          <tr><td>6</td><td>+0.189</td><td>.113 n.s.</td><td>+0.215 †</td><td>.073</td></tr>
+          <tr><td>7 (ימין קיצוני)</td><td>+0.149</td><td>.394 n.s.</td><td>+0.214</td><td>.217 n.s.</td></tr>
+        </tbody>
+      </table>
+      <div class="note">שורות מודגשות = מובהק. ירוק = מתוך אזור JN.</div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">Simple slope — אשמה קולקטיבית (עם CI ואזור JN)</div>
+      <canvas id="jnGuiltChart2" style="max-height:230px"></canvas>
+      <div class="note" style="margin-top:6px">הרצועה הירוקה = אזור מובהק (2.72–5.65). קו מקווקוו = CI 95%. שמאל: n.s. בגלל ceiling. ימין קיצוני: n.s. בגלל עמידות אפשרית.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Simple slope — חרטה מופנמת (עם CI ואזור JN)</div>
+      <canvas id="jnRegretChart2" style="max-height:230px"></canvas>
+      <div class="note" style="margin-top:6px">הרצועה הכתומה = אזור מובהק (3.94–5.76). שמאל n.s. — כבר היו גבוהים ב-W1. הקשר כמעט שטוח לאורך הספקטרום (β_interaction=−0.001, p=.99).</div>
+    </div>
+  </div>
+
+  <div class="insight-yellow" style="direction:rtl;text-align:right">
+    <strong>למה ה-H3 null לא אומר שאין מודרציה:</strong> הטסט הגלובלי של האינטראקציה בוחן האם השיפוע משתנה בצורה לינארית לאורך כל הספקטרום. כאן יש שני גבולות שמבטלים אחד את השני — בקצה השמאלי האפקט קטן מ-ceiling, בקצה הימני האפקט קטן מעמידות. הבדיקה הלינארית לא רואה את זה. Johnson-Neyman חושף את הפרופיל הרציף ומראה שהאפקט <em>כן</em> קיים — ולאוכלוסייה רחבה מכפי שניבינו.
+  </div>
+</div>
+
 </div><!-- end content -->
 </div><!-- end app -->
 
@@ -722,6 +867,7 @@ function P(id,btn){
 P('eq1',tabs['eq1']);
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
 <script>
 window.addEventListener('load',function(){
 
@@ -854,7 +1000,138 @@ new Chart(document.getElementById('blocChart'),{type:'bar',data:{
   scales:{y:{title:{display:true,text:'β coefficient'}},x:{ticks:{font:{size:10}}}}}
 });
 
+}); // end original charts
+</script>
+
+<script>
+const jnSigPlugin2 = {
+  id:'jnSigBand2',
+  beforeDraw(chart) {
+    if (!chart.config.options.jnBounds) return;
+    const {ctx, chartArea, scales} = chart;
+    const {lo, hi, color} = chart.config.options.jnBounds;
+    const xScale = scales.x;
+    const x0 = xScale.getPixelForValue(lo - 1);
+    const x1 = xScale.getPixelForValue(hi - 1);
+    ctx.save();
+    ctx.fillStyle = color || 'rgba(34,197,94,0.10)';
+    ctx.fillRect(x0, chartArea.top, x1 - x0, chartArea.bottom - chartArea.top);
+    ctx.restore();
+  }
+};
+Chart.register(jnSigPlugin2);
+
+window.addEventListener('load', function() {
+
+new Chart(document.getElementById('jnGuiltChart2'), {
+  type: 'line',
+  data: {
+    labels: [1,2,3,4,5,6,7],
+    datasets: [
+      {label:'Simple slope (Guilt)',
+       data:[0.391,0.350,0.310,0.270,0.230,0.189,0.149],
+       borderColor:'#3b82f6',
+       pointBackgroundColor:['#94a3b8','#f97316','#22c55e','#22c55e','#22c55e','#94a3b8','#94a3b8'],
+       pointRadius:6, borderWidth:2.5, fill:false, tension:0.3},
+      {label:'CI upper',data:[0.924,0.774,0.600,0.466,0.398,0.423,0.491],
+       borderColor:'rgba(59,130,246,0.25)',borderWidth:1,pointRadius:0,fill:false,borderDash:[4,4]},
+      {label:'CI lower',data:[-0.143,-0.073,0.019,0.074,0.062,-0.045,-0.193],
+       borderColor:'rgba(59,130,246,0.25)',borderWidth:1,pointRadius:0,
+       fill:'1',backgroundColor:'rgba(59,130,246,0.06)',borderDash:[4,4]},
+    ]
+  },
+  options:{
+    responsive:true,
+    jnBounds:{lo:2.72,hi:5.65,color:'rgba(34,197,94,0.12)'},
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`slope=${ctx.raw.toFixed(3)}`}}},
+    scales:{
+      x:{title:{display:true,text:'\u05d0\u05d9\u05d3\u05d9\u05d0\u05d5\u05dc\u05d5\u05d2\u05d9\u05d4 (1=\u05e9\u05de\u05d0\u05dc, 7=\u05d9\u05de\u05d9\u05df)'},ticks:{font:{size:10}}},
+      y:{title:{display:true,text:'Simple slope'},grid:{color:'#f1f5f9'},suggestedMin:-0.25,suggestedMax:0.55}
+    }
+  }
 });
+
+new Chart(document.getElementById('jnRegretChart2'), {
+  type: 'line',
+  data: {
+    labels: [1,2,3,4,5,6,7],
+    datasets: [
+      {label:'Simple slope (Regret)',
+       data:[0.222,0.220,0.219,0.218,0.217,0.215,0.214],
+       borderColor:'#f97316',
+       pointBackgroundColor:['#94a3b8','#94a3b8','#94a3b8','#22c55e','#22c55e','#f9731688','#94a3b8'],
+       pointRadius:6, borderWidth:2.5, fill:false, tension:0.2},
+      {label:'CI upper',data:[0.775,0.648,0.529,0.431,0.396,0.451,0.553],
+       borderColor:'rgba(249,115,22,0.25)',borderWidth:1,pointRadius:0,fill:false,borderDash:[4,4]},
+      {label:'CI lower',data:[-0.331,-0.208,-0.091,0.005,0.037,-0.022,-0.124],
+       borderColor:'rgba(249,115,22,0.25)',borderWidth:1,pointRadius:0,
+       fill:'1',backgroundColor:'rgba(249,115,22,0.06)',borderDash:[4,4]},
+    ]
+  },
+  options:{
+    responsive:true,
+    jnBounds:{lo:3.94,hi:5.76,color:'rgba(249,115,22,0.10)'},
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`slope=${ctx.raw.toFixed(3)}`}}},
+    scales:{
+      x:{title:{display:true,text:'\u05d0\u05d9\u05d3\u05d9\u05d0\u05d5\u05dc\u05d5\u05d2\u05d9\u05d4 (1=\u05e9\u05de\u05d0\u05dc, 7=\u05d9\u05de\u05d9\u05df)'},ticks:{font:{size:10}}},
+      y:{title:{display:true,text:'Simple slope'},grid:{color:'#f1f5f9'},suggestedMin:-0.45,suggestedMax:0.65}
+    }
+  }
+});
+
+// Bloc deep dive charts
+new Chart(document.getElementById('blocExposureChart'),{type:'bar',data:{
+  labels:['\u05e7\u05d5\u05d0\u05dc\u05d9\u05e6\u05d9\u05d4 (N=212)','\u05d0\u05d5\u05e4\u05d5\u05d6\u05d9\u05e6\u05d9\u05d4 (N=205)'],
+  datasets:[
+    {label:'\u05e0\u05d7\u05e9\u05e4\u05d5',data:[35.4,61.0],backgroundColor:['#ef444488','#22c55e88'],borderColor:['#ef4444','#22c55e'],borderWidth:1.5,borderRadius:4},
+    {label:'\u05dc\u05d0 \u05e0\u05d7\u05e9\u05e4\u05d5',data:[64.6,39.0],backgroundColor:['#94a3b844','#94a3b844'],borderColor:'#94a3b8',borderWidth:1.5,borderRadius:4},
+  ]
+},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:10}}}},
+  scales:{x:{stacked:false},y:{title:{display:true,text:'%'},max:100}}}
+});
+
+new Chart(document.getElementById('blocCommissionDeltaChart'),{type:'bar',data:{
+  labels:['\u05e7\u05d5\u05d0\u05dc-\u05d1\u05d9\u05e7\u05d5\u05e8\u05ea','\u05e7\u05d5\u05d0\u05dc-\u05e0\u05d7\u05e9\u05e4\u05d5','\u05d0\u05d5\u05e4\u05d5-\u05d1\u05d9\u05e7\u05d5\u05e8\u05ea','\u05d0\u05d5\u05e4\u05d5-\u05e0\u05d7\u05e9\u05e4\u05d5'],
+  datasets:[{label:'Delta W2-W1',data:[-0.226,0.067,-0.013,0.056],
+    backgroundColor:['#ef444488','#22c55e88','#94a3b844','#94a3b844'],
+    borderColor:['#ef4444','#22c55e','#94a3b8','#94a3b8'],borderWidth:1.5,borderRadius:4}]
+},options:{responsive:true,plugins:{legend:{display:false}},
+  scales:{y:{title:{display:true,text:'\u0394 (W2\u2212W1)'},grid:{color:'#f1f5f9'}}}}
+});
+
+new Chart(document.getElementById('blocBehFreezeChart'),{type:'bar',data:{
+  labels:['\u05e7\u05d5\u05d0\u05dc-\u05d1\u05d9\u05e7\u05d5\u05e8\u05ea','\u05e7\u05d5\u05d0\u05dc-\u05e0\u05d7\u05e9\u05e4\u05d5','\u05d0\u05d5\u05e4\u05d5-\u05d1\u05d9\u05e7\u05d5\u05e8\u05ea','\u05d0\u05d5\u05e4\u05d5-\u05e0\u05d7\u05e9\u05e4\u05d5'],
+  datasets:[{label:'\u0394 \u05d4\u05ea\u05e0\u05d4\u05d2\u05d5\u05ea',data:[0.095,-0.080,-0.137,0.035],
+    backgroundColor:['#22c55e88','#ef444488','#ef444488','#22c55e88'],
+    borderColor:['#22c55e','#ef4444','#ef4444','#22c55e'],borderWidth:1.5,borderRadius:4}]
+},options:{responsive:true,plugins:{legend:{display:false}},
+  scales:{y:{title:{display:true,text:'\u0394 (W2\u2212W1)'},grid:{color:'#f1f5f9'}}}}
+});
+
+new Chart(document.getElementById('blocTrustChart'),{type:'bar',data:{
+  labels:['\u05e7\u05d5\u05d0\u05dc-\u05d1\u05d9\u05e7\u05d5\u05e8\u05ea','\u05e7\u05d5\u05d0\u05dc-\u05e0\u05d7\u05e9\u05e4\u05d5','\u05d0\u05d5\u05e4\u05d5-\u05d1\u05d9\u05e7\u05d5\u05e8\u05ea','\u05d0\u05d5\u05e4\u05d5-\u05e0\u05d7\u05e9\u05e4\u05d5'],
+  datasets:[
+    {label:'\u0394 "\u05d1\u05d9\u05d1\u05d9 \u05d9\u05e6\u05d9\u05dc"',data:[-0.190,-0.120,0.237,-0.112],backgroundColor:'#ef444455',borderColor:'#ef4444',borderWidth:1.5,borderRadius:3},
+    {label:'\u0394 "\u05d9\u05e9\u05e8\u05d0\u05dc\u05d9\u05dd \u05d9\u05e6\u05d9\u05dc\u05d5"',data:[-0.124,0.120,-0.087,-0.128],backgroundColor:'#3b82f655',borderColor:'#3b82f6',borderWidth:1.5,borderRadius:3},
+  ]
+},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:10}}}},
+  scales:{y:{title:{display:true,text:'\u0394 (W2\u2212W1)'},grid:{color:'#f1f5f9'}}}}
+});
+
+new Chart(document.getElementById('blocNetDeltaChart'),{type:'bar',data:{
+  labels:['Govt\ndelayed','Bibi\nblame','Guilt','Commission','Israelis\nsave me','Bibi\nresp.','Behavioral','Bibi\nsave me','Efficacy'],
+  datasets:[
+    {label:'Coalition (net)',data:[-0.121,0.276,0.371,0.293,0.244,-0.196,-0.175,0.070,0.072],
+      backgroundColor:'#ef444455',borderColor:'#ef4444',borderWidth:1.5,borderRadius:3},
+    {label:'Opposition (net)',data:[0.010,-0.001,0.218,0.069,-0.041,0.112,0.172,-0.349,0.318],
+      backgroundColor:'#3b82f655',borderColor:'#3b82f6',borderWidth:1.5,borderRadius:3},
+  ]
+},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:11}}}},
+  scales:{y:{title:{display:true,text:'Net \u0394 (exp \u2212 ctrl)'},grid:{color:'#f1f5f9'}},
+          x:{ticks:{font:{size:9}}}}}
+});
+
+}); // end window.onload
 </script>
 </body>
 </html>
